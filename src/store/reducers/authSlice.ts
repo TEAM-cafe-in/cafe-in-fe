@@ -1,7 +1,9 @@
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState, useAppSelector } from '..';
+import { RootState, useAppSelector } from '~/store';
 
 interface Auth {
   access_token: string;
@@ -33,7 +35,7 @@ const authSlice = createSlice({
 
 export const { setToken } = authSlice.actions;
 
-export const accessTokenSelector = () =>
+export const useAccessTokenSelector = () =>
   useAppSelector((rootState: RootState) => rootState.auth.auth.access_token);
 
 export default authSlice.reducer;

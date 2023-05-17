@@ -1,3 +1,5 @@
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+
 import { combineReducers, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 
@@ -19,9 +21,9 @@ const reducers = (
 ) => {
   if (action.type === HYDRATE) {
     return { ...state, ...action.payload };
-  } else {
-    return combinedReducer(state, action);
   }
+
+  return combinedReducer(state, action);
 };
 
 export default reducers;

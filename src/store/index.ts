@@ -1,3 +1,5 @@
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
   AnyAction,
