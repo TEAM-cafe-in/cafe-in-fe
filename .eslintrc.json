@@ -1,0 +1,35 @@
+{
+  "env": {
+    // 브라우저 window 객체에서 사용하는 변수들 허용
+    "browser": true,
+    // 모듈을 제외한 ECMAScript 6 기능을 활성화
+    "es6": true,
+    // node 에서 사용하는 전역변수 허용
+    "node": true
+  },
+  // eslint 에서 typescript 사용을 위한 파싱 설정
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  // @typescript-eslint/eslint-plugin: typescript eslint 연동
+  // airbnb: airbnb에서 설정한 lint 설정
+  // next/core-web-vitals: next에서 기본적으로 제공하는 lint 규칙
+  // plugin:prettier/recommended: prettier 규칙을 eslint 규칙에 추가, prettier와 충돌하는 eslint 규칙 설정
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  }
+}
