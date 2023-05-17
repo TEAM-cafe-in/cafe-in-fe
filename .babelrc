@@ -1,0 +1,16 @@
+// 스타일이 적용되기 전에 렌더링되는 현상을 막기 위해 설정
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "styled-components",
+      {
+        "fileName": true,
+        "ssr": true,
+        "displayName": true,
+        "pure": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}
