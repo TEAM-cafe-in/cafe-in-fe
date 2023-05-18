@@ -16,7 +16,10 @@
     "incremental": true,
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
+    // redux setting 추가
+    // 우리가 작성한 types 폴더를 타입체크하라고 알려줍니다.
+    "typeRoots": ["./node_modules/@types", "types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
