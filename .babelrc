@@ -1,0 +1,12 @@
+// .babelrc
+// 스타일이 적용되기 전에 렌더링되는 현상을 막기 위해 설정
+
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "babel-plugin-styled-components",
+      { "fileName": true, "displayName": true, "pure": true, "ssr": true }
+    ]
+  ]
+}
