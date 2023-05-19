@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
+    // react query로는 서버데이터를 관리하므로 redux보다 상위에 위치해 두었습니다
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <GlobalStyle />
