@@ -1,13 +1,47 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import React from 'react';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
+import { ServerStyleSheets } from '@mui/styles';
+// mui와 styled-components가 next.js에서 작동하도록 설정
 
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
+export default class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
+
+MyDocument.getInitialProps = async (ctx) => {
+  const sheet = new ServerStyleSheet();
+  const materialSheets = new ServerStyleSheets();
+  const originalRenderPage = ctx.renderPage;
+
+  try {
+    // eslint-disable-next-line no-param-reassign
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: (App) => (props) =>
+          sheet.collectStyles(materialSheets.collect(<App {...props} />)),
+      });
+
+    const initialProps = await Document.getInitialProps(ctx);
+    return {
+      ...initialProps,
+      styles: (
+        <>
+          {initialProps.styles}
+          {sheet.getStyleElement()}
+        </>
+      ),
+    };
+  } finally {
+    sheet.seal();
+  }
+};
