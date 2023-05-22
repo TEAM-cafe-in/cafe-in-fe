@@ -1,8 +1,22 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryCache, QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient({
+  // v5 useQuery사용할 때 onError, onSuccess 사용 x => QueryClient를 세팅할 때 전역 캐시 단계에서 콜백을 사용
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (query.meta) {
+        if (query.meta.errorMessage) {
+          console.log(query.meta.errorMessage);
+        }
+      }
+    },
+  }),
+  // => useQuery를 사용할 때 (onSuccess, onError 사용 x)
+  // meta: {
+  //  errorMessage: 'Failed to fetch todos',
+  //  },
+  // 이런식으로 query 마다 다른 에러 메시지 전달
   defaultOptions: {
-    // onError : handleError => 공통 에러 처러 hook 만들기
     queries: {
       // staleTime을 변경하여 리엑트 쿼리에개 캐시된 데이터를 얼마나 자주 최신화 시켜줘야 하는지 알려줄 수 있다.(중복 호출 방지)
       // 쿼리 마다 다르게 시간을 지정 가능

@@ -14,11 +14,9 @@ import queryClient from '~/helpers/QueryClient';
 export default function App({ Component, pageProps }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(pageProps);
 
-  const queryclient = queryClient;
-
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryclient}>
+      <QueryClientProvider client={queryClient}>
         <GlobalStyle />
         <Component {...props} />
         <ReactQueryDevtools initialIsOpen={false} />
