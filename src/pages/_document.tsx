@@ -1,14 +1,18 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import { ServerStyleSheets } from '@mui/styles';
 // mui와 styled-components가 next.js에서 작동하도록 설정
 
+// 카카오 api를 활용하기 위해 sdk를 추가해줘야 함
 export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <script src="https://developers.kakao.com/sdk/js/kakao.js" />
+        </Head>
         <body>
           <Main />
           <NextScript />

@@ -1,11 +1,18 @@
-import Button from '@mui/material/Button';
+/* eslint-disable react/button-has-type */
+import { useRouter } from 'next/router';
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 
 export default function Home() {
+  const accessToken = useAccessTokenSelector();
+  console.log(accessToken);
+  const router = useRouter();
+  const loginClickHandler = (): void => {
+    router.push('/login');
+  };
   return (
     <div>
       <h1>cafe in</h1>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
+      <button onClick={loginClickHandler}>로그인</button>
     </div>
   );
 }
