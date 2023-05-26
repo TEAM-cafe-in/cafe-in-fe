@@ -15,7 +15,7 @@ import queryClient from '~/helpers/QueryClient';
 import { ConfigProvider } from '~/helpers/themeConfig';
 import ThemeCustomization from '~/themes';
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(pageProps);
 
   return (
@@ -31,4 +31,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </QueryClientProvider>
     </Provider>
   );
-}
+};
+
+export default App;
