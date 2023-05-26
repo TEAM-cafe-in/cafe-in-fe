@@ -1,4 +1,4 @@
-import { TypographyVariantsOptions } from '@mui/material';
+import { ButtonProps, Theme, TypographyVariantsOptions } from '@mui/material';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -27,4 +27,11 @@ export interface CustomizationProps {
   mode: ThemeMode;
   onChangeMode: (mode: ThemeMode) => void;
   onChangeFontFamily: (fontFamily: FontFamily) => void;
+}
+
+export type ColorProps = ButtonProps['color'];
+
+export interface ExtendedStyleProps {
+  color: ColorProps;
+  theme: Theme;
 }
