@@ -1,18 +1,13 @@
-import { setToken } from '~/store/reducers/authSlice';
-import { useDispatch } from 'react-redux';
-
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-// eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-unused-vars
-import axios from 'axios';
-
-import { useMutation } from '@tanstack/react-query';
-import KakaoLogin from '~/api/KakaoLogin';
+// import { useMutation } from '@tanstack/react-query';
 
 import styled from 'styled-components';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+
 import { KakaoButton, GoogleButton } from '../../sections/login';
+import { getLoginToken, getUserData } from '../api/user';
 import image from './img/cafe-in-logo.png';
 
 const MyArrowBackIosNewIcon = styled(ArrowBackIosNewIcon)`
@@ -33,23 +28,27 @@ const Wrapper = styled.div`
 
 function LoginPage() {
   const router = useRouter();
-  const dispatch = useDispatch();
 
-  const mutate = useMutation(KakaoLogin);
   const kakaoLoginHandler = async () => {
     window.Kakao.Auth.login({
-      success: (res: any) => {
-        const accessToken = res.access_token;
-        const refreshToken = res.refresh_token;
-        dispatch(
-          setToken({ access_token: accessToken, refresh_token: refreshToken })
-        );
-        mutate.mutate(accessToken);
-        router.push('/');
+      success: async (kakao_data: any) => {
+        // 카카오톡 서버로 부터 refresh token, access token 받기
+        const refreshToken = kakao_data.refresh_token;
+        let accessToken = kakao_data.access_token;
+        // api 통신으로 jwt 토큰 access token 받기
+        const response = getLoginToken(accessToken, 'KAKAO');
+        // promise 객체값 접근
+        response.then((res: any) => {
+          // 리덕스에 access token과 refresh token 값 저장
+          accessToken = res.data.accessToken; // jwt access token 저장
+          window.localStorage.setItem('accessToken', accessToken);
+          window.localStorage.setItem('refreshToken', refreshToken);
+        });
+        const user = getUserData(accessToken, 'USER');
+        console.log(user);
       },
     });
   };
-
   const backClickHandler = () => {
     router.push('/');
   };

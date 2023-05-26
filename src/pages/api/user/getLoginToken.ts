@@ -1,12 +1,13 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-var-requires
 import axios from 'axios';
 
-async function KakaoLogin(token: string): Promise<any> {
+// access 토큰을 header로 전달하면 jwt토큰 반환하는 api 함수
+async function getLoginToken(token: string, type: string) {
   try {
     const res = await axios.post(
       'http://52.78.196.20:8080/api/oauth/login',
       {
-        memberType: 'KAKAO',
+        memberType: `${type}`,
       },
       {
         headers: {
@@ -21,4 +22,4 @@ async function KakaoLogin(token: string): Promise<any> {
     return error;
   }
 }
-export default KakaoLogin;
+export default getLoginToken;

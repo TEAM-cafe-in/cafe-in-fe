@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
     // 카카오 로그인 할 때 Javascript SDK 초기화 함수 추가
     //  app 최상단에 useEffext 로 init
     if (!window.Kakao.isInitialized()) {
-      window.Kakao.init('9d76d14a60f3a41a190f12c3b58543d5'); // env 파일 불러오기 아직 오류..
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_KEY);
     }
   }, []);
 
