@@ -32,6 +32,6 @@ export interface CustomizationProps {
 export type ColorProps = ButtonProps['color'];
 
 export interface ExtendedStyleProps {
-  color: ColorProps;
+  color?: ColorProps;
   theme: Theme;
 }

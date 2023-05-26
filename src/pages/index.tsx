@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import { useCallback } from 'react';
 
-import BoxButton from '~/components/atom/buttons/BoxButton';
+import { BoxButton, CapsuleButton } from '~/components/atom/buttons';
 
-function Home() {
+const Home = () => {
   const handleClick = useCallback(() => {}, []);
 
   return (
@@ -90,9 +90,15 @@ function Home() {
             onClick={handleClick}
           />
         </Grid>
+        <Grid item xs={12}>
+          <CapsuleButton title="버튼" padding="xl" onClick={handleClick} />
+          <CapsuleButton title="버튼" padding="lg" onClick={handleClick} />
+          <CapsuleButton title="버튼" padding="md" onClick={handleClick} />
+          <CapsuleButton title="버튼" padding="sm" onClick={handleClick} />
+        </Grid>
       </Grid>
     </div>
   );
-}
+};
 
 export default Home;

@@ -1,3 +1,8 @@
+/**
+ * @createdBy 김해지
+ * @description 박스형 버튼 Component
+ */
+
 import {
   Button,
   useTheme,
@@ -7,17 +12,6 @@ import {
 } from '@mui/material';
 
 import { Color, Variant, Size } from '~/types/button';
-
-interface BoxButtonProps extends ButtonProps {
-  // 버튼명
-  title: string;
-  // 버튼 배경 색상
-  color?: Color;
-  // 버튼 모양
-  variant?: Variant;
-  // 버튼 사이즈
-  padding?: Size;
-}
 
 interface StyleProps {
   padding: string;
@@ -41,15 +35,25 @@ const PADDING = {
   sm: '8px 12px',
 };
 
-// 박스형 버튼
-function BoxButton({
+interface BoxButtonProps extends ButtonProps {
+  // 버튼명
+  title: string;
+  // 버튼 배경 색상
+  color?: Color;
+  // 버튼 모양
+  variant?: Variant;
+  // 버튼 사이즈
+  padding?: Size;
+}
+
+const BoxButton = ({
   title,
   variant,
   color,
   padding,
   disabled,
   ...others
-}: BoxButtonProps) {
+}: BoxButtonProps) => {
   const theme = useTheme();
 
   // 버튼 색상 분기 처리
@@ -80,7 +84,7 @@ function BoxButton({
       </Typography>
     </MuiButton>
   );
-}
+};
 
 BoxButton.defaultProps = {
   color: 'primary',
