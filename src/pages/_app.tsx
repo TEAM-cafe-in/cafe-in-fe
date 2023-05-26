@@ -1,3 +1,5 @@
+import '~/static/font-styles.css';
+
 import React from 'react';
 
 import type { AppProps } from 'next/app';
@@ -10,6 +12,8 @@ import GlobalStyle from '~/styles/global-styles';
 
 import wrapper from '~/store';
 import queryClient from '~/helpers/QueryClient';
+import { ConfigProvider } from '~/helpers/themeConfig';
+import ThemeCustomization from '~/themes';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(pageProps);
@@ -17,9 +21,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <GlobalStyle />
-        <Component {...props} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ConfigProvider>
+          <ThemeCustomization>
+            <GlobalStyle />
+            <Component {...props} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </ThemeCustomization>
+        </ConfigProvider>
       </QueryClientProvider>
     </Provider>
   );
