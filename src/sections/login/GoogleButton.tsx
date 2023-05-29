@@ -3,7 +3,13 @@ import Image from 'next/image';
 
 import google from './img/google.png';
 
-const GoogleBtn = styled.button`
+interface ButtonProps {
+  // eslint-disable-next-line react/require-default-props
+  onClick?: () => void;
+  // eslint-disable-next-line react/require-default-props
+}
+
+const GoogleBtn = styled.button<ButtonProps>`
   margin-top: 10px;
   width: 300px;
   display: flex;
@@ -19,10 +25,25 @@ const GoogleBtn = styled.button`
     justify-content: left;
   }
 `;
+// const GoogleBtn = styled(GoogleLogin)`
+//  margin-top: 10px;
+//  width: 300px;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  border-radius: 50px;
+//  border: 1px solid black;
+//  cursor: pointer;
+//  /*.google {
+//    width: 30px;
+//    height: 30px;
+//    justify-content: left;
+//  }*/
+// `;
 
-function GoogleButton() {
+function GoogleButton({ ...props }: ButtonProps) {
   return (
-    <GoogleBtn>
+    <GoogleBtn {...props}>
       <Image className="google" src={google} alt="google" />
       구글로 시작하기
     </GoogleBtn>

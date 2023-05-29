@@ -11,6 +11,7 @@ async function getUserData(token: string, role: string) {
           'Content-Type': 'application/json',
           accept: '*/*',
           Authorization: `Bearer ${token}`,
+          withCredentials: true,
         },
       }
     );

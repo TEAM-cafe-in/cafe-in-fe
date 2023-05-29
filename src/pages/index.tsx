@@ -1,10 +1,10 @@
 /* eslint-disable react/button-has-type */
 import { useRouter } from 'next/router';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
+import { useAccessUserSelector } from '~/store/reducers/userSlice';
 
 export default function Home() {
-  const accessToken = useAccessTokenSelector();
-  console.log(accessToken);
+  const user = useAccessUserSelector();
+  console.log(user);
   const router = useRouter();
   const loginClickHandler = (): void => {
     router.push('/login');
