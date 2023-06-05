@@ -20,7 +20,9 @@ interface StyleProps {
 }
 
 // Mateiral ui Button 커스텀
-const MuiButton = styled(Button)(({ padding, borderColor }: StyleProps) => ({
+const MuiButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'padding' && prop !== 'borderColor',
+})(({ padding, borderColor }: StyleProps) => ({
   borderColor,
   padding: padding as string,
   margin: 5,

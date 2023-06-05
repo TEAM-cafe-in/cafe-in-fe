@@ -38,7 +38,7 @@ interface MuiDrawerProps extends DrawerProps {
 }
 
 export const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isSecondProps',
 })(({ theme, open, isSecondProps = false }: MuiDrawerProps) => ({
   width: drawerWidth,
   flexShrink: 0,
