@@ -51,7 +51,7 @@ export const Drawer = styled(MuiDrawer, {
   ...(!isSecondProps &&
     theme && {
       [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
+        width: `calc(${theme.spacing(12)} + 1px)`,
       },
     }),
   ...(isSecondProps &&

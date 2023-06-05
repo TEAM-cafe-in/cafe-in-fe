@@ -5,10 +5,10 @@
 
 import { Box, Button, styled } from '@mui/material';
 
-export const Depth1Box = styled(Box)(() => ({
+export const Depth1Box = styled(Box)(({ theme }) => ({
   position: 'absolute',
   display: 'flex',
-  left: 'calc(95px + 1px)',
+  left: `calc(${theme.spacing(12)} + 1px)`,
   height: '100%',
   zIndex: 1,
 }));

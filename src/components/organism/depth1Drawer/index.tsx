@@ -11,6 +11,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 import { useState } from 'react';
+
 import { Drawer } from '../drawer/drawer.styled';
 import Depth2Drawer from '../depth2Drawer';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
@@ -22,7 +23,7 @@ interface IDepth1Drawer {
 
 const Depth1Drawer = ({ open, setOpen }: IDepth1Drawer) => {
   // depth2 메뉴 오픈 여부
-  const [openDepth2, setOpenDepth2] = useState(true);
+  const [openDepth2, setOpenDepth2] = useState(false);
 
   // depth1 메뉴 열기/닫기 handler 함수
   const handleOpen = () => {
