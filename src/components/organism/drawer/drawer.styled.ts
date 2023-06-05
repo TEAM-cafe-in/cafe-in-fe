@@ -12,7 +12,7 @@ import {
   Button,
 } from '@mui/material';
 
-export const drawerWidth = 240;
+export const drawerWidth = 300;
 
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
