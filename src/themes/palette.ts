@@ -19,6 +19,10 @@ const Palette = (): PaletteOptions => {
       main: '#FF4545',
       dark: '',
     },
+    info: {
+      main: '#1A1A1A',
+      dark: '',
+    },
     grey: {
       50: '#FCFCFC',
       100: '#EFEFEF',
