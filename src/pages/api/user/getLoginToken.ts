@@ -12,9 +12,10 @@ async function getLoginToken(token: string, type: string) {
       {
         headers: {
           'Content-Type': 'application/json',
-          accept: '*/*',
+          // accept: '*/*',
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       }
     );
     return res;

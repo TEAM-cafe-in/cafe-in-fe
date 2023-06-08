@@ -1,10 +1,10 @@
 /* eslint import/no-cycle: [2, { maxDepth: 1 }] */
 
-import { combineReducers, AnyAction } from 'redux';
+import { combineReducers, AnyAction, CombinedState } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import authSlice, { AuthState } from './authSlice';
-import userSlice, { UserState } from './userSlice';
+import authSlice, { AuthState, initialAuthState } from './authSlice';
+import userSlice, { UserState, initialUserState } from './userSlice';
 
 export interface ReducerStates {
   auth: AuthState;
@@ -12,14 +12,21 @@ export interface ReducerStates {
 }
 
 // 쪼개져있는 reducer들을 하나로 합쳐준다.
-const combinedReducer = combineReducers<ReducerStates>({
+export const combinedReducer = combineReducers<ReducerStates>({
   auth: authSlice,
   user: userSlice,
 });
 
+const initialState: CombinedState<ReducerStates> = {
+  auth: initialAuthState,
+  user: initialUserState,
+};
+
 // 서버에서 생성한 스토어의 상태를 HYDRATE라는 액션을 통해서 클라이언트에 합쳐주는 작업
 const reducers = (
-  state: ReturnType<typeof combinedReducer>,
+  // state: ReturnType<typeof combinedReducer>,
+  // eslint-disable-next-line @typescript-eslint/default-param-last
+  state: CombinedState<ReducerStates> = initialState,
   action: AnyAction
 ) => {
   if (action.type === HYDRATE) {

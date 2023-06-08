@@ -1,18 +1,22 @@
 /* eslint-disable react/button-has-type */
-import { useRouter } from 'next/router';
-import { useAccessUserSelector } from '~/store/reducers/userSlice';
+import { useCookies } from 'react-cookie';
+import { store } from '~/store';
 
 export default function Home() {
-  const user = useAccessUserSelector();
-  console.log(user);
-  const router = useRouter();
-  const loginClickHandler = (): void => {
-    router.push('/login');
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie, removeCookie] = useCookies(['refreshToken']);
+
+  // const loginClickHandler = (): void => {
+  //  router.push('/login');
+  // };
+  // const logoutClickHandler = (): void => {
+  //  removeCookie('refreshToken');
+  // };
+  console.log(store.getState().user);
+  console.log(store.getState().auth);
   return (
     <div>
       <h1>cafe in</h1>
-      <button onClick={loginClickHandler}>로그인</button>
     </div>
   );
 }

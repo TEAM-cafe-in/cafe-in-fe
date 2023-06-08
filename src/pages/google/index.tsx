@@ -1,12 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setUserData } from '~/store/reducers/userSlice';
-import { getLoginToken, getUserData } from '../api/user';
+import { useCookies } from 'react-cookie';
+
+import { getLoginToken } from '../api/user';
 
 function GooglePage() {
   const router = useRouter();
-  const dispatch = useDispatch();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie] = useCookies(['refreshToken']);
+
   useEffect(() => {
     const url = new URL(window.location.href);
     // url에서 access_token 값 변수에 저장
@@ -14,25 +17,21 @@ function GooglePage() {
       url.hash.indexOf('=') + 1,
       url.hash.indexOf('&token_type')
     );
+    console.log(accessToken);
 
     if (accessToken) {
       const response = getLoginToken(accessToken, 'GOOGLE');
+
+      // promise 객체값 접근
       response.then((res: any) => {
+        // jwt access token 리덕스에 저장
         accessToken = res.data.accessToken;
-        const userData = getUserData(accessToken, 'USER');
-        window.localStorage.setItem('accessToken', accessToken);
-        console.log(userData);
-        userData.then((user: any) => {
-          dispatch(
-            setUserData({
-              isLogged: true,
-              id: user.data.memberId,
-              nickname: user.data.memberName,
-              profile_image: user.data.profile,
-              email: user.data.email,
-            })
-          );
-        });
+        console.log(accessToken);
+
+        // refresh token은 쿠키로 보관
+        const { refreshToken } = res.data;
+        console.log(refreshToken);
+        setCookie('refreshToken', refreshToken);
         router.push('/');
       });
     }

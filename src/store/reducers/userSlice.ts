@@ -17,7 +17,7 @@ export interface UserState {
   user: User;
 }
 
-const initialState: UserState = {
+export const initialUserState: UserState = {
   user: {
     isLogged: false,
     id: 0,
@@ -30,14 +30,10 @@ const initialState: UserState = {
 // 사용자 정보 Slice
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: initialUserState,
   reducers: {
-    setUserData(state: UserState, { payload }: PayloadAction<User>) {
-      state.user.isLogged = payload.isLogged;
-      state.user.id = payload.id;
-      state.user.nickname = payload.nickname;
-      state.user.profile_image = payload.profile_image;
-      state.user.email = payload.email;
+    setUserData: (state, action: PayloadAction<User>) => {
+      state.user = { ...action.payload };
     },
   },
 });
