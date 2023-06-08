@@ -1,16 +1,16 @@
-import { Typography } from '@mui/material';
-import Button from '@mui/material/Button';
+// Google Maps 페이지
+import { Box } from '@mui/material';
+import ButtonPreview from '~/components/organism/preview/ButtonPreview';
 
-export default function Home() {
+const Home = () => {
   return (
-    <div>
-      <Typography variant="h1">Cafe In</Typography>
-      <Button variant="contained">
-        <Typography variant="h4">Contained</Typography>
-      </Button>
-      <Button variant="outlined">
-        <Typography variant="body1">Outlined</Typography>
-      </Button>
-    </div>
+    <Box>
+      <h1>
+        cafe in
+        <ButtonPreview />
+      </h1>
+    </Box>
   );
-}
+};
+
+export default Home;
