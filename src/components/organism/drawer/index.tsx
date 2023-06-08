@@ -3,8 +3,6 @@
  * @description 사이드 고정 메뉴
  */
 
-import Image from 'next/image';
-
 import {
   List,
   ListItem,
@@ -46,17 +44,13 @@ const MainDrawer = ({
               <ListItemButton
                 selected={selectedItem === v.name}
                 onClick={() => handleSelectedItem(v.name)}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: 'center',
-                  px: 2.5,
-                  textAlign: 'center',
-                }}
               >
-                <ListItemAvatar>
-                  <Image src={v.src} alt="Profile_01" />
+                <ListItemAvatar sx={{ m: '0 auto', minWidth: 'auto' }}>
+                  {v.children}
                   {v.text && (
-                    <Typography variant="subtitle2">{v.text}</Typography>
+                    <Typography variant="subtitle2" textAlign="center">
+                      {v.text}
+                    </Typography>
                   )}
                 </ListItemAvatar>
               </ListItemButton>

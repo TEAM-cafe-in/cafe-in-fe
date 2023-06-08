@@ -47,11 +47,13 @@ export const Drawer = styled(MuiDrawer, {
   '& .MuiPaper-root': {
     left: isSecondProps ? 'auto' : 0,
     backgroundColor: '#fff',
+    borderRight: '0.1px solid rgba(0, 0, 0, 0.12)',
+    width: 'inherit',
   },
   ...(!isSecondProps &&
     theme && {
       [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(12)} + 1px)`,
+        width: `calc(${theme.spacing(8)} + 1px)`,
       },
     }),
   ...(isSecondProps &&
