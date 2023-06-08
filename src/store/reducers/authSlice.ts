@@ -5,7 +5,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState, useAppSelector } from '~/store';
 
-interface Auth {
+export interface Auth {
   access_token: string;
 }
 

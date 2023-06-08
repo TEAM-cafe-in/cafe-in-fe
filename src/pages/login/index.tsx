@@ -1,16 +1,18 @@
+/**
+ * @createdBy 한수민
+ * @description 카카오톡 로그인 기능과 로그인 페이지 구성
+ */
+
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-
-import { useCookies } from 'react-cookie';
 import styled from 'styled-components';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import { useDispatch } from 'react-redux';
 import { setToken } from '~/store/reducers/authSlice';
-import { store } from '~/store';
-import { setUserData } from '~/store/reducers/userSlice';
+import { setCookie } from '~/helpers/Cookie';
 import { GoogleButton, KakaoButton } from '../../sections/login';
-import { getLoginToken, getUserData } from '../api/user';
+import { getLoginToken } from '../api/user';
 import image from './img/cafe-in-logo.png';
 
 const MyArrowBackIosNewIcon = styled(ArrowBackIosNewIcon)`
@@ -33,16 +35,13 @@ function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie] = useCookies(['refreshToken']);
-
   const kakaoLoginHandler = async () => {
     window.Kakao.Auth.login({
       success: async (kakao_data: any) => {
         // 카카오톡 서버로 부터 access token 받기
         let accessToken = kakao_data.access_token;
 
-        // api 통신으로 jwt 토큰 access token 받기
+        // api 통신으로 jwt 토큰 access token, refresh token 받기
         const response = getLoginToken(accessToken, 'KAKAO');
 
         // promise 객체값 접근
@@ -51,31 +50,20 @@ function LoginPage() {
           accessToken = res.data.accessToken;
           dispatch(setToken({ access_token: accessToken }));
 
-          // user data를 받아와서 리덕스에 저장
-          const userData = getUserData(accessToken, 'USER');
-          userData.then((data: any) => {
-            store.dispatch(
-              setUserData({
-                isLogged: true,
-                id: data.memberId,
-                nickname: data.memberName,
-                profile_image: data.profile,
-                email: data.email,
-              })
-            );
+          // refresh 토큰값과 토큰의 만료시간 쿠키에 저장
+          const expire = new Date(res.data.refreshTokenExpireTime).getTime();
+          setCookie('refreshToken', res.data.refreshToken, {
+            maxAge: expire,
+            expire: 0,
           });
-
-          // refresh token은 쿠키로 보관
-          const { refreshToken } = res.data;
-          console.log(refreshToken);
-          setCookie('refreshToken', refreshToken);
-
+          // 로그인이 완료되면 메인으로 라우트
           router.push('/');
         });
       },
     });
   };
 
+  // 구글 로그인하기 위한 url로 이동
   const googleLoginHandler = () => {
     window.location.href =
       'https://accounts.google.com/o/oauth2/v2/auth?' +

@@ -1,7 +1,11 @@
+/**
+ * @createdBy 한수민
+ * @description access 토큰을 header로 전달하면 jwt토큰 반환하는 api 함수
+ */
+
 // eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-var-requires
 import axios from 'axios';
 
-// access 토큰을 header로 전달하면 jwt토큰 반환하는 api 함수
 async function getLoginToken(token: string, type: string) {
   try {
     const res = await axios.post(

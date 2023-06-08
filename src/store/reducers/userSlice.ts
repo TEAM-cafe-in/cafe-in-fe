@@ -5,12 +5,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState, useAppSelector } from '~/store';
 
-interface User {
-  isLogged: boolean;
-  id: number;
-  nickname: string;
-  profile_image: string;
+export interface User {
+  isLoggedIn: boolean;
   email: string;
+  memberId: number;
+  memberName: string;
+  profile: string;
+  role: string;
 }
 
 export interface UserState {
@@ -19,11 +20,12 @@ export interface UserState {
 
 export const initialUserState: UserState = {
   user: {
-    isLogged: false,
-    id: 0,
-    nickname: '',
-    profile_image: '',
+    isLoggedIn: false,
     email: '',
+    memberId: 0,
+    memberName: '',
+    profile: '',
+    role: '',
   },
 };
 
@@ -32,8 +34,15 @@ const userSlice = createSlice({
   name: 'user',
   initialState: initialUserState,
   reducers: {
-    setUserData: (state, action: PayloadAction<User>) => {
-      state.user = { ...action.payload };
+    setUserData: (state: UserState, { payload }: PayloadAction<User>) => {
+      state.user = {
+        isLoggedIn: true,
+        email: payload.email,
+        memberId: payload.memberId,
+        memberName: payload.memberName,
+        profile: payload.profile,
+        role: payload.role,
+      };
     },
   },
 });
