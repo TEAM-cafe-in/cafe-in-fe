@@ -6,7 +6,7 @@ const queryClient = new QueryClient({
     onError: (error, query) => {
       if (query.meta) {
         if (query.meta.errorMessage) {
-          console.log(query.meta.errorMessage);
+          // console.log(query.meta.errorMessage);
         }
       }
     },

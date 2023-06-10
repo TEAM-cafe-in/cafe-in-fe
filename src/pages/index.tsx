@@ -6,9 +6,12 @@ import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+// Google Maps 페이지
+import { Box } from '@mui/material';
+import ButtonPreview from '~/components/organism/preview/ButtonPreview';
 import { getAccessToken, getUserData, getLogout } from './api/user';
 
-export default function Home(props: any) {
+const Home = (props: any) => {
   const { accessToken, userData } = props;
   const user = useAccessUserSelector();
   const token = useAccessTokenSelector();
@@ -53,14 +56,20 @@ export default function Home(props: any) {
     }
   };
   return (
-    <div>
-      <h1>cafe in</h1>
-      {user.isLoggedIn && (
-        <button onClick={logoutClickHandler}>로그아웃</button>
-      )}
-    </div>
+    <Box>
+      <h1>
+        cafe in
+        <ButtonPreview />
+        {user.isLoggedIn && (
+          <button onClick={logoutClickHandler}>로그아웃</button>
+        )}
+      </h1>
+    </Box>
   );
-}
+};
+
+export default Home;
+
 export const getServerSideProps = async (context: any) => {
   const { req } = context;
   // 서버에서 쿠키값 접근하기

@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   margin-top: 150px;
 `;
 
-function LoginPage() {
+const LoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -87,6 +87,5 @@ function LoginPage() {
       </Wrapper>
     </>
   );
-}
-
+};
 export default LoginPage;
