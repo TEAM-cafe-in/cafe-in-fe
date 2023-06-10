@@ -25,28 +25,13 @@ const GoogleBtn = styled.button<ButtonProps>`
     justify-content: left;
   }
 `;
-// const GoogleBtn = styled(GoogleLogin)`
-//  margin-top: 10px;
-//  width: 300px;
-//  display: flex;
-//  justify-content: center;
-//  align-items: center;
-//  border-radius: 50px;
-//  border: 1px solid black;
-//  cursor: pointer;
-//  /*.google {
-//    width: 30px;
-//    height: 30px;
-//    justify-content: left;
-//  }*/
-// `;
 
-function GoogleButton({ ...props }: ButtonProps) {
+const GoogleButton = ({ ...props }: ButtonProps) => {
   return (
     <GoogleBtn {...props}>
       <Image className="google" src={google} alt="google" />
       구글로 시작하기
     </GoogleBtn>
   );
-}
+};
 export default GoogleButton;

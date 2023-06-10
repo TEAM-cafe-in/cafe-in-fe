@@ -27,12 +27,12 @@ const KakaoBtn = styled.button<ButtonProps>`
   }
 `;
 
-function KakaoButton({ ...props }: ButtonProps) {
+const KakaoButton = ({ ...props }: ButtonProps) => {
   return (
     <KakaoBtn {...props}>
       <Image className="kakao" src={kakao} alt="kakao" />
       카카오로 시작하기
     </KakaoBtn>
   );
-}
+};
 export default KakaoButton;

@@ -11,7 +11,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useDispatch } from 'react-redux';
 import { setToken } from '~/store/reducers/authSlice';
 import { setCookie } from '~/helpers/Cookie';
-import { GoogleButton, KakaoButton } from '../../sections/login';
+import { GoogleButton, KakaoButton } from '../../components/atom/buttons';
 import { getLoginToken } from '../api/user';
 import image from './img/cafe-in-logo.png';
 
