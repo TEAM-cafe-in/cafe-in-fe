@@ -1,3 +1,7 @@
+/**
+ * @createBy 김해지
+ * @description 버튼 컴포넌트 미리보기
+ */
 import { Box, Grid, Typography } from '@mui/material';
 import { useCallback } from 'react';
 
