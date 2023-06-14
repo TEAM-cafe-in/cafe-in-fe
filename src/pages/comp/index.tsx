@@ -3,7 +3,9 @@
  * @description 공통 컴포넌트 미리 보기 화면
  */
 import { Box } from '@mui/material';
+
 import ButtonPreview from '~/components/organism/preview/ButtonPreview';
+import ModalPreview from '~/components/organism/preview/ModalPreview';
 import PopupPreview from '~/components/organism/preview/PopupPreview';
 
 const Comp = () => {
@@ -14,6 +16,8 @@ const Comp = () => {
       <ButtonPreview />
       <h4>Popup Component</h4>
       <PopupPreview />
+      <h4>Modal Component</h4>
+      <ModalPreview />
     </Box>
   );
 };

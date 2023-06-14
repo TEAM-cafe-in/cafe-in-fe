@@ -43,6 +43,7 @@ const PopupPreview = () => {
   return (
     <Box>
       <BoxButton title="Open Popup" onClick={openPopup} />
+
       <Popup
         open={open}
         title="제목입니다."
