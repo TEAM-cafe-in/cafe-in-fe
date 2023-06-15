@@ -11,10 +11,10 @@ import { Typography } from '@mui/material';
 
 import { setCookie } from '~/helpers/Cookie';
 import { setToken } from '~/store/reducers/authSlice';
-import SnsButtons from '~/components/molecule/buttons/SnsButtons';
+import SnsButton from '~/components/molecule/buttons/SnsButton';
 import image from './img/cafe-in-logo.png';
 import { getLoginToken } from '../api/user';
-import { MyArrowBackIosNewIcon, Wrapper } from './Login.styled';
+import { MyArrowBackIosNewIcon, Wrapper } from './login.styled';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -69,8 +69,8 @@ const LoginPage = () => {
           핫한 카페, 내 자리가 있을까 궁금할 때?
         </Typography>
         <Image src={image} alt="logo" />
-        <SnsButtons type="kakao" onClick={kakaoLoginHandler} />
-        <SnsButtons type="google" onClick={googleLoginHandler} />
+        <SnsButton type="kakao" onClick={kakaoLoginHandler} />
+        <SnsButton type="google" onClick={googleLoginHandler} />
       </Wrapper>
     </>
   );

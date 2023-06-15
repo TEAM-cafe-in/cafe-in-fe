@@ -7,9 +7,9 @@ import { GoogleButton, KakaoButton } from '~/components/atom/buttons';
 
 interface ButtonProps {
   onClick: () => void;
-  type: string;
+  type: 'kakao' | 'google';
 }
-const SnsButtons = ({ onClick, type }: ButtonProps) => {
+const SnsButton = ({ onClick, type }: ButtonProps) => {
   if (type === 'kakao') {
     return <KakaoButton onClick={onClick} />;
   }
@@ -18,4 +18,4 @@ const SnsButtons = ({ onClick, type }: ButtonProps) => {
   }
   return null;
 };
-export default SnsButtons;
+export default SnsButton;
