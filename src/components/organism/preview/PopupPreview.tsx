@@ -6,7 +6,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 
-import Popup from '~/components/molecule/popup';
+import Popup from '~/components/atom/popup';
 import { BoxButton } from '~/components/atom/buttons';
 import { ActionButton } from '~/types/popup';
 

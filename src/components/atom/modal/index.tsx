@@ -13,7 +13,7 @@ interface ModalProps {
   open: boolean;
   // content 영역
   children: ReactNode;
-  // 팝업 닫기 함수
+  // 모달 닫기 함수
   onClose: () => void;
 }
 

@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react';
 import { Box } from '@mui/material';
 
 import { BoxButton } from '~/components/atom/buttons';
-import Toast from '~/components/molecule/toast';
+import Toast from '~/components/atom/toast';
 
 const ToastPreview = () => {
   const [open, setOpen] = useState(false);

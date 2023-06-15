@@ -7,17 +7,17 @@ import { useCallback, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 import { BoxButton } from '~/components/atom/buttons';
-import Modal from '~/components/molecule/modal';
+import Modal from '~/components/atom/modal';
 
 const ModalPreview = () => {
   const [open, setOpen] = useState(false);
 
-  // 팝업 열기 함수
+  // Modal 열기 함수
   const openPopup = () => {
     setOpen(true);
   };
 
-  // 팝업 닫기 함수
+  // Modal 닫기 함수
   const closePopup = useCallback(() => {
     setOpen(false);
   }, []);
