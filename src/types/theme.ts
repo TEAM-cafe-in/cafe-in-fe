@@ -33,5 +33,5 @@ export type ColorProps = ButtonProps['color'];
 
 export interface ExtendedStyleProps {
   color?: ColorProps;
-  theme: Theme;
+  theme?: Theme;
 }
