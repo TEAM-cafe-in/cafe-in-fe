@@ -5,31 +5,16 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
 import { useDispatch } from 'react-redux';
-import { setToken } from '~/store/reducers/authSlice';
+
+import { Typography } from '@mui/material';
+
 import { setCookie } from '~/helpers/Cookie';
-import { GoogleButton, KakaoButton } from '../../components/atom/buttons';
-import { getLoginToken } from '../api/user';
+import { setToken } from '~/store/reducers/authSlice';
+import SnsButtons from '~/components/molecule/buttons/SnsButtons';
 import image from './img/cafe-in-logo.png';
-
-const MyArrowBackIosNewIcon = styled(ArrowBackIosNewIcon)`
-  margin-left: 20%;
-  margin-top: 15px;
-  @media (max-width: 768px) {
-    margin: 5px;
-  }
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 150px;
-`;
+import { getLoginToken } from '../api/user';
+import { MyArrowBackIosNewIcon, Wrapper } from './Login.styled';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -80,10 +65,12 @@ const LoginPage = () => {
     <>
       <MyArrowBackIosNewIcon onClick={backClickHandler} />
       <Wrapper>
-        <h5>핫한 카페, 내 자리가 있을까 궁금할 때?</h5>
+        <Typography mb="20px">
+          핫한 카페, 내 자리가 있을까 궁금할 때?
+        </Typography>
         <Image src={image} alt="logo" />
-        <KakaoButton onClick={kakaoLoginHandler} />
-        <GoogleButton onClick={googleLoginHandler} />
+        <SnsButtons type="kakao" onClick={kakaoLoginHandler} />
+        <SnsButtons type="google" onClick={googleLoginHandler} />
       </Wrapper>
     </>
   );

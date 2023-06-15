@@ -1,29 +1,33 @@
+/**
+ * @createdBy 한수민
+ * @description 카카오톡 로그인 버튼
+ */
+
 import Image from 'next/image';
 
 import { styled } from 'styled-components';
+import { Typography } from '@mui/material';
 
 import kakao from './img/kakao.png';
 
 interface ButtonProps {
-  // eslint-disable-next-line react/require-default-props
-  onClick?: () => void;
-  // eslint-disable-next-line react/require-default-props
+  onClick: () => void;
 }
 
 const KakaoBtn = styled.button<ButtonProps>`
   margin-top: 100px;
-  width: 300px;
+  width: 350px;
+  padding: 0.2rem;
   background-color: #ffe400;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   border-radius: 20px;
   cursor: pointer;
 
   .kakao {
     width: 30px;
     height: 30px;
-    justify-content: left;
   }
 `;
 
@@ -31,7 +35,7 @@ const KakaoButton = ({ ...props }: ButtonProps) => {
   return (
     <KakaoBtn {...props}>
       <Image className="kakao" src={kakao} alt="kakao" />
-      카카오로 시작하기
+      <Typography ml="10px">카카오로 시작하기</Typography>
     </KakaoBtn>
   );
 };

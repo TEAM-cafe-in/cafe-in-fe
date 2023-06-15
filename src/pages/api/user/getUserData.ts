@@ -3,7 +3,7 @@
  * @description jwt 토큰과 role을 넣어 get 통신을 하면 user 정보를 반환하는 api 함수
  */
 
-async function getUserData(token: string | undefined, role: string) {
+const getUserData = async (token: string | undefined, role: string) => {
   try {
     const url = `http://52.78.196.20:8080/api/member/info?role=${role}`;
 
@@ -22,5 +22,5 @@ async function getUserData(token: string | undefined, role: string) {
   } catch (error) {
     return error;
   }
-}
+};
 export default getUserData;

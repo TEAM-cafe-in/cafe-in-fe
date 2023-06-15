@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-sync-scripts */
+// script eslint 에러 => Synchronous scripts should not be used
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
@@ -28,6 +29,7 @@ MyDocument.getInitialProps = async (ctx) => {
   const originalRenderPage = ctx.renderPage;
 
   try {
+    // cts eslint 에러 => Assignment to property of function parameter 'ctx'
     // eslint-disable-next-line no-param-reassign
     ctx.renderPage = () =>
       originalRenderPage({

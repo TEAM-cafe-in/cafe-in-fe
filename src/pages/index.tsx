@@ -1,13 +1,13 @@
-/* eslint-disable react/button-has-type */
-import Cookies from 'universal-cookie';
-import { setToken, useAccessTokenSelector } from '~/store/reducers/authSlice';
-import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
-
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+
+import { Box, Button } from '@mui/material';
+import Cookies from 'universal-cookie';
+
+import { setToken, useAccessTokenSelector } from '~/store/reducers/authSlice';
+import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
 // Google Maps 페이지
-import { Box } from '@mui/material';
 import ButtonPreview from '~/components/organism/preview/ButtonPreview';
 import { getAccessToken, getUserData, getLogout } from './api/user';
 
@@ -61,7 +61,7 @@ const Home = (props: any) => {
         cafe in
         <ButtonPreview />
         {user.isLoggedIn && (
-          <button onClick={logoutClickHandler}>로그아웃</button>
+          <Button onClick={logoutClickHandler}>로그아웃</Button>
         )}
       </h1>
     </Box>

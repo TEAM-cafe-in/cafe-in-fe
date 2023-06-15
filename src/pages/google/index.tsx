@@ -5,10 +5,10 @@
 
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-
 import { useDispatch } from 'react-redux';
-import { setToken } from '~/store/reducers/authSlice';
+
 import { setCookie } from '~/helpers/Cookie';
+import { setToken } from '~/store/reducers/authSlice';
 import { getLoginToken } from '../api/user';
 
 function GooglePage() {

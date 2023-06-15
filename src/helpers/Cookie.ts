@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-
 /**
  * @createdBy 한수민
  * @description refresh token을 관리하기 위한 쿠키 setting하는 함수

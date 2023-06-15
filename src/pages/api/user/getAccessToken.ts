@@ -3,7 +3,7 @@
  * @description refresh token으로 access token 재발급 받는 api 함수
  */
 
-async function getAccessToken(token: string) {
+const getAccessToken = async (token: string) => {
   try {
     const url = 'http://52.78.196.20:8080/api/access-token/issue';
 
@@ -22,5 +22,5 @@ async function getAccessToken(token: string) {
   } catch (error) {
     return error;
   }
-}
+};
 export default getAccessToken;
