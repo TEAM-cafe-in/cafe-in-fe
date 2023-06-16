@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setCookie } from '~/helpers/Cookie';
+import { setCookie } from '~/helpers/cookie';
 import { setToken } from '~/store/reducers/authSlice';
 import { getLoginToken } from '../api/user';
 

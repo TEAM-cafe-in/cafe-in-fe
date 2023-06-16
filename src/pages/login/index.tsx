@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 import { Typography } from '@mui/material';
 
-import { setCookie } from '~/helpers/Cookie';
+import { setCookie } from '~/helpers/cookie';
 import { setToken } from '~/store/reducers/authSlice';
 import SnsButton from '~/components/molecule/buttons/SnsButton';
 import image from './img/cafe-in-logo.png';

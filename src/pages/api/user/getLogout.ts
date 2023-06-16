@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import { removeCookie } from '~/helpers/Cookie';
+import { removeCookie } from '~/helpers/cookie';
 
 const getLogout = async (token: string) => {
   try {

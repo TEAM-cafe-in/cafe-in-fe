@@ -4,13 +4,13 @@
  */
 
 import { ReactNode, useCallback, useState } from 'react';
+import Image from 'next/image';
 
 import { Box, Toolbar, useMediaQuery } from '@mui/material';
 
 import Logo from '~/static/images/logo.png';
 
 import { DrawerItem } from '~/types/drawer';
-import Image from 'next/image';
 import AppBar from '../organism/appBar';
 import Drawer from '../organism/drawer';
 import Profile from '../atom/profile';
