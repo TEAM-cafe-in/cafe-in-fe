@@ -17,11 +17,15 @@
     "@mui/styled-engine-sc": "^5.12.0",
     "@mui/styles": "^5.13.1",
     "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-query-devtools": "^4.29.7",
     "@tanstack/react-query": "^4.29.7",
     "@types/node": "20.1.7",
     "@types/react": "18.2.6",
+    "@types/react-cookies": "^0.1.0",
     "@types/react-dom": "18.2.4",
     "@types/styled-components": "^5.1.26",
+    "axios": "^1.4.0",
+    "cross-env": "^7.0.3",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "husky": "^8.0.3",
@@ -34,7 +38,8 @@
     "redux": "^4.2.1",
     "styled-components": "^6.0.0-rc.1",
     "styled-reset": "^4.4.7",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.29.7",

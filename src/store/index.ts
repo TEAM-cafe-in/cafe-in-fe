@@ -29,7 +29,6 @@ export type AppDispatch = AppStore['dispatch'];
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-// next-redux-wrapper 라이브러리를 통ㅎ해 SSR에서 Redux Store에 접근할 수 있음
+// next-redux-wrapper 라이브러리를 통해 SSR에서 Redux Store에 접근할 수 있음
 const wrapper = createWrapper(makeStore);
-
 export default wrapper;
