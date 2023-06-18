@@ -1,4 +1,8 @@
-import { useState } from 'react';
+/**
+ * @createBy 김해지
+ * @description [모바일] 메인 하단 카페 목록용 Bottom Sheet
+ */
+import { useCallback, useState } from 'react';
 
 import { SwipeableDrawer } from '@mui/material';
 import { Global } from '@emotion/react';
@@ -14,9 +18,15 @@ const BottomSheet = () => {
   const container =
     window !== undefined ? () => window.document.body : undefined;
 
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
+  // Bottom Modal Open 함수
+  const handleOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  // Bottom Modal Close 함수
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
 
   return (
     <>
@@ -32,8 +42,8 @@ const BottomSheet = () => {
         container={container}
         anchor="bottom"
         open={open}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
+        onOpen={handleOpen}
+        onClose={handleClose}
         swipeAreaWidth={DRAWER_BLEEDING}
         disableSwipeToOpen={false}
         ModalProps={{ keepMounted: true }}

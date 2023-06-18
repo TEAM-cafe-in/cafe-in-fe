@@ -56,6 +56,8 @@
       {
         "devDependencies": true
       }
-    ]
+    ],
+    // 파일에서 export가 하나인 경우 export default 가 아닌 export 하나만 정의해서 사용가능
+    "import/prefer-default-export": 0
   }
 }
