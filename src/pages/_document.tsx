@@ -13,6 +13,11 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           <script src="https://developers.kakao.com/sdk/js/kakao.js" />
+          <script defer src="/components/molecule/googleMap/index.tsx" />
+          <script
+            async
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}&callback=initMap`}
+          />
         </Head>
         <body>
           <Main />
