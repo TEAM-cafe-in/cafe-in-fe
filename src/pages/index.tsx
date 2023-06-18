@@ -56,6 +56,7 @@ const Home = (props: any) => {
       alert('로그아웃 실패하였습니다');
     }
   };
+
   return (
     <Box>
       <h1>

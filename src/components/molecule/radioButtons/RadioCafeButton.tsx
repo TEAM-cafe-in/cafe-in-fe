@@ -1,3 +1,8 @@
+/**
+ * @createBy 한수민
+ * @description 카페이름과 상태 표시  (status : full, empty, average, unknown)
+ */
+
 import { Typography } from '@mui/material';
 import Radio from '~/components/atom/radio';
 import { Wrapper } from './radioButton.styled';
