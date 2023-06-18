@@ -10,8 +10,6 @@ import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
 // Google Maps 페이지
 
 import ButtonPreview from '~/components/organism/preview/ButtonPreview';
-import GoogleMap from '~/components/molecule/googleMap';
-import { RadioButton } from '~/components/atom/radioButton';
 import { getAccessToken, getUserData, getLogout } from './api/user';
 
 const Home = (props: any) => {
@@ -66,11 +64,6 @@ const Home = (props: any) => {
         {user.isLoggedIn && (
           <Button onClick={logoutClickHandler}>로그아웃</Button>
         )}
-        {/* <GoogleMap /> */}
-        <RadioButton text="스타벅스" status="full" />
-        <RadioButton text="스타벅스" status="average" />
-        <RadioButton text="스타벅스" status="empty" />
-        <RadioButton text="스타벅스" status="unknown" />
       </h1>
     </Box>
   );
