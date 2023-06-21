@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import Cookies from 'universal-cookie';
 
 import { setToken, useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
 // Google Maps 페이지
 
-import ButtonPreview from '~/components/organism/preview/ButtonPreview';
+import { BoxButton } from '~/components/atom/buttons';
+import GoogleMapComponent from '~/components/organism/googleMap';
 import { getAccessToken, getUserData, getLogout } from './api/user';
 
 const Home = (props: any) => {
@@ -59,13 +60,15 @@ const Home = (props: any) => {
 
   return (
     <Box>
-      <h1>
-        cafe in
-        <ButtonPreview />
-        {user.isLoggedIn && (
-          <Button onClick={logoutClickHandler}>로그아웃</Button>
-        )}
-      </h1>
+      {user.isLoggedIn && (
+        <BoxButton
+          title="로그아웃"
+          color="primary"
+          padding="md"
+          onClick={logoutClickHandler}
+        />
+      )}
+      <GoogleMapComponent />
     </Box>
   );
 };
@@ -79,6 +82,7 @@ export const getServerSideProps = async (context: any) => {
   const refreshToken = cookies.get('refreshToken');
   // 쿠키에 있는 refresh 토큰값으로 access 토큰 재발급
   const res = await getAccessToken(refreshToken);
+  console.log(res);
   // access 토큰으로 사용자 정보 받아오기
   const user = await getUserData(res.accessToken, 'USER');
 
