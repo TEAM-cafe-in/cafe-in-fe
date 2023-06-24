@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 
 import { Box } from '@mui/material';
 import Cookies from 'universal-cookie';
@@ -9,16 +8,14 @@ import { setToken, useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
 // Google Maps 페이지
 
-import { BoxButton } from '~/components/atom/buttons';
 import GoogleMapComponent from '~/components/organism/googleMap';
-import { getAccessToken, getUserData, getLogout } from './api/user';
+import { getAccessToken, getUserData } from './api/user';
 
 const Home = (props: any) => {
   const { accessToken, userData } = props;
   const user = useAccessUserSelector();
   const token = useAccessTokenSelector();
   const dispatch = useDispatch();
-  const router = useRouter();
 
   useEffect(() => {
     dispatch(setToken({ access_token: accessToken }));
@@ -38,36 +35,36 @@ const Home = (props: any) => {
   console.log(token);
 
   // 로그아웃 클릭 핸들러
-  const logoutClickHandler = async (): Promise<void> => {
-    dispatch(
-      setUserData({
-        isLoggedIn: false,
-        email: '',
-        memberId: 0,
-        memberName: '',
-        profile: '',
-        role: '',
-      })
-    );
-    const logout = await getLogout(token);
-    if (logout) {
-      alert('로그아웃되었습니다');
-      router.push('/login');
-    } else {
-      alert('로그아웃 실패하였습니다');
-    }
-  };
+  // const logoutClickHandler = async (): Promise<void> => {
+  //  dispatch(
+  //    setUserData({
+  //      isLoggedIn: false,
+  //      email: '',
+  //      memberId: 0,
+  //      memberName: '',
+  //      profile: '',
+  //      role: '',
+  //    })
+  //  );
+  //  const logout = await getLogout(token);
+  //  if (logout) {
+  //    alert('로그아웃되었습니다');
+  //    router.push('/login');
+  //  } else {
+  //    alert('로그아웃 실패하였습니다');
+  //  }
+  // };
 
   return (
     <Box>
-      {user.isLoggedIn && (
+      {/* {user.isLoggedIn && (
         <BoxButton
           title="로그아웃"
           color="primary"
           padding="md"
           onClick={logoutClickHandler}
         />
-      )}
+      )} */}
       <GoogleMapComponent />
     </Box>
   );
