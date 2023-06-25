@@ -1,14 +1,17 @@
 import { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import { useDispatch } from 'react-redux';
 
 import LocationButtonGroup from '~/components/molecule/buttons/LocationButtonGroup';
+import { setCafeId } from '~/store/reducers/cafeIdSlice';
 import { encodeSVG } from './encodeSVG';
 import { tagSvgRaw } from './tagSvgRaw';
 
 const GoogleMapComponent = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     // Google 맵 초기화 함수 정의
-    function initMap(): void {
+    function initMap() {
       const map = new window.google.maps.Map(
         document.getElementById('map') as HTMLElement,
         {
@@ -34,72 +37,84 @@ const GoogleMapComponent = () => {
       // 1 , 2, 3 (여유, 보통, 혼잡)
       const locations = [
         {
+          cafeId: '1',
           place: '카페 홍대입구역',
           lat: 37.557361,
           lng: 126.924633,
           averageCongestion: '1',
         },
         {
+          cafeId: '2',
           place: '파스쿠찌 홍대입구역점',
           lat: 37.556289,
           lng: 126.924329,
           averageCongestion: '2',
         },
         {
+          cafeId: '3',
           place: '도우터 홍대입구역점',
           lat: 37.557136,
           lng: 126.92386,
           averageCongestion: '3',
         },
         {
+          cafeId: '4',
           place: '스타벅스 홍대입구역점',
           lat: 37.55805,
           lng: 126.92472,
           averageCongestion: '0',
         },
         {
+          cafeId: '5',
           place: '성수점 카페',
           lat: 37.544665,
           lng: 127.057641,
           averageCongestion: '1',
         },
         {
+          cafeId: '6',
           place: '파스쿠찌 성수점',
           lat: 37.545335,
           lng: 127.056747,
           averageCongestion: '2',
         },
         {
+          cafeId: '7',
           place: '도우터 성수점',
           lat: 37.544321,
           lng: 127.055678,
           averageCongestion: '3',
         },
         {
+          cafeId: '8',
           place: '스타벅스 성수점',
           lat: 37.544189,
           lng: 127.057641,
           averageCongestion: '0',
         },
         {
+          cafeId: '9',
           place: '연남점 카페',
           lat: 37.564151,
           lng: 126.926535,
           averageCongestion: '1',
         },
         {
+          cafeId: '10',
           place: '파스쿠찌 연남점',
           lat: 37.565302,
           lng: 126.924933,
           averageCongestion: '2',
         },
         {
+          cafeId: '11',
           place: '도우터 연남점',
           lat: 37.563478,
           lng: 126.926123,
           averageCongestion: '3',
         },
         {
+          cafeId: '12',
           place: '스타벅스 연남점',
           lat: 37.563928,
           lng: 126.925057,
@@ -127,6 +142,14 @@ const GoogleMapComponent = () => {
             scaledSize: new window.google.maps.Size(181, 65),
           },
         });
+
+        // 마커 클릭했을 때
+        function handleMarkerClick() {
+          console.log('클릭한 마커의 cafeId:', data.cafeId);
+          // 마커 클릭하면 카페 id를 리덕스 저장
+          dispatch(setCafeId({ cafe_id: data.cafeId }));
+        }
+        marker.addListener('click', handleMarkerClick);
       });
 
       // 홍대 버튼 클릭했을 때
@@ -151,13 +174,12 @@ const GoogleMapComponent = () => {
       const customControlsDiv = document.createElement('div');
       customControlsDiv.classList.add('custom-map-controls');
 
-      ReactDOM.render(
+      createRoot(customControlsDiv).render(
         <LocationButtonGroup
           hongdaeFunc={handleHongdaeButtonClick}
           seongsuFunc={handleSeongsuButtonClick}
           yeonnamFunc={handleYeonnamButtonClick}
-        />,
-        customControlsDiv
+        />
       );
 
       map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(

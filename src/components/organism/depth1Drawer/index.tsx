@@ -12,6 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { useState } from 'react';
 
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import { Drawer } from '../drawer/drawer.styled';
 import Depth2Drawer from '../depth2Drawer';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
@@ -22,6 +23,9 @@ interface IDepth1Drawer {
 }
 
 const Depth1Drawer = ({ open, setOpen }: IDepth1Drawer) => {
+  // 클릭한 카페 아이디
+  const cafeId = useCafeIdSelector();
+  console.log('drawer', cafeId);
   // depth2 메뉴 오픈 여부
   const [openDepth2, setOpenDepth2] = useState(false);
 
