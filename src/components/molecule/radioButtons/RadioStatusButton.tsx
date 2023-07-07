@@ -16,22 +16,22 @@ const RadioStatusButton = ({ status }: Props) => {
     <Wrapper>
       <Radio status={status} />
       {status === '1' && (
-        <Typography ml="4px" color="#1eda00">
+        <Typography variant="caption" ml="1px" color="#1eda00">
           여유
         </Typography>
       )}
       {status === '3' && (
-        <Typography ml="4px" color="#ff4545">
+        <Typography variant="caption" ml="1px" color="#ff4545">
           혼잡
         </Typography>
       )}
       {status === '2' && (
-        <Typography ml="4px" color="#ffa011">
+        <Typography variant="caption" ml="1px" color="#ffa011">
           보통
         </Typography>
       )}
       {status === '0' && (
-        <Typography ml="4px" color="#949494">
+        <Typography variant="caption" ml="1px" color="#949494">
           실시간 혼잡도 알아보기
         </Typography>
       )}
