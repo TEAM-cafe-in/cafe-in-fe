@@ -17,8 +17,6 @@
     "paths": {
       "~/*": ["./src/*"]
     }
-
-    //"typeRoots": ["gobal.d.ts"]
   },
   "include": [
     "global.d.ts",

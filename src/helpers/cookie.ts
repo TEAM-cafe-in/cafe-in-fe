@@ -3,7 +3,7 @@
  * @description refresh token을 관리하기 위한 쿠키 setting하는 함수
  */
 
-import Cookies from 'universal-cookie';
+import Cookies, { CookieSetOptions } from 'universal-cookie';
 
 const cookies = new Cookies();
 
@@ -14,7 +14,11 @@ const COMMON_OPTIONS = {
 };
 
 // 쿠키 저장하는 함수
-export const setCookie = (name: string, value: any, options: any) => {
+export const setCookie = (
+  name: string,
+  value: string,
+  options: CookieSetOptions
+) => {
   return cookies.set(name, value, { ...COMMON_OPTIONS, ...options });
 };
 

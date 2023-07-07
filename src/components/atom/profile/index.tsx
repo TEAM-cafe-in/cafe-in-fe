@@ -16,11 +16,7 @@ interface MiniProfileProps extends BoxProps {
 const Profile = ({ src, size, ...props }: MiniProfileProps) => {
   return (
     <Background size={size} {...props}>
-      <ProfileImage
-        src={src || DefaultProfile}
-        alt="프로필 이미지"
-        size={size}
-      />
+      <ProfileImage src={src || DefaultProfile} alt="프로필 이미지" />
     </Background>
   );
 };

@@ -2,6 +2,7 @@
  * @createdBy 김해지
  * @description 사이드 고정 메뉴
  */
+import { useCallback, useState } from 'react';
 
 import {
   List,
@@ -11,21 +12,22 @@ import {
   Typography,
 } from '@mui/material';
 
-import { DrawerItem } from '~/types/drawer';
-import { useCallback, useState } from 'react';
+import { DrawerItem, DrawerName } from '~/types/drawer';
 import { Drawer } from './drawer.styled';
 import Depth1Drawer from '../depth1Drawer';
 
 interface MainDrawerProps {
   data: DrawerItem[];
-  selectedItem: string;
-  handleSelectedItem: (name: string) => void;
+  // 상위 선택된 메뉴 (카페목록/마이페이지)
+  selectedMenu: DrawerName;
+  // 상위 선택된 메뉴 변경 함수
+  handleSelectedMenu: (name: DrawerName) => void;
 }
 
 const MainDrawer = ({
   data,
-  selectedItem,
-  handleSelectedItem,
+  selectedMenu,
+  handleSelectedMenu,
 }: MainDrawerProps) => {
   // depth1 메뉴 오픈 여부
   const [openDepth1, setOpenDepth1] = useState(true);
@@ -42,8 +44,8 @@ const MainDrawer = ({
           {data.map((v) => (
             <ListItem key={v.name} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
-                selected={selectedItem === v.name}
-                onClick={() => handleSelectedItem(v.name)}
+                selected={selectedMenu === v.name}
+                onClick={() => handleSelectedMenu(v.name)}
               >
                 <ListItemAvatar sx={{ m: '0 auto', minWidth: 'auto' }}>
                   {v.children}
@@ -59,7 +61,11 @@ const MainDrawer = ({
         </List>
       </Drawer>
 
-      <Depth1Drawer open={openDepth1} setOpen={handleOpenDepth1} />
+      <Depth1Drawer
+        selectedMenu={selectedMenu}
+        open={openDepth1}
+        setOpen={handleOpenDepth1}
+      />
     </>
   );
 };
