@@ -4,11 +4,11 @@
  */
 import { Box } from '@mui/material';
 
-import ButtonPreview from '~/components/organism/preview/ButtonPreview';
-import ModalPreview from '~/components/organism/preview/ModalPreview';
-import PopupPreview from '~/components/organism/preview/PopupPreview';
-import RadioButtonPreview from '~/components/organism/preview/RadioButtonPreview';
-import ToastPreview from '~/components/organism/preview/ToastPreview';
+import ButtonPreview from '~/components/pages/preview/ButtonPreview';
+import ModalPreview from '~/components/pages/preview/ModalPreview';
+import PopupPreview from '~/components/pages/preview/PopupPreview';
+import RadioButtonPreview from '~/components/pages/preview/RadioButtonPreview';
+import ToastPreview from '~/components/pages/preview/ToastPreview';
 
 const Comp = () => {
   return (

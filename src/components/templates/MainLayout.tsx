@@ -12,9 +12,9 @@ import Logo from '~/static/images/logo.png';
 
 import { DrawerItem, DrawerName } from '~/types/drawer';
 import AppBar from '~/components/organism/appBar';
-import Drawer from '~/components/organism/drawer';
+import Drawer from '~/components/pages/drawer';
 import Profile from '~/components/atom/profile';
-import BottomSheet from '~/components/organism/bottomSheet';
+import BottomSheet from '~/components/pages/bottomSheet';
 
 interface MainLayoutProps {
   children: ReactNode;

@@ -12,12 +12,12 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 import { DrawerName } from '~/types/drawer';
-import MyPage from '~/components/pages/mypage';
-import Depth2Drawer from '~/components/organism/depth2Drawer';
+import MyPage from '~/components/organism/mypage';
 import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
-import { Drawer } from '~/components/organism/drawer/drawer.styled';
+import Depth2Drawer from '~/components/pages/depth2Drawer';
+import { Drawer } from '~/components/pages/drawer/drawer.styled';
+import CafeInfoList from '~/components/organism/cafeInfoList';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
-import CafeInfoList from '../cafeInfoList';
 
 interface IDepth1Drawer {
   // 상위 선택된 메뉴 (카페목록/마이페이지)
