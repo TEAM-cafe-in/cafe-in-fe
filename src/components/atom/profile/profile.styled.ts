@@ -9,6 +9,12 @@ const SIZE: { [key: string]: number } = {
   lg: 78,
 };
 
+const radius: { [key: string]: number } = {
+  sm: 20,
+  md: 20,
+  lg: 35,
+};
+
 interface StyleProps {
   size: string;
 }
@@ -20,16 +26,15 @@ export const Background = styled(Box, {
   backgroundColor: '#DADADA',
   width: SIZE[size],
   height: SIZE[size],
-  borderRadius: 20,
+  borderRadius: radius[size],
   overflow: 'hidden',
+  textAlign: 'center',
 }));
 
-export const ProfileImage = styled(Image, {
-  shouldForwardProp: (prop) => prop !== 'size',
-})(({ size }: StyleProps) => ({
-  position: 'absolute',
-  width: SIZE[size] - 10,
-  height: SIZE[size],
+export const ProfileImage = styled(Image)(() => ({
   color: 'transparent',
-  left: 5,
+  transform: 'translate(0%, 0%)',
+  width: 'inherit',
+  height: 'inherit',
+  objectFit: 'contain',
 }));

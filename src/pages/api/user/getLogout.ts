@@ -4,9 +4,9 @@
  */
 
 import axios from 'axios';
-import { removeCookie } from '~/helpers/Cookie';
+import { removeCookie } from '~/helpers/cookie';
 
-export const getLogout = async (token: string) => {
+const getLogout = async (token: string) => {
   try {
     await axios.post('http://52.78.196.20:8080/api/logout', null, {
       headers: {
@@ -22,3 +22,5 @@ export const getLogout = async (token: string) => {
     return false;
   }
 };
+
+export default getLogout;

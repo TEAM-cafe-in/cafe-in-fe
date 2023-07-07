@@ -11,20 +11,24 @@ import {
 } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { DrawerName } from '~/types/drawer';
+import MyPage from '~/components/pages/mypage';
+import Depth2Drawer from '~/components/organism/depth2Drawer';
 import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
-import { Drawer } from '../drawer/drawer.styled';
-import Depth2Drawer from '../depth2Drawer';
+import { Drawer } from '~/components/organism/drawer/drawer.styled';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
 import CafeInfoList from '../cafeInfoList';
 
 interface IDepth1Drawer {
+  // 상위 선택된 메뉴 (카페목록/마이페이지)
+  selectedMenu: DrawerName;
   open: boolean;
   setOpen: () => void;
 }
 
-const Depth1Drawer = ({ open, setOpen }: IDepth1Drawer) => {
-  // 클릭한 카페 아이디
+const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
   const cafeId = useCafeIdSelector();
+
   // depth2 메뉴 오픈 여부
   const [openDepth2, setOpenDepth2] = useState(false);
   const [depth2DataId, setDepth2DataId] = useState('');
@@ -49,12 +53,13 @@ const Depth1Drawer = ({ open, setOpen }: IDepth1Drawer) => {
   return (
     <Depth1Box>
       <Drawer variant="permanent" isSecondProps open={open}>
-        <Box>
+        {selectedMenu === 'logo' && (
           <CafeInfoList
             setOpenDepth2={setOpenDepth2}
             setDepth2DataId={setDepth2DataId}
           />
-        </Box>
+        )}
+        {selectedMenu === 'mypage' && <MyPage />}
       </Drawer>
 
       <Depth2Drawer open={openDepth2} dataId={depth2DataId} />

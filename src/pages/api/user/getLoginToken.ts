@@ -4,10 +4,11 @@
  */
 
 import axios from 'axios';
+import { LoginResponse } from '~/types/auth';
 
 const getLoginToken = async (token: string, type: string) => {
   try {
-    const res = await axios.post(
+    const res: LoginResponse = await axios.post(
       'http://52.78.196.20:8080/api/oauth/login',
       {
         memberType: `${type}`,
@@ -21,9 +22,9 @@ const getLoginToken = async (token: string, type: string) => {
         withCredentials: true,
       }
     );
-    return res;
+    return { ...res, success: true };
   } catch (error) {
-    return error;
+    return { success: false };
   }
 };
 export default getLoginToken;
