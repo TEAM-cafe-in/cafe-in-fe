@@ -10,11 +10,11 @@ import { Box, Toolbar, useMediaQuery } from '@mui/material';
 
 import Logo from '~/static/images/logo.png';
 
-import { DrawerItem } from '~/types/drawer';
-import AppBar from '../organism/appBar';
-import Drawer from '../organism/drawer';
-import Profile from '../atom/profile';
-import BottomSheet from '../organism/bottomSheet';
+import { DrawerItem, DrawerName } from '~/types/drawer';
+import AppBar from '~/components/organism/appBar';
+import Drawer from '~/components/organism/drawer';
+import Profile from '~/components/atom/profile';
+import BottomSheet from '~/components/organism/bottomSheet';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -39,11 +39,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 선택중인 메뉴
-  const [selectedItem, setSelectedItem] = useState('logo');
+  const [selectedMenu, setSelectedMenu] = useState<DrawerName>('logo');
 
   // 메뉴 변경 함수
-  const handleSelectedItem = useCallback((name: string) => {
-    setSelectedItem(name);
+  const handleSelectedMenu = useCallback((name: DrawerName) => {
+    setSelectedMenu(name);
   }, []);
 
   return (
@@ -55,8 +55,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       {!isMobile && (
         <Drawer
           data={drawerItems}
-          selectedItem={selectedItem}
-          handleSelectedItem={handleSelectedItem}
+          selectedMenu={selectedMenu}
+          handleSelectedMenu={handleSelectedMenu}
         />
       )}
 

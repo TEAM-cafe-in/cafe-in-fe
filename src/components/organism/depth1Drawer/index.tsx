@@ -2,6 +2,7 @@
  * @createdBy 김해지
  * @description 메인 레이아웃 사이드 메뉴 Depth1
  */
+import { useState } from 'react';
 
 import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import {
@@ -10,18 +11,20 @@ import {
 } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useState } from 'react';
-
-import { Drawer } from '../drawer/drawer.styled';
-import Depth2Drawer from '../depth2Drawer';
+import { DrawerName } from '~/types/drawer';
+import MyPage from '~/components/pages/mypage';
+import Depth2Drawer from '~/components/organism/depth2Drawer';
+import { Drawer } from '~/components/organism/drawer/drawer.styled';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
 
 interface IDepth1Drawer {
+  // 상위 선택된 메뉴 (카페목록/마이페이지)
+  selectedMenu: DrawerName;
   open: boolean;
   setOpen: () => void;
 }
 
-const Depth1Drawer = ({ open, setOpen }: IDepth1Drawer) => {
+const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
   // depth2 메뉴 오픈 여부
   const [openDepth2, setOpenDepth2] = useState(false);
 
@@ -39,15 +42,18 @@ const Depth1Drawer = ({ open, setOpen }: IDepth1Drawer) => {
   return (
     <Depth1Box>
       <Drawer variant="permanent" isSecondProps open={open}>
-        <Box>
-          <List>
-            <ListItem>
-              <ListItemButton onClick={() => setOpenDepth2(true)}>
-                depth2
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Box>
+        {selectedMenu === 'logo' && (
+          <Box>
+            <List>
+              <ListItem>
+                <ListItemButton onClick={() => setOpenDepth2(true)}>
+                  depth2
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+        )}
+        {selectedMenu === 'mypage' && <MyPage />}
       </Drawer>
 
       <Depth2Drawer open={openDepth2} />
