@@ -6,8 +6,11 @@ import { useCallback, useState } from 'react';
 
 import { SwipeableDrawer } from '@mui/material';
 import { Global } from '@emotion/react';
+import {
+  EMPTY_TOOL_BAR_HEIGHT,
+  TOOL_BAR_HEIGHT,
+} from '~/components/organism/appBar';
 import { DRAWER_BLEEDING, Puller, StyledBox } from './bottomSheet.styled';
-import { EMPTY_TOOL_BAR_HEIGHT, TOOL_BAR_HEIGHT } from '../appBar';
 
 // Bottom Sheet FUll 높이 값 : DRAWER Puller 높이 + Toolbar 높이 + 빈 Toolbar 높이 + 여유 높이
 const BOTTOM_SHEET_FULL_HEIGHT =
