@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import ButtonPreview from '~/components/organism/preview/ButtonPreview';
 import ModalPreview from '~/components/organism/preview/ModalPreview';
 import PopupPreview from '~/components/organism/preview/PopupPreview';
+import RadioButtonPreview from '~/components/organism/preview/RadioButtonPreview';
 import ToastPreview from '~/components/organism/preview/ToastPreview';
 
 const Comp = () => {
@@ -21,6 +22,8 @@ const Comp = () => {
       <ModalPreview />
       <h4>Toast Message Component</h4>
       <ToastPreview />
+      <h4>Radio Button Component</h4>
+      <RadioButtonPreview />
     </Box>
   );
 };

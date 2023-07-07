@@ -3,22 +3,22 @@
  * @description 메인 레이아웃 사이드 메뉴 Depth2
  */
 
-import { Box, List, ListItem, ListItemText } from '@mui/material';
+import { Box, List } from '@mui/material';
 
+import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
   open: boolean;
+  dataId: string;
 }
 
-const Depth2Drawer = ({ open }: Depth2DrawerProps) => {
+const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
   return (
     <Drawer variant="permanent" isSecondProps open={open}>
       <Box>
         <List>
-          <ListItem>
-            <ListItemText>sss</ListItemText>
-          </ListItem>
+          <CafeDetailInfo cafeId={dataId} />
         </List>
       </Box>
     </Drawer>

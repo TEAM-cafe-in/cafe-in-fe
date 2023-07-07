@@ -9,8 +9,9 @@
 export {};
 
 declare global {
-  // window 안에 Kakao라는 객체가 있다고 미리 알려주는 것
   interface Window {
-    Kakao: any;
+    Kakao: any; // window 객체에 kakao 속성을 추가
+    google: any; // window 객체에 google 속성을 추가
+    initMap: () => void;
   }
 }

@@ -12,7 +12,7 @@ import { Typography } from '@mui/material';
 import { setCookie } from '~/helpers/cookie';
 import { setToken } from '~/store/reducers/authSlice';
 import SnsButton from '~/components/molecule/buttons/SnsButton';
-import image from './img/cafe-in-logo.png';
+import image from '../../static/images/cafe-in-logo.png';
 import { getLoginToken } from '../api/user';
 import { MyArrowBackIosNewIcon, Wrapper } from './login.styled';
 

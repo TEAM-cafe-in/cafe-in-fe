@@ -2,9 +2,9 @@
  * @createdBy 김해지
  * @description 메인 레이아웃 사이드 메뉴 Depth1
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { Box, List, ListItem, ListItemButton } from '@mui/material';
+import { Box } from '@mui/material';
 import {
   ArrowLeft as ArrowLeftIcon,
   ArrowRight as ArrowRightIcon,
@@ -14,8 +14,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import { DrawerName } from '~/types/drawer';
 import MyPage from '~/components/pages/mypage';
 import Depth2Drawer from '~/components/organism/depth2Drawer';
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import { Drawer } from '~/components/organism/drawer/drawer.styled';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
+import CafeInfoList from '../cafeInfoList';
 
 interface IDepth1Drawer {
   // 상위 선택된 메뉴 (카페목록/마이페이지)
@@ -25,8 +27,18 @@ interface IDepth1Drawer {
 }
 
 const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
+  const cafeId = useCafeIdSelector();
+
   // depth2 메뉴 오픈 여부
   const [openDepth2, setOpenDepth2] = useState(false);
+  const [depth2DataId, setDepth2DataId] = useState('');
+
+  useEffect(() => {
+    if (cafeId !== '0') {
+      setOpenDepth2(true);
+      setDepth2DataId(cafeId);
+    }
+  }, [cafeId]);
 
   // depth1 메뉴 열기/닫기 handler 함수
   const handleOpen = () => {
@@ -34,7 +46,6 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
     if (open) {
       setOpenDepth2(false);
     }
-
     // open 이 true인 경우 fasle로, fals인 경우 true로 변경
     setOpen();
   };
@@ -43,20 +54,15 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
     <Depth1Box>
       <Drawer variant="permanent" isSecondProps open={open}>
         {selectedMenu === 'logo' && (
-          <Box>
-            <List>
-              <ListItem>
-                <ListItemButton onClick={() => setOpenDepth2(true)}>
-                  depth2
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Box>
+          <CafeInfoList
+            setOpenDepth2={setOpenDepth2}
+            setDepth2DataId={setDepth2DataId}
+          />
         )}
         {selectedMenu === 'mypage' && <MyPage />}
       </Drawer>
 
-      <Depth2Drawer open={openDepth2} />
+      <Depth2Drawer open={openDepth2} dataId={depth2DataId} />
 
       <Box display="flex" flexDirection="column">
         {/* Depth2 활성화된 경우 Close 버튼 표시 */}
