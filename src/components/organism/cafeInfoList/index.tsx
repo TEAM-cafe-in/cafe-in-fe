@@ -1,4 +1,10 @@
+/**
+ * @createBy 한수민
+ * @description 카페 정보 리스트
+ */
+
 import { List, Typography, useTheme } from '@mui/material';
+
 import { CafeData } from '~/db/data';
 import CafeInfo from './CafeInfo';
 

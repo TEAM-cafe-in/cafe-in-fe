@@ -5,17 +5,17 @@
 
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import HelpIcon from '@mui/icons-material/Help';
+
+import { RadioProps, Status, options } from '~/types/radio';
 import { Wrapper } from './radio.styled';
 
-interface Props {
-  status: '1' | '2' | '3' | '0';
-}
-
-const Radio = ({ status }: Props) => {
+const Radio = ({ status }: RadioProps) => {
   return (
-    <Wrapper status={status}>
-      {status !== '0' && <RadioButtonCheckedIcon className="mui-icon" />}
-      {status === '0' && <HelpIcon className="mui-icon" />}
+    <Wrapper statusColor={options[status]?.color}>
+      {status !== Status.unknown && (
+        <RadioButtonCheckedIcon className="mui-icon" />
+      )}
+      {status === Status.unknown && <HelpIcon className="mui-icon" />}
     </Wrapper>
   );
 };
