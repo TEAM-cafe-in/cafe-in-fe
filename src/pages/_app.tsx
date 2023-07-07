@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
 import { Provider } from 'react-redux';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import GlobalStyle from '~/styles/global-styles';
@@ -36,15 +36,17 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ConfigProvider>
-          <ThemeCustomization>
-            <GlobalStyle />
-            <DynamicLayout>
-              <Component {...props} />
-            </DynamicLayout>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </ThemeCustomization>
-        </ConfigProvider>
+        <Hydrate state={pageProps.dehydratedProps}>
+          <ConfigProvider>
+            <ThemeCustomization>
+              <GlobalStyle />
+              <DynamicLayout>
+                <Component {...props} />
+              </DynamicLayout>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </ThemeCustomization>
+          </ConfigProvider>
+        </Hydrate>
       </QueryClientProvider>
     </Provider>
   );
