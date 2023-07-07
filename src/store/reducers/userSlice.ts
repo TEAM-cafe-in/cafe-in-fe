@@ -4,15 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState, useAppSelector } from '~/store';
-
-export interface User {
-  isLoggedIn: boolean;
-  email: string;
-  memberId: number;
-  memberName: string;
-  profile: string;
-  role: string;
-}
+import { User } from '~/types/user';
 
 export interface UserState {
   user: User;

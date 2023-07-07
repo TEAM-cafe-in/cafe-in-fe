@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * @createdBy 한수민
  * @description 전역 개체의 프로퍼티 타입 정의

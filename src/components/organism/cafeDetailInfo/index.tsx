@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { ListItem, Typography, Box, useTheme } from '@mui/material';
 
 import { WriteButton } from '~/components/atom/buttons';
@@ -28,10 +30,11 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
     <ListItem>
       <CafeDetailContainer>
         <CafeContentContainer grayColor={grayColor}>
-          <img
+          <Image
             src="https://cdn.pixabay.com/photo/2016/11/29/12/54/cafe-1869656_1280.jpg"
-            width="270px"
-            height="100px"
+            alt="marker"
+            width={270}
+            height={100}
           />
           <CafeTitle>
             <Box>
