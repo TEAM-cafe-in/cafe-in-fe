@@ -6,6 +6,7 @@ export interface CafeInfoGrayProps {
   grayColor: string;
 }
 export const CafeDetailContainer = styled(Box)`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -25,17 +26,6 @@ export const CafeTitle = styled(Box)`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-`;
-
-export const CafeStatusSearch = styled(Box)<CafeInfoGrayProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 15px 0px;
-  border: 1px solid ${(props) => props.grayColor};
-  width: 100%;
-  padding: 10px 0px;
-  cursor: pointer;
 `;
 
 // CafePlaceInfo 컴포넌트 styled component
@@ -87,7 +77,8 @@ export const CommentBox = styled(Box)<CafeInfoGrayProps>`
   margin-bottom: 15px;
   .arrow {
     padding: 0.6rem;
-    border-radius: 10px;
+    border-radius: 6px;
     background-color: ${(props) => props.grayColor};
+    width: 100%;
   }
 `;
