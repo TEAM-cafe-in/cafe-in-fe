@@ -19,8 +19,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       // staleTime을 변경하여 리엑트 쿼리에개 캐시된 데이터를 얼마나 자주 최신화 시켜줘야 하는지 알려줄 수 있다.(중복 호출 방지)
-      // 쿼리 마다 다르게 시간을 지정 가능
-      staleTime: 1000 * 20,
+      // 5분으로 설정
+      staleTime: 1000 * 300,
       retry: 0,
       // API가 실패하면 설정한 값만큼 재시도 하는 옵션
       suspense: true,

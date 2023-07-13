@@ -6,9 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { List, Typography, useTheme } from '@mui/material';
 
-import { CafeData } from '~/db/data';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-
 import { CafesInfo } from '~/types/cafeInfo';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
 import CafeInfo from './CafeInfo';
@@ -25,21 +23,18 @@ const CafeInfoList = ({
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
 
-  const datas = CafeData;
   const token = useAccessTokenSelector();
-  console.log('카페 데이터에서', token);
 
+  // 캐시해둔 카페 정보가져오기
   const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));
-  // const data = getAllCafeInfo(token);
-  console.log(data);
 
   return (
     <List>
       <Typography ml="30px" color={grayColor}>
-        총 {datas.cafeCount}
+        총 {data?.cafeCount}
       </Typography>
 
-      {datas?.cafes?.map((cafe: CafesInfo) => (
+      {data?.cafes?.map((cafe: CafesInfo) => (
         <CafeInfo
           key={cafe.cafeId}
           onClick={() => {
