@@ -3,7 +3,7 @@
  * @description string을 SVG 이미지를 나타내는 데이터 URI로 인코딩하여 반환
  */
 
-export function encodeSVG(rawSvgString: string): string {
+export const encodeSVG = (rawSvgString: string): string => {
   // eslint-disable-next-line no-useless-escape
   const symbols = /[\r\n%#()<>?\[\\\]^`{|}]/g;
 
@@ -18,4 +18,4 @@ export function encodeSVG(rawSvgString: string): string {
     symbols,
     encodeURIComponent
   )}`;
-}
+};

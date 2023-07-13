@@ -6,6 +6,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
 
 import { Typography } from '@mui/material';
 
@@ -21,7 +22,7 @@ const LoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const kakaoLoginHandler = async () => {
+  const kakaoLoginHandler = useCallback(async () => {
     window.Kakao.Auth.login({
       success: async (kakao_data: KakaoResponse) => {
         // 카카오톡 서버로 부터 access token 받기
@@ -36,31 +37,30 @@ const LoginPage = () => {
         dispatch(setToken({ access_token: accessToken }));
 
         // refresh 토큰값과 토큰의 만료시간 쿠키에 저장
-        const expire = new Date(
-          res.data?.refreshTokenExpireTime || ''
-        ).getTime();
-        setCookie('refreshToken', res.data?.refreshToken, {
-          maxAge: expire,
-          expire: 0,
+        const expires = new Date(res.data?.refreshTokenExpireTime || '');
+        setCookie('refreshToken', res.data?.refreshToken || '', {
+          maxAge: expires.getTime(),
+          expires,
         });
         // 로그인이 완료되면 메인으로 라우트
         router.push('/');
       },
     });
-  };
+  }, [dispatch, router]);
 
   // 구글 로그인하기 위한 url로 이동
-  const googleLoginHandler = () => {
+  const googleLoginHandler = useCallback(() => {
     window.location.href =
       'https://accounts.google.com/o/oauth2/v2/auth?' +
       `client_id=${process.env.NEXT_PUBLIC_GOOGLE_KEY}&` +
       `redirect_uri=http://localhost:3000/google&` +
       'response_type=token&' +
       'scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
-  };
-  const backClickHandler = () => {
+  }, []);
+
+  const backClickHandler = useCallback(() => {
     router.push('/');
-  };
+  }, [router]);
 
   return (
     <>

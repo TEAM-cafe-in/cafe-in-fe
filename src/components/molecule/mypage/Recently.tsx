@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useCallback } from 'react';
 
 import {
   Divider,
@@ -19,7 +19,7 @@ interface RecentlyProps {
 const Recently = ({ items }: RecentlyProps) => {
   const theme = useTheme();
 
-  const handleClick = () => {};
+  const handleClick = useCallback(() => {}, []);
 
   return (
     <List sx={{ pt: 0 }}>

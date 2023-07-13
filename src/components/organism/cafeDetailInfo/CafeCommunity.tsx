@@ -1,4 +1,5 @@
 import { Typography, useTheme } from '@mui/material';
+
 import CafeCommunityComment from './CafeCommunityComment';
 import {
   CafeCommunityContainer,
@@ -8,6 +9,7 @@ import {
 const CafeCommunity = () => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
+
   return (
     <>
       <CafeCommunityContainer grayColor={grayColor}>
