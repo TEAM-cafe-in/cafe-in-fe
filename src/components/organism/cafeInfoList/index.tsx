@@ -2,13 +2,13 @@
  * @createBy 한수민
  * @description 카페 정보 리스트
  */
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 import { List, Typography, useTheme } from '@mui/material';
 
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
+// import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { CafesInfo } from '~/types/cafeInfo';
-import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
+// import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
 import { CafeData } from '~/db/data';
 import CafeInfo from './CafeInfo';
 
@@ -24,7 +24,7 @@ const CafeInfoList = ({
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
 
-  const token = useAccessTokenSelector();
+  // const token = useAccessTokenSelector();
 
   // 캐시해둔 카페 정보가져오기
   // const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));

@@ -14,9 +14,9 @@ import getAllCafeInfo from './api/home/getAllCafeInfo';
 // import getAllCafeInfo from './api/home/getAllCafeInfo';
 
 const Home = () => {
-  // const token = useAccessTokenSelector();
-  // const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));
-  // console.log(data);
+  const token = useAccessTokenSelector();
+  const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));
+  console.log(data);
   return (
     <Box>
       <GoogleMapComponent />
