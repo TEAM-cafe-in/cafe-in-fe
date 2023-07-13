@@ -1,8 +1,13 @@
+/**
+ * @createBy 한수민
+ * @description 카페 디테일 컴포넌트
+ */
+
 import { ListItem, Typography, Box, useTheme } from '@mui/material';
 
 import { WriteButton } from '~/components/atom/buttons';
-import Radio from '~/components/atom/radio';
 import { CafeData } from '~/db/data';
+import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
 import CafePlaceInfo from './CafePlaceInfo';
 import CafeCommunity from './CafeCommunity';
 import {
@@ -10,7 +15,6 @@ import {
   CafeDetailContainer,
   CafeStatusTypography,
   CafeTitle,
-  CafeStatusSearch,
 } from './cafeDetailInfo.styled';
 
 interface DetailProps {
@@ -20,7 +24,6 @@ interface DetailProps {
 const CafeDetailInfo = ({ cafeId }: DetailProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
-  const borderColor = theme.palette.grey[200];
   const data1 = CafeData.cafes.filter((cafe) => cafe.cafeId === cafeId);
   const data = data1[0];
 
@@ -28,12 +31,6 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
     <ListItem>
       <CafeDetailContainer>
         <CafeContentContainer grayColor={grayColor}>
-          <img
-            src="https://cdn.pixabay.com/photo/2016/11/29/12/54/cafe-1869656_1280.jpg"
-            alt="marker"
-            width={270}
-            height={100}
-          />
           <CafeTitle>
             <Box>
               <Typography variant="h3" mr="4px" mt="7px">
@@ -49,12 +46,7 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
             </Box>
             <WriteButton onClick={() => {}} />
           </CafeTitle>
-          <CafeStatusSearch grayColor={borderColor}>
-            <Radio status="0" />
-            <Typography variant="caption" ml="1px">
-              실시간 혼잡도 알아보기
-            </Typography>
-          </CafeStatusSearch>
+          <RadioStatusBoxButton status={data?.averageCongestion} />
         </CafeContentContainer>
         <CafePlaceInfo
           address={data?.address}

@@ -1,6 +1,6 @@
 import { ListItem, ListItemButton, Typography } from '@mui/material';
 
-import RadioStatusButton from '~/components/molecule/radioButtons/RadioStatusButton';
+import { RadioStatusButton } from '~/components/molecule/radioButtons';
 import { CafesInfo } from '~/types/cafeInfo';
 import { CafeBox, CafeInfoTitle, CafeStatus } from './cafeInfo.styled';
 
