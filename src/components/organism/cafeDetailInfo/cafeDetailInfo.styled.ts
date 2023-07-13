@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // index.tsx 파일 styled component
 export interface CafeInfoGrayProps {
-  grayColor: string;
+  color: string;
 }
 export const CafeDetailContainer = styled(Box)`
   width: 100%;
@@ -12,14 +12,14 @@ export const CafeDetailContainer = styled(Box)`
 `;
 
 export const CafeContentContainer = styled(Box)<CafeInfoGrayProps>`
-  border-bottom: 4px solid ${(props) => props.grayColor};
+  border-bottom: 4px solid ${(props) => props.color};
 `;
 
 export const CafeStatusTypography = styled(Typography)<CafeInfoGrayProps>`
   display: inline-block;
   padding: 2px 4px;
   border-radius: 4px;
-  background-color: ${(props) => props.grayColor};
+  background-color: ${(props) => props.color};
 `;
 
 export const CafeTitle = styled(Box)`
@@ -30,13 +30,13 @@ export const CafeTitle = styled(Box)`
 
 // CafePlaceInfo 컴포넌트 styled component
 interface CafeColorProps {
-  grayColor: string;
-  iconColor: string;
+  color: string;
+  icon: string;
 }
 
 export const CafePlaceContainer = styled(Box)<CafeColorProps>`
   width: 100%;
-  border-bottom: 4px solid ${(props) => props.grayColor};
+  border-bottom: 4px solid ${(props) => props.color};
   display: flex;
   flex-direction: column;
   float: left;
@@ -45,7 +45,7 @@ export const CafePlaceContainer = styled(Box)<CafeColorProps>`
     align-items: center;
     margin-bottom: 6px;
     svg {
-      color: ${(props) => props.iconColor};
+      color: ${(props) => props.icon};
       transform: scale(0.8);
       margin-right: 5px;
     }
@@ -62,7 +62,7 @@ export const CafePlaceContainer = styled(Box)<CafeColorProps>`
 
 // CafeCommunity 컴포넌트 styled component
 export const CafeCommunityContainer = styled(Box)<CafeInfoGrayProps>`
-  border-bottom: 1px solid ${(prop) => prop.grayColor};
+  border-bottom: 1px solid ${(prop) => prop.color};
 `;
 export const CafeCommunityTypography = styled(Typography)`
   text-decoration: underline;
@@ -78,7 +78,7 @@ export const CommentBox = styled(Box)<CafeInfoGrayProps>`
   .arrow {
     padding: 0.6rem;
     border-radius: 6px;
-    background-color: ${(props) => props.grayColor};
+    background-color: ${(props) => props.color};
     width: 100%;
   }
 `;

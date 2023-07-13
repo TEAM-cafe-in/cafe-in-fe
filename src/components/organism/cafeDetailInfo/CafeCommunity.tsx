@@ -12,7 +12,7 @@ const CafeCommunity = () => {
 
   return (
     <>
-      <CafeCommunityContainer grayColor={grayColor}>
+      <CafeCommunityContainer color={grayColor}>
         <Typography variant="h4" mt="20px" mb="15px">
           커뮤니티
         </Typography>

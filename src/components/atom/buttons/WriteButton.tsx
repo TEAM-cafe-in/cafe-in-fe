@@ -11,11 +11,11 @@ interface WriteProp {
   onClick: () => void;
 }
 interface WriteButtonProps {
-  backgroundColor: string;
+  backgroundcolor: string;
 }
 
 const StyledWriteButton = styled(Button)<WriteButtonProps>`
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   border-radius: 60px;
   padding: 0px 0px;
   transform: scale(0.75);
@@ -37,7 +37,7 @@ const WriteButton = ({ onClick }: WriteProp) => {
       variant="contained"
       color="primary"
       onClick={onClick}
-      backgroundColor={backgroundColor}
+      backgroundcolor={backgroundColor}
     >
       <WriteBox>
         <DriveFileRenameOutlineIcon />
