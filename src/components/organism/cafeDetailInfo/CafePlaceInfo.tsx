@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CallIcon from '@mui/icons-material/Call';
+
 import { CafePlaceContainer } from './cafeDetailInfo.styled';
 
 interface CafePlaceInfoProps {
@@ -13,6 +14,7 @@ const CafePlaceInfo = ({ address, phoneNumber }: CafePlaceInfoProps) => {
   const grayColor = theme.palette.grey[100];
   const iconColor = theme.palette.grey[300];
   const infoColor = theme.palette.grey[400];
+
   return (
     <CafePlaceContainer color={grayColor} icon={iconColor}>
       <Typography variant="h4" mt="20px" mb="15px">

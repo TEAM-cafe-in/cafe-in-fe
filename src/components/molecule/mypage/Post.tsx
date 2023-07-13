@@ -1,4 +1,7 @@
+import { Fragment, useCallback } from 'react';
+
 import {
+  Box,
   Divider,
   List,
   ListItem,
@@ -7,22 +10,39 @@ import {
   Typography,
 } from '@mui/material';
 
-const Post = () => {
-  const handleClick = () => {};
+import { Review } from '~/types/mypage';
+import LabelItems from '../label/LabelItems';
+import RadioStatusButton from '../radioButtons/RadioStatusButton';
+
+interface PostProps {
+  items: Review[];
+}
+
+const Post = ({ items }: PostProps) => {
+  const handleClick = useCallback(() => {}, []);
 
   return (
     <List sx={{ pt: 0 }}>
-      <ListItem sx={{ p: 0 }}>
-        <ListItemButton sx={{ p: 2 }} onClick={handleClick}>
-          <ListItemText>
-            <Typography variant="h5">카페레이어드</Typography>
-            <Typography variant="subtitle2">
-              서울 마포구 성미산로 161-4
-            </Typography>
-          </ListItemText>
-        </ListItemButton>
-      </ListItem>
-      <Divider />
+      {items.map((v) => (
+        <Fragment key={v.address}>
+          <ListItem sx={{ p: 0 }}>
+            <ListItemButton sx={{ p: 2 }} onClick={handleClick}>
+              <ListItemText>
+                <Typography variant="h5">{v.cafeName}</Typography>
+
+                <Typography variant="subtitle2">{v.address}</Typography>
+              </ListItemText>
+
+              <Box my={2}>
+                <RadioStatusButton status={v.cafeCongestion} />
+
+                <LabelItems hasPlug={v.hasPlug} isClean={v.inClean} />
+              </Box>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+        </Fragment>
+      ))}
     </List>
   );
 };

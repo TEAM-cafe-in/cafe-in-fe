@@ -60,7 +60,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         />
       )}
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: 'gray' }}>
+      <Box component="main" sx={{ flexGrow: 1, backgroundColor: 'gray' }}>
         {/* Mobile 용 AppBar 영역만큼 차지해줌 */}
         {isMobile && <Toolbar />}
 

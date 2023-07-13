@@ -1,3 +1,5 @@
+import { Fragment, useCallback } from 'react';
+
 import {
   Divider,
   List,
@@ -8,27 +10,36 @@ import {
   useTheme,
 } from '@mui/material';
 
-const Recently = () => {
+import { CafeInfoView } from '~/types/mypage';
+
+interface RecentlyProps {
+  items: CafeInfoView[];
+}
+
+const Recently = ({ items }: RecentlyProps) => {
   const theme = useTheme();
 
-  const handleClick = () => {};
+  const handleClick = useCallback(() => {}, []);
 
   return (
     <List sx={{ pt: 0 }}>
-      <ListItem sx={{ p: 0 }}>
-        <ListItemButton sx={{ p: 2 }} onClick={handleClick}>
-          <ListItemText>
-            <Typography variant="h5">카페레이어드</Typography>
-            <Typography variant="subtitle2">
-              서울 마포구 성미산로 161-4
-            </Typography>
-            <Typography variant="subtitle2" color={theme.palette.grey[500]}>
-              후기 999+
-            </Typography>
-          </ListItemText>
-        </ListItemButton>
-      </ListItem>
-      <Divider />
+      {items.map((v) => (
+        <Fragment key={v.cafeName}>
+          <ListItem sx={{ p: 0 }}>
+            <ListItemButton sx={{ p: 2 }} onClick={handleClick}>
+              <ListItemText>
+                <Typography variant="h5">{v.cafeName}</Typography>
+                <Typography variant="subtitle2">{v.address}</Typography>
+                <Typography variant="subtitle2" color={theme.palette.grey[500]}>
+                  후기 {v.commentReviewCount}
+                  {Number(v.commentReviewCount) > 999 && '+'}
+                </Typography>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+        </Fragment>
+      ))}
     </List>
   );
 };

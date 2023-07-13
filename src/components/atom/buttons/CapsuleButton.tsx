@@ -10,7 +10,7 @@ import {
   ButtonProps,
   Typography,
 } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Variant, Size } from '~/types/button';
 
@@ -62,12 +62,15 @@ const CapsuleButton = ({
 
   const [isActive, setIsActive] = useState(false);
 
-  // 버튼 Down 색상
-  const activeColor = theme.palette.grey[900];
-
-  // 버튼 Up 색상
-  const inactiveColor = theme.palette.grey[100];
-  const inactiveTextColor = theme.palette.grey[400];
+  const colors = useMemo(() => {
+    return {
+      // 버튼 Down 색상
+      active: theme.palette.grey[900],
+      // 버튼 Up 색상
+      inactive: theme.palette.grey[100],
+      inactiveText: theme.palette.grey[400],
+    };
+  }, [theme.palette.grey]);
 
   const handleMounseDown = useCallback(() => {
     setIsActive(true);
@@ -81,7 +84,7 @@ const CapsuleButton = ({
     <MuiButton
       theme={theme}
       variant={variant}
-      borderColor={isActive ? activeColor : inactiveColor}
+      borderColor={isActive ? colors.active : colors.inactive}
       padding={PADDING[padding as Size]}
       disabled={disabled}
       onMouseDown={handleMounseDown}
@@ -91,7 +94,7 @@ const CapsuleButton = ({
     >
       <Typography
         variant="h5"
-        color={isActive ? activeColor : inactiveTextColor}
+        color={isActive ? colors.active : colors.inactiveText}
       >
         {title}
       </Typography>

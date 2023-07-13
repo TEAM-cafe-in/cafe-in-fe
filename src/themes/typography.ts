@@ -52,6 +52,7 @@ const Typography = (
     fontWeight: 600,
     fontSize: '16px',
     color: mode === 'light' ? palette.grey?.[900] : palette.grey?.[50],
+    lineHeight: 1.5,
   },
   // Body1
   body1: {
@@ -78,6 +79,7 @@ const Typography = (
     fontSize: '12px',
     fontWeight: 500,
     color: mode === 'light' ? palette.grey?.[900] : palette.grey?.[50],
+    lineHeight: 1.5,
   },
   // Body5
   caption: {
