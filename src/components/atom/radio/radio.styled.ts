@@ -8,6 +8,7 @@ export const Wrapper = styled.div<WrapperProps>`
   .mui-icon {
     width: 17px;
     height: 17px;
+    margin: 0 4px 0 0;
     /* status가 혼잡인 경우 */
     ${(props) =>
       props.status === '3' &&
