@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useCallback } from 'react';
 
 import {
   Box,
@@ -19,7 +19,7 @@ interface PostProps {
 }
 
 const Post = ({ items }: PostProps) => {
-  const handleClick = () => {};
+  const handleClick = useCallback(() => {}, []);
 
   return (
     <List sx={{ pt: 0 }}>

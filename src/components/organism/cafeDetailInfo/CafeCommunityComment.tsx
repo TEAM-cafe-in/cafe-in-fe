@@ -6,6 +6,7 @@ import { CommentBox } from './cafeDetailInfo.styled';
 const CafeCommunityComment = () => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
+
   return (
     <CommentBox grayColor={grayColor}>
       <Profile size="sm" />
