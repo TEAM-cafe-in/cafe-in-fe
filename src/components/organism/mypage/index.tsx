@@ -3,6 +3,7 @@
  * @description 마이페이지
  */
 
+import { Suspense } from 'react';
 import Image from 'next/image';
 
 import { Box, Divider, IconButton, Typography, useTheme } from '@mui/material';
@@ -34,7 +35,9 @@ const MyPage = () => {
       <Divider sx={{ borderWidth: 3, borderColor: theme.palette.grey[100] }} />
 
       {/* 마이페이지 탭 영역 */}
-      <TabContainer />
+      <Suspense fallback={<div>loading...</div>}>
+        <TabContainer />
+      </Suspense>
     </Box>
   );
 };
