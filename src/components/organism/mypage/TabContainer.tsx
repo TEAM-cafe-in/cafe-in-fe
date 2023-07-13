@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /**
  * @createdBy 김해지
  * @description 마이페이지 탭 영역
@@ -6,13 +7,23 @@
 import { SyntheticEvent, useCallback, useMemo, useState } from 'react';
 
 import { Box, Divider, Tab, Tabs, useTheme } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
-import { MyPageTab, TMyPageTabKey } from '~/types/mypage';
+import { MyPageResponse, MyPageTab, TMyPageTabKey } from '~/types/mypage';
 import Recently from '~/components/molecule/mypage/Recently';
 import Post from '~/components/molecule/mypage/Post';
+import getMemberMyPage from '~/pages/api/member/getMemberMyPage';
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 
 const TabContainer = () => {
   const theme = useTheme();
+  const token = useAccessTokenSelector();
+  const { data } = useQuery(['mypage'], () => getMemberMyPage(token), {
+    suspense: true,
+  });
+
+  const { cafeInfoViewedByMemberDTOS, reviewCount, reviewDTOS } =
+    data as MyPageResponse;
 
   // recently, post
   const [tabKey, setTabKey] = useState<TMyPageTabKey>('recently');
@@ -36,9 +47,9 @@ const TabContainer = () => {
   const tabList = useMemo<MyPageTab[]>(() => {
     return [
       { label: '최근 본 매장', value: 'recently' },
-      { label: '작성한 게시물', value: 'post' },
+      { label: `작성한 게시물 ${reviewCount}`, value: 'post' },
     ];
-  }, []);
+  }, [reviewCount]);
 
   const onChangeTabKey = useCallback(
     (e: SyntheticEvent, newTabKey: TMyPageTabKey) => {
@@ -65,8 +76,10 @@ const TabContainer = () => {
 
       {/* Tab Content */}
       <Box sx={{ p: 0 }}>
-        {tabKey === 'recently' && <Recently />}
-        {tabKey === 'post' && <Post />}
+        {tabKey === 'recently' && (
+          <Recently items={cafeInfoViewedByMemberDTOS} />
+        )}
+        {tabKey === 'post' && <Post items={reviewDTOS} />}
       </Box>
     </Box>
   );
