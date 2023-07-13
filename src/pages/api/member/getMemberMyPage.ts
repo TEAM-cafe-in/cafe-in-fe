@@ -22,7 +22,7 @@ const getMemberMyPage = async (token: string) => {
     const data: MyPageResponse = await response.json();
     return data;
   } catch (error) {
-    return error;
+    return new Error('예상치 못한 오류가 발생했습니다. 다시 시도해주세요.');
   }
 };
 

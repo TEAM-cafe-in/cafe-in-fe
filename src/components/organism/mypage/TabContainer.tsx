@@ -18,12 +18,23 @@ import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 const TabContainer = () => {
   const theme = useTheme();
   const token = useAccessTokenSelector();
-  const { data } = useQuery(['mypage'], () => getMemberMyPage(token), {
-    suspense: true,
-  });
+  const { data, isError, error } = useQuery(
+    ['mypage'],
+    () => getMemberMyPage(token),
+    {
+      suspense: true,
+    }
+  );
 
-  const { cafeInfoViewedByMemberDTOS, reviewCount, reviewDTOS } =
-    data as MyPageResponse;
+  if (isError) {
+    return <div>{Object(error).message}</div>;
+  }
+
+  const {
+    cafeInfoViewedByMemberDTOS = [],
+    reviewCount = 0,
+    reviewDTOS = [],
+  } = data as MyPageResponse;
 
   // recently, post
   const [tabKey, setTabKey] = useState<TMyPageTabKey>('recently');
