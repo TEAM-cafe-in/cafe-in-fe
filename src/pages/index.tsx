@@ -1,22 +1,28 @@
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { GetServerSidePropsContext } from 'next';
-
-import { Box } from '@mui/material';
 import Cookies from 'universal-cookie';
 
-import { setToken, useAccessTokenSelector } from '~/store/reducers/authSlice';
-import { setUserData, useAccessUserSelector } from '~/store/reducers/userSlice';
+import { Box } from '@mui/material';
+
+import { setToken } from '~/store/reducers/authSlice';
+import { useAccessUserSelector } from '~/store/reducers/userSlice';
 // Google Maps 페이지
 
-import GoogleMapComponent from '~/components/organism/googleMap';
 import wrapper from '~/store';
+import GoogleMapComponent from '~/components/organism/googleMap';
+import { getAccessToken } from './api/user';
+import getAllCafeInfo from './api/home/getAllCafeInfo';
 
-import { getAccessToken, getUserData } from './api/user';
+// import getAllCafeInfo from './api/home/getAllCafeInfo';
 
 const Home = () => {
-  const token = useAccessTokenSelector();
-  console.log('리덕스 엑세스 토큰', token);
+  // const token = useAccessTokenSelector();
+  // const { data } = useQuery(['allCafeInfo', token], () =>
+  //  getAllCafeInfo(token)
+  // );
+
   const user = useAccessUserSelector();
-  console.log('리덕스 사용자 정보', user);
+  console.log('userData', user);
 
   return (
     <Box>
@@ -36,27 +42,38 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const refreshToken = cookies.get('refreshToken');
 
     // 쿠키에 있는 refresh 토큰값으로 access 토큰 재발급
-    const res = await getAccessToken(refreshToken);
-    const { accessToken } = res;
+    const queryClient = new QueryClient();
 
-    // access 토큰으로 사용자 정보 받아오기
-    const user = await getUserData(res.accessToken, 'USER');
+    const accessTokenResponse = await queryClient.fetchQuery(
+      ['accessToken'],
+      () => getAccessToken(refreshToken)
+    );
 
-    // store.dispatch를 사용하여 액션을 호출(토큰과 사용자 정보 저장)
+    const { accessToken } = accessTokenResponse;
+
+    // store.dispatch를 사용하여 액션을 호출(토큰 정보 저장)
     store.dispatch(setToken({ access_token: accessToken }));
-    store.dispatch(
-      setUserData({
-        isLoggedIn: true,
-        email: user.email,
-        memberId: user.memberId,
-        memberName: user.memberName,
-        profile: user.profile,
-        role: user.role,
-      })
+
+    await queryClient.prefetchQuery(['allCafeIn'], () =>
+      getAllCafeInfo(accessToken)
     );
 
     return {
-      props: {},
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     };
   }
 );
+// store.dispatch를 사용하여 액션을 호출(토큰과 사용자 정보 저장)
+// store.dispatch(setToken({ access_token: accessToken }));
+// store.dispatch(
+//  setUserData({
+//    isLoggedIn: true,
+//    email: user.email,
+//    memberId: user.memberId,
+//    memberName: user.memberName,
+//    profile: user.profile,
+//    role: user.role,
+//  })
+// );
