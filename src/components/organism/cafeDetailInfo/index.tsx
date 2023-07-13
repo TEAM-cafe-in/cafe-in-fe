@@ -30,7 +30,7 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
   return (
     <ListItem>
       <CafeDetailContainer>
-        <CafeContentContainer grayColor={grayColor}>
+        <CafeContentContainer color={grayColor}>
           <CafeTitle>
             <Box>
               <Typography variant="h3" mr="4px" mt="7px">
@@ -39,7 +39,7 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
               <CafeStatusTypography
                 variant="subtitle2"
                 mt="5px"
-                grayColor={grayColor}
+                color={grayColor}
               >
                 {data?.status}
               </CafeStatusTypography>

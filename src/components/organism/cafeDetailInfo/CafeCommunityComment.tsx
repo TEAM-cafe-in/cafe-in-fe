@@ -7,7 +7,7 @@ const CafeCommunityComment = () => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
   return (
-    <CommentBox grayColor={grayColor}>
+    <CommentBox color={grayColor}>
       <Profile size="sm" />
       <Typography ml="10px" className="arrow" variant="body2">
         엄청 맛이 있어요~~

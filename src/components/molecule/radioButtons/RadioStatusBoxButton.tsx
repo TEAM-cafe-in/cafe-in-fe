@@ -13,9 +13,9 @@ const RadioStatusBoxButton = ({ status }: RadioProps) => {
   const isBorder = status === '0';
   return (
     <CafeStatusSearch
-      borderColor={options[status]?.color}
-      backgroundColor={options[status]?.color2}
-      isBorder={isBorder}
+      bordercolor={options[status]?.color}
+      background={options[status]?.color2}
+      isborder={isBorder.toString()}
     >
       <Radio status={status} />
       <Typography variant="subtitle1" ml="2px" color={options[status]?.color}>

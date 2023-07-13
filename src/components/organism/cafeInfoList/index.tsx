@@ -9,6 +9,7 @@ import { List, Typography, useTheme } from '@mui/material';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { CafesInfo } from '~/types/cafeInfo';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
+import { CafeData } from '~/db/data';
 import CafeInfo from './CafeInfo';
 
 interface CafeInfoListProps {
@@ -26,8 +27,10 @@ const CafeInfoList = ({
   const token = useAccessTokenSelector();
 
   // 캐시해둔 카페 정보가져오기
-  const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));
+  // const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));
 
+  // console.log(data);
+  const data = CafeData;
   return (
     <List>
       <Typography ml="30px" color={grayColor}>

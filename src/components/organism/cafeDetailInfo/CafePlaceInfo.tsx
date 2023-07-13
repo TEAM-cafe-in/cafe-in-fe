@@ -14,7 +14,7 @@ const CafePlaceInfo = ({ address, phoneNumber }: CafePlaceInfoProps) => {
   const iconColor = theme.palette.grey[300];
   const infoColor = theme.palette.grey[400];
   return (
-    <CafePlaceContainer grayColor={grayColor} iconColor={iconColor}>
+    <CafePlaceContainer color={grayColor} icon={iconColor}>
       <Typography variant="h4" mt="20px" mb="15px">
         매장 정보
       </Typography>

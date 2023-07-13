@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import styled, { css } from 'styled-components';
 
 interface RadioBorderProps {
-  borderColor: string;
-  backgroundColor: string;
-  isBorder: boolean;
+  bordercolor: string;
+  background: string;
+  isborder: string;
 }
 export const Wrapper = styled.div`
   display: flex;
@@ -18,15 +18,15 @@ export const CafeStatusSearch = styled(Box)<RadioBorderProps>`
   justify-content: center;
   align-items: center;
   margin: 15px 0px;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.background};
   width: 100%;
   padding: 20px 0px;
   cursor: pointer;
 
   ${(props) =>
-    props.isBorder &&
+    props.isborder === 'true' &&
     css`
-      border: 1px solid ${props.borderColor};
+      border: 1px solid ${props.bordercolor};
       flex-direction: column;
       padding: 10px 0px;
     `}

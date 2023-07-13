@@ -11,7 +11,7 @@ import { Wrapper } from './radio.styled';
 
 const Radio = ({ status }: RadioProps) => {
   return (
-    <Wrapper statusColor={options[status]?.color}>
+    <Wrapper color={options[status]?.color}>
       {status !== Status.unknown && (
         <RadioButtonCheckedIcon className="mui-icon" />
       )}
