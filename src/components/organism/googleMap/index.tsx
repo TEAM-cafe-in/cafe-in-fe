@@ -70,34 +70,12 @@ const GoogleMapComponent = () => {
         marker.addListener('click', handleMarkerClick);
       });
 
-      // 홍대 버튼 클릭했을 때
-      const handleHongdaeButtonClick = () => {
-        map.setCenter({ lat: 37.557361, lng: 126.924633 });
-        map.setZoom(17);
-      };
-
-      // 성수 버튼 클릭했을 때
-      const handleSeongsuButtonClick = () => {
-        map.setCenter({ lat: 37.544665, lng: 127.057641 });
-        map.setZoom(17);
-      };
-
-      // 연남 버튼 클릭했을 때
-      const handleYeonnamButtonClick = () => {
-        map.setCenter({ lat: 37.560907, lng: 126.924619 });
-        map.setZoom(17);
-      };
-
       // 컨트롤 위치 및 스타일 조정
       const customControlsDiv = document.createElement('div');
       customControlsDiv.classList.add('custom-map-controls');
 
       createRoot(customControlsDiv).render(
-        <LocationButtonGroup
-          hongdaeFunc={handleHongdaeButtonClick}
-          seongsuFunc={handleSeongsuButtonClick}
-          yeonnamFunc={handleYeonnamButtonClick}
-        />
+        <LocationButtonGroup googleMap={map} />
       );
 
       map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(
@@ -122,10 +100,6 @@ const GoogleMapComponent = () => {
         // 스크립트 로드가 완료되면 initGoogleMap 함수를 호출
         window.initMap();
       };
-
-      // script.onerror = () => {
-      //  console.error('Failed to load Google Maps API script.');
-      // };
 
       document.body.appendChild(script);
     };
