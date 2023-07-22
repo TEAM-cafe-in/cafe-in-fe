@@ -1,22 +1,27 @@
-import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { GetServerSidePropsContext } from 'next';
 import Cookies from 'universal-cookie';
 
 import { Box } from '@mui/material';
 
-import { setToken, useAccessTokenSelector } from '~/store/reducers/authSlice';
+import { setToken } from '~/store/reducers/authSlice';
 // Google Maps 페이지
 
 import wrapper from '~/store';
 import GoogleMapComponent from '~/components/organism/googleMap';
+import { CafeInfo } from '~/types/cafeInfo';
+import { useDispatch } from 'react-redux';
+import { setCafeInfo } from '~/store/reducers/cafeInfoSlice';
 import { getAccessToken } from './api/user';
 import getAllCafeInfo from './api/home/getAllCafeInfo';
-// import getAllCafeInfo from './api/home/getAllCafeInfo';
 
-const Home = () => {
-  const token = useAccessTokenSelector();
-  const { data } = useQuery(['allCafeInfo'], () => getAllCafeInfo(token));
-  console.log(data);
+interface HomeProp {
+  cafe: CafeInfo;
+}
+const Home = ({ cafe }: HomeProp) => {
+  // 카페 정보 리덕스에 저장
+  const dispatch = useDispatch();
+  dispatch(setCafeInfo(cafe));
   return (
     <Box>
       <GoogleMapComponent />
@@ -48,12 +53,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
     store.dispatch(setToken({ access_token: accessToken }));
 
     // 카페정보 SSR로 미리 캐시해두기
-    await queryClient.prefetchQuery(['allCafeIn'], () =>
+    // await queryClient.prefetchQuery(['allCafeIn'], () =>
+    //  getAllCafeInfo(accessToken)
+    // );
+    const cafeInfoResponse = await queryClient.fetchQuery(['allCafeIn'], () =>
       getAllCafeInfo(accessToken)
     );
     return {
       props: {
-        dehydratedState: dehydrate(queryClient),
+        cafe: cafeInfoResponse,
       },
     };
   }

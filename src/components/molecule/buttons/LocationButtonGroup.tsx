@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Button, ButtonGroup, Typography } from '@mui/material';
 import styled from 'styled-components';
@@ -29,14 +29,17 @@ const StyledButton = styled(Button)<StyledButtonProps>`
 const LocationButtonGroup = ({ googleMap }: LocationProps) => {
   const [selectedButton, setSelectedButton] = useState<string>('hongdae');
 
-  const handleButtonClick = (location: Option) => {
-    setSelectedButton(location.name);
-    googleMap.setCenter({
-      lat: location.lat,
-      lng: location.lng,
-    });
-    googleMap.setZoom(17);
-  };
+  const handleButtonClick = useCallback(
+    (location: Option) => {
+      setSelectedButton(location.name);
+      googleMap.setCenter({
+        lat: location.lat,
+        lng: location.lng,
+      });
+      googleMap.setZoom(17);
+    },
+    [googleMap]
+  );
 
   return (
     <Wrapper>
