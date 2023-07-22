@@ -2,6 +2,7 @@ import { Box, Typography, useTheme } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CallIcon from '@mui/icons-material/Call';
 
+import { UnderlineButton } from '~/components/atom/buttons';
 import { CafePlaceContainer } from './cafeDetailInfo.styled';
 
 interface CafePlaceInfoProps {
@@ -34,9 +35,7 @@ const CafePlaceInfo = ({ address, phoneNumber }: CafePlaceInfoProps) => {
         <Typography variant="caption" color={infoColor} mt="15px">
           실시간 호잡도를 조회하면 추가 정보를 확인할 수 있어요!
         </Typography>
-        <Typography className="plus" variant="caption" mb="15px" mt="5px">
-          지금 알아보기
-        </Typography>
+        <UnderlineButton text="지금 알아보기" />
       </Box>
     </CafePlaceContainer>
   );

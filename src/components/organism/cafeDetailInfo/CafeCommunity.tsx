@@ -1,14 +1,17 @@
 import { Typography, useTheme } from '@mui/material';
 
+import { UnderlineButton } from '~/components/atom/buttons';
 import CafeCommunityComment from './CafeCommunityComment';
-import {
-  CafeCommunityContainer,
-  CafeCommunityTypography,
-} from './cafeDetailInfo.styled';
+import { CafeCommunityContainer } from './cafeDetailInfo.styled';
 
-const CafeCommunity = () => {
+interface CommunityProp {
+  comment: string;
+}
+const CafeCommunity = ({ comment }: CommunityProp) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
+
+  const content = `${comment}개 댓글보기`;
 
   return (
     <>
@@ -19,9 +22,7 @@ const CafeCommunity = () => {
         <CafeCommunityComment />
         <CafeCommunityComment />
       </CafeCommunityContainer>
-      <CafeCommunityTypography variant="caption" mb="15px" mt="5px">
-        2021개 댓글 보기
-      </CafeCommunityTypography>
+      <UnderlineButton text={content} onClick={() => {}} />
     </>
   );
 };

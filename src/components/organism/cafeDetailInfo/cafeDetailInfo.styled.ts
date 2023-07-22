@@ -20,6 +20,7 @@ export const CafeStatusTypography = styled(Typography)<CafeInfoGrayProps>`
   padding: 2px 4px;
   border-radius: 4px;
   background-color: ${(props) => props.color};
+  color: black;
 `;
 
 export const CafeTitle = styled(Box)`
@@ -54,20 +55,12 @@ export const CafePlaceContainer = styled(Box)<CafeColorProps>`
     display: flex;
     flex-direction: column;
     text-align: center;
-    .plus {
-      text-decoration: underline;
-    }
   }
 `;
 
 // CafeCommunity 컴포넌트 styled component
 export const CafeCommunityContainer = styled(Box)<CafeInfoGrayProps>`
   border-bottom: 1px solid ${(prop) => prop.color};
-`;
-export const CafeCommunityTypography = styled(Typography)`
-  text-decoration: underline;
-  text-align: center;
-  cursor: pointer;
 `;
 
 // CafeCommunityComment 컴포넌트 styled component

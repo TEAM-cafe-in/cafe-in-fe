@@ -6,8 +6,9 @@
 import { ListItem, Typography, Box, useTheme } from '@mui/material';
 
 import { WriteButton } from '~/components/atom/buttons';
-import { CafeData } from '~/db/data';
 import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
+import { useCafeInfoSelector } from '~/store/reducers/cafeInfoSlice';
+import { CafeInfo, CafesInfo } from '~/types/cafeInfo';
 import CafePlaceInfo from './CafePlaceInfo';
 import CafeCommunity from './CafeCommunity';
 import {
@@ -24,8 +25,12 @@ interface DetailProps {
 const CafeDetailInfo = ({ cafeId }: DetailProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
-  const data1 = CafeData.cafes.filter((cafe) => cafe.cafeId === cafeId);
-  const data = data1[0];
+
+  const cafeData: CafeInfo = useCafeInfoSelector();
+  const datas = cafeData
+    ? cafeData?.cafes.filter((cafe: CafesInfo) => cafe.cafeId === cafeId)
+    : [];
+  const data: CafesInfo = datas[0];
 
   return (
     <ListItem>
@@ -37,9 +42,9 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
                 {data?.name}
               </Typography>
               <CafeStatusTypography
+                color={grayColor}
                 variant="subtitle2"
                 mt="5px"
-                color={grayColor}
               >
                 {data?.status}
               </CafeStatusTypography>
@@ -52,7 +57,9 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
           address={data?.address}
           phoneNumber={data?.phoneNumber}
         />
-        <CafeCommunity />
+        {data?.commentReviewCount && (
+          <CafeCommunity comment={data?.commentReviewCount} />
+        )}
       </CafeDetailContainer>
     </ListItem>
   );
