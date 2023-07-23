@@ -50,6 +50,7 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
     <ListItem>
       <CafeDetailContainer>
         <CafeReviewModal
+          cafeId={cafeId}
           open={reviewOpen}
           onClose={closeReviewHandler}
           title={data?.name}

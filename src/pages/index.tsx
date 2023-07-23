@@ -56,7 +56,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // await queryClient.prefetchQuery(['allCafeIn'], () =>
     //  getAllCafeInfo(accessToken)
     // );
-    const cafeInfoResponse = await queryClient.fetchQuery(['allCafeIn'], () =>
+    const cafeInfoResponse = await queryClient.fetchQuery(['allCafeInfo'], () =>
       getAllCafeInfo(accessToken)
     );
     return {
