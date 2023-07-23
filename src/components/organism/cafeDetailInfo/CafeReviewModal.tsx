@@ -3,14 +3,13 @@
  * @description  카페 리뷰 작성 모달
  */
 import { useState, useCallback } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Button, Typography, useTheme } from '@mui/material';
 
 import Modal from '~/components/atom/modal';
 import { RadioReviewButtons } from '~/components/molecule/radioButtons';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import addCafeReview from '~/pages/api/cafe/addCafeReview';
 import { ReviewContent, ReviewTitle } from './cafeDetailInfo.styled';
 
@@ -19,9 +18,18 @@ interface ReviewProps {
   open: boolean;
   onClose: () => void;
   title: string;
+  reviewSuccess: () => void;
+  setReviewCount: (data: number) => void;
 }
 
-const CafeReviewModal = ({ cafeId, open, onClose, title }: ReviewProps) => {
+const CafeReviewModal = ({
+  cafeId,
+  open,
+  onClose,
+  title,
+  reviewSuccess,
+  setReviewCount,
+}: ReviewProps) => {
   const token = useAccessTokenSelector();
 
   const [cafeCongestion, setCafeCongestion] = useState<string>('');
@@ -31,9 +39,10 @@ const CafeReviewModal = ({ cafeId, open, onClose, title }: ReviewProps) => {
   // 리뷰 작성 react query문
   const queryClient = useQueryClient();
   const { mutate } = useMutation(addCafeReview, {
-    onSuccess: () => {
-      // console.log(data.coffeeBean);
+    onSuccess: (data) => {
       queryClient.invalidateQueries(['allCafeInfo']);
+      setReviewCount(data.coffeeBean);
+      reviewSuccess();
     },
   });
 
@@ -67,6 +76,11 @@ const CafeReviewModal = ({ cafeId, open, onClose, title }: ReviewProps) => {
     handleReviewModalClose();
   };
 
+  // 등록 버튼 비활성화 함수
+  const isButtonDisabled = () => {
+    return cafeCongestion === '' || hasPlug === '' || isClean === '';
+  };
+
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
 
@@ -77,7 +91,9 @@ const CafeReviewModal = ({ cafeId, open, onClose, title }: ReviewProps) => {
           취소
         </Button>
         <Typography variant="h5">{title}</Typography>
-        <Button onClick={handleCafeReview}>등록</Button>
+        <Button onClick={handleCafeReview} disabled={isButtonDisabled()}>
+          등록
+        </Button>
       </ReviewTitle>
 
       <ReviewContent color={grayColor}>

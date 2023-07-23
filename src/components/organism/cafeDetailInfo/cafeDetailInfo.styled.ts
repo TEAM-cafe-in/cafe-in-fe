@@ -91,3 +91,9 @@ export const ReviewContent = styled(Box)<CafeInfoGrayProps>`
   align-items: center;
   padding: 10px;
 `;
+
+export const ReviewCount = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
