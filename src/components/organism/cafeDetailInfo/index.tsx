@@ -3,6 +3,8 @@
  * @description 카페 디테일 컴포넌트
  */
 
+import { useState, useCallback } from 'react';
+
 import { ListItem, Typography, Box, useTheme } from '@mui/material';
 
 import { WriteButton } from '~/components/atom/buttons';
@@ -17,12 +19,14 @@ import {
   CafeStatusTypography,
   CafeTitle,
 } from './cafeDetailInfo.styled';
+import CafeReviewModal from './CafeReviewModal';
 
 interface DetailProps {
   cafeId: string;
 }
 
 const CafeDetailInfo = ({ cafeId }: DetailProps) => {
+  const [reviewOpen, setReviewOpen] = useState(false);
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
 
@@ -32,9 +36,24 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
     : [];
   const data: CafesInfo = datas[0];
 
+  // Modal 열기 함수
+  const openReviewHandler = () => {
+    setReviewOpen(true);
+  };
+
+  // Modal 닫기 함수
+  const closeReviewHandler = useCallback(() => {
+    setReviewOpen(false);
+  }, []);
+
   return (
     <ListItem>
       <CafeDetailContainer>
+        <CafeReviewModal
+          open={reviewOpen}
+          onClose={closeReviewHandler}
+          title={data?.name}
+        />
         <CafeContentContainer color={grayColor}>
           <CafeTitle>
             <Box>
@@ -49,7 +68,7 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
                 {data?.status}
               </CafeStatusTypography>
             </Box>
-            <WriteButton onClick={() => {}} />
+            <WriteButton onClick={openReviewHandler} />
           </CafeTitle>
           <RadioStatusBoxButton status={data?.averageCongestion} />
         </CafeContentContainer>

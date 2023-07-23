@@ -75,3 +75,19 @@ export const CommentBox = styled(Box)<CafeInfoGrayProps>`
     width: 100%;
   }
 `;
+
+// CafeReviewModal 컴포넌트 styled component
+export const ReviewTitle = styled(Box)<CafeInfoGrayProps>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid ${(props) => props.color};
+`;
+export const ReviewContent = styled(Box)<CafeInfoGrayProps>`
+  display: flex;
+  border-bottom: 1px solid ${(props) => props.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+`;
