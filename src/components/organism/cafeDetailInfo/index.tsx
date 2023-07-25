@@ -12,6 +12,9 @@ import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
 import { useCafeInfoSelector } from '~/store/reducers/cafeInfoSlice';
 import { CafeInfo, CafesInfo } from '~/types/cafeInfo';
 import { ActionButton } from '~/types/popup';
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import useCoffeeBean from '~/pages/api/cafe/useCoffeeBean';
 import CafeReviewModal from './CafeReviewModal';
 import CafePlaceInfo from './CafePlaceInfo';
 import CafeCommunity from './CafeCommunity';
@@ -22,18 +25,23 @@ import {
   CafeTitle,
 } from './cafeDetailInfo.styled';
 import CafeReviewSuccessPopup from './CafeReviewSuccessPopup';
+import CafeCongestionPopup from './CafeCongestionPopup';
 
 interface DetailProps {
   cafeId: string;
 }
 
 const CafeDetailInfo = ({ cafeId }: DetailProps) => {
+  const token = useAccessTokenSelector();
   // 리뷰 등록 모달 상태
   const [reviewOpen, setReviewOpen] = useState<boolean>(false);
   // 리뷰 등록 성공 팝업 모달 상태
   const [reviewPopUp, setReviewPopUp] = useState<boolean>(false);
   // 커피빈 남은 개수
   const [coffeeCount, setCoffeeCount] = useState<number>(0);
+  // 실시간 혼잡도 확인하기
+  const [cafeCongestionPopup, setCafeCongestionPopup] =
+    useState<boolean>(false);
 
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
@@ -44,6 +52,13 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
     ? cafeData?.cafes.filter((cafe: CafesInfo) => cafe.cafeId === cafeId)
     : [];
   const data: CafesInfo = datas[0];
+
+  // 혼잡도 확인 react query 문
+  const { mutate: CoffeeBeanMutate } = useMutation(useCoffeeBean, {
+    onSuccess: (data) => {
+      console.log('혼잡도 확인', data);
+    },
+  });
 
   // 커피 남은 콩 개수 update 함수
   const updateCoffeCount = useCallback((coffee: number) => {
@@ -59,6 +74,39 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
   const closeReviewHandler = useCallback(() => {
     setReviewOpen(false);
   }, []);
+
+  // 혼잡도 확인 팝업 열기 함수
+  const openCafeCongestionPopup = useCallback(() => {
+    setCafeCongestionPopup(true);
+  }, []);
+
+  // 혼잡도 확인 팝업 닫기 함수
+  const closeCafeCongestionPopup = useCallback(() => {
+    setCafeCongestionPopup(false);
+  }, []);
+
+  // 혼잡도 확인 팝업 확인 함수
+  // const onConfirmCafeCongestion = useCallback(() => {
+  //  closeCafeCongestionPopup();
+  // }, [closeCafeCongestionPopup]);
+
+  // 혼잡도 확인하는 버튼 함수
+  const handleCoffeCongestion = useCallback(() => {
+    CoffeeBeanMutate({ token, cafeId });
+    closeCafeCongestionPopup();
+  }, [CoffeeBeanMutate, closeCafeCongestionPopup, token, cafeId]);
+
+  // 혼잡도 확인 팝업 Button 목록
+  const congestionActions: ActionButton[] = useMemo(() => {
+    return [
+      {
+        title: ' 정보 확인하기',
+        type: 'confirm',
+        onClick: handleCoffeCongestion,
+      },
+      { title: '취소', type: 'close', onClick: closeCafeCongestionPopup },
+    ];
+  }, [closeCafeCongestionPopup, handleCoffeCongestion]);
 
   // 리뷰 성공 팝업 열기 함수
   const openReviewPopup = useCallback(() => {
@@ -106,6 +154,12 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
           actions={actions}
           closePopup={closePopup}
         />
+        {/* 카페 혼잡도 확인 팝업 모달 */}
+        <CafeCongestionPopup
+          open={cafeCongestionPopup}
+          onClose={closeCafeCongestionPopup}
+          actions={congestionActions}
+        />
 
         <CafeContentContainer color={grayColor}>
           <CafeTitle>
@@ -124,7 +178,14 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
             {/* 리뷰 작성 버튼 */}
             <WriteButton onClick={openReviewHandler} />
           </CafeTitle>
-          <RadioStatusBoxButton status={data?.averageCongestion} />
+          {data?.averageCongestion === '0' ? (
+            <RadioStatusBoxButton
+              status={data?.averageCongestion}
+              onClick={openCafeCongestionPopup}
+            />
+          ) : (
+            <RadioStatusBoxButton status={data?.averageCongestion} />
+          )}
         </CafeContentContainer>
         <CafePlaceInfo
           address={data?.address}

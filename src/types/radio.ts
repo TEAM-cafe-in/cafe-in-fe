@@ -7,6 +7,11 @@ export interface RadioProps {
   status: '1' | '2' | '3' | '0';
 }
 
+export interface RadioStatusProps {
+  status: '1' | '2' | '3' | '0';
+  onClick?: () => void;
+}
+
 export enum Status {
   unknown = '0', // 모름
   spare = '1', // 여유

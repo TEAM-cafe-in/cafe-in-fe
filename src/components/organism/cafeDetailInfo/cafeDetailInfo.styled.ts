@@ -97,3 +97,12 @@ export const ReviewCount = styled(Box)`
   align-items: center;
   justify-content: center;
 `;
+
+// CafeCongestionPopup 컴포넌트 styled component
+export const CongestionCoffee = styled(Box)`
+  display: inline-flex;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid black;
+  padding: 3px;
+`;
