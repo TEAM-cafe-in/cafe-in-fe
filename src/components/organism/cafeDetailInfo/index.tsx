@@ -13,7 +13,7 @@ import { useCafeInfoSelector } from '~/store/reducers/cafeInfoSlice';
 import { CafeInfo, CafesInfo } from '~/types/cafeInfo';
 import { ActionButton } from '~/types/popup';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import useCoffeeBean from '~/pages/api/cafe/useCoffeeBean';
 import CafeReviewModal from './CafeReviewModal';
 import CafePlaceInfo from './CafePlaceInfo';
@@ -55,8 +55,8 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
 
   // 혼잡도 확인 react query 문
   const { mutate: CoffeeBeanMutate } = useMutation(useCoffeeBean, {
-    onSuccess: (data) => {
-      console.log('혼잡도 확인', data);
+    onSuccess: (cafe) => {
+      console.log('혼잡도 확인', cafe);
     },
   });
 
