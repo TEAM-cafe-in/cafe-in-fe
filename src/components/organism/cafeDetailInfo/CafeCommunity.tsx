@@ -22,7 +22,6 @@ const CafeCommunity = ({ comment }: CommunityProp) => {
   const grayColor = theme.palette.grey[100];
 
   const content = `${comment.length}개 댓글보기`;
-  console.log('댓글', comment);
 
   return (
     <>

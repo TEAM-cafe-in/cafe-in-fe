@@ -63,7 +63,10 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
         )}
         {selectedMenu === 'mypage' && <MyPage />}
       </Drawer>
-      <Depth2Drawer open={openDepth2} dataId={depth2DataId} />
+
+      <Suspense fallback={<div>loading...</div>}>
+        <Depth2Drawer open={openDepth2} dataId={depth2DataId} />
+      </Suspense>
 
       <Box display="flex" flexDirection="column">
         {/* Depth2 활성화된 경우 Close 버튼 표시 */}
