@@ -10,7 +10,7 @@ import { CafeComment } from '~/types/cafeInfo';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import CafePlaceInfo from './CafePlaceInfo';
-// import CafeCommunity from './CafeCommunity';
+import CafeCommunity from './CafeCommunity';
 import CafeDetailTitle from './CafeDetailTitle';
 import CafeCongestionStatus from './CafeCongestionStatus';
 import {
@@ -37,8 +37,6 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
     }
   );
 
-  // console.log('혼잡도 댓글', data);
-  // data?.averageCongestion === '0' => 혼잡도 확인 전
   return (
     <ListItem>
       {data && (
@@ -63,7 +61,7 @@ const CafeDetailInfo = ({ cafeId }: DetailProps) => {
             hasPlugCount={data?.cafeInfoProjection.hasPlugCount}
             isCleanCount={data?.cafeInfoProjection.isCleanCount}
           />
-          {/* {data?.comment && <CafeCommunity comment={length(data.comments)} />} */}
+          {data?.comments && <CafeCommunity comment={data?.comments} />}
         </CafeDetailContainer>
       )}
     </ListItem>

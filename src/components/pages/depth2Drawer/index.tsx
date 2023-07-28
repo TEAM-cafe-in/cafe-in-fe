@@ -8,6 +8,8 @@ import { Suspense } from 'react';
 import { List } from '@mui/material';
 
 import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
+import CafeComment from '~/components/organism/cafeComment';
+import { useDepth2ContentSelector } from '~/store/reducers/depth2ContentSlice';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
@@ -16,13 +18,21 @@ interface Depth2DrawerProps {
 }
 
 const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
+  const depth2Detail = useDepth2ContentSelector();
   return (
     <Drawer variant="permanent" isSecondProps open={open}>
-      <List>
-        <Suspense fallback={<div>loading...</div>}>
-          <CafeDetailInfo cafeId={dataId} />
-        </Suspense>
-      </List>
+      {depth2Detail === 'content' && (
+        <List>
+          <Suspense fallback={<div>loading...</div>}>
+            <CafeDetailInfo cafeId={dataId} />
+          </Suspense>
+        </List>
+      )}
+      {depth2Detail === 'comment' && (
+        <List>
+          <CafeComment />
+        </List>
+      )}
     </Drawer>
   );
 };
