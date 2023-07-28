@@ -1,7 +1,9 @@
 /**
  * @createdBy 한수민
- * @description 카페 혼잡도 확인하는 api 함수
+ * @description 커피콩을 활용해서 카페 혼잡도 확인하는 api 함수
  */
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface CoffeeBean {
   token: string;
@@ -30,3 +32,15 @@ const useCoffeeBean = async (body: CoffeeBean) => {
   }
 };
 export default useCoffeeBean;
+
+// 인자 only defined => lint error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const useAddCoffeeBeanMutation = (body: CoffeeBean) => {
+  const queryClient = useQueryClient();
+  return useMutation(useCoffeeBean, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['cafeList']);
+      queryClient.invalidateQueries(['comment']);
+    },
+  });
+};

@@ -3,7 +3,7 @@
  * @description  카페 리뷰 작성 모달
  */
 import { useState, useCallback } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { Button, Typography, useTheme } from '@mui/material';
 
@@ -37,10 +37,8 @@ const CafeReviewModal = ({
   const [isClean, setIsClean] = useState<string>('');
 
   // 리뷰 작성 react query문
-  const queryClient = useQueryClient();
   const { mutate } = useMutation(addCafeReview, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['allCafeInfo']);
       setReviewCount(data.coffeeBean);
       reviewSuccess();
     },
@@ -52,7 +50,7 @@ const CafeReviewModal = ({
     setCafeCongestion('');
     setHasPlug('');
     setIsClean('');
-  }, []);
+  }, [onClose]);
 
   // 혼잡도 상태 update
   const handleCafeCongestionChange = useCallback((data: string) => {
