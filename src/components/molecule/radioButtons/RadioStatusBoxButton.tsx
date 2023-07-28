@@ -19,7 +19,7 @@ const RadioStatusBoxButton = ({ status, onClick }: RadioStatusProps) => {
       onClick={onClick}
     >
       <Radio status={status} />
-      <Typography variant="subtitle2" ml="2px" color={options[status]?.color}>
+      <Typography variant="subtitle2" color={options[status]?.color}>
         {options[status]?.label2}
       </Typography>
     </CafeStatusSearch>
