@@ -2,15 +2,15 @@
  * @createdBy 김해지
  * @description 메인 레이아웃 사이드 메뉴 Depth2
  */
+import { useQuery } from '@tanstack/react-query';
+
 import { List } from '@mui/material';
 
 import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
-import CafeComment from '~/components/organism/cafeComment';
+import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import { useDepth2ContentSelector } from '~/store/reducers/depth2ContentSlice';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
-import { useQuery } from '@tanstack/react-query';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
@@ -39,9 +39,10 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
         </List>
       )}
       {depth2Detail === 'comment' && (
-        <List>
-          <CafeComment />
-        </List>
+        <CafeDetailComment
+          name={congestion?.cafeInfoProjection.name}
+          comments={congestion?.comments}
+        />
       )}
     </Drawer>
   );

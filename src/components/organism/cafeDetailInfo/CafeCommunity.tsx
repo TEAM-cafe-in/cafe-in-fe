@@ -45,9 +45,16 @@ const CafeCommunity = ({ comment }: CommunityProp) => {
           </>
         )}
       </CafeCommunityContainer>
-      {comment.length !== 0 && (
+      {comment.length !== 0 ? (
         <UnderlineButton
           text={content}
+          onClick={() => {
+            dispatch(setDepth2Content('comment'));
+          }}
+        />
+      ) : (
+        <UnderlineButton
+          text="댓글을 입력하세요"
           onClick={() => {
             dispatch(setDepth2Content('comment'));
           }}
