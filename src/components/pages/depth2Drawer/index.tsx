@@ -54,7 +54,9 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
       {depth2Detail === 're-comment' && <CafeReComment />}
 
       {/* 카페 댓글 작성 페이지 */}
-      {depth2Detail === 'write' && <CafeWriteComment />}
+      {depth2Detail === 'write' && (
+        <CafeWriteComment name={congestion?.cafeInfoProjection.name} />
+      )}
     </Drawer>
   );
 };
