@@ -5,8 +5,10 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState, useAppSelector } from '~/store';
 
+type Depth2Navigation = 'content' | 'comment' | 're-comment' | 'write';
+
 export interface Depth2Content {
-  depth2_content: 'content' | 'comment';
+  depth2_content: Depth2Navigation;
 }
 
 export interface Depth2ContentState {
@@ -26,7 +28,7 @@ const depth2ContentSlice = createSlice({
   reducers: {
     setDepth2Content(
       state: Depth2ContentState,
-      action: PayloadAction<'content' | 'comment'>
+      action: PayloadAction<Depth2Navigation>
     ) {
       state.depth2Content.depth2_content = action.payload;
     },

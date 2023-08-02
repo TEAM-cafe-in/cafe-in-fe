@@ -11,6 +11,8 @@ import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import { useDepth2ContentSelector } from '~/store/reducers/depth2ContentSlice';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
+import CafeReComment from '~/components/organism/cafeReComment';
+import CafeWriteComment from '~/components/organism/cafeWriteComment';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
@@ -33,17 +35,26 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
   );
   return (
     <Drawer variant="permanent" isSecondProps open={open}>
+      {/* 카페 디테일 페이지 */}
       {depth2Detail === 'content' && (
         <List>
           <CafeDetailInfo cafeId={dataId} data={congestion} />
         </List>
       )}
+
+      {/* 카페 댓글 리스트 페이지 */}
       {depth2Detail === 'comment' && (
         <CafeDetailComment
           name={congestion?.cafeInfoProjection.name}
           comments={congestion?.comments}
         />
       )}
+
+      {/* 카페 대댓글 리스트 페이지 */}
+      {depth2Detail === 're-comment' && <CafeReComment />}
+
+      {/* 카페 댓글 작성 페이지 */}
+      {depth2Detail === 'write' && <CafeWriteComment />}
     </Drawer>
   );
 };
