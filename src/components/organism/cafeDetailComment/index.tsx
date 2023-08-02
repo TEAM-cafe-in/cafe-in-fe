@@ -3,9 +3,11 @@
  * @description 카페 상세 댓글 페이지 depth2 컴포넌트
  */
 
+import {
+  CafeCommentLayout,
+  CafeSingleComment,
+} from '~/components/molecule/cafeCommentLayout';
 import { Comment } from '~/types/cafeInfo';
-import CafeCommentLayout from '~/components/molecule/cafeCommentLayout';
-import CafeSingleComment from '../../molecule/cafeCommentLayout/CafeSingleComment';
 
 interface CommentProps {
   name: string;

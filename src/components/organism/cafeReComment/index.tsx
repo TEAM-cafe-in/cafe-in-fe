@@ -1,5 +1,12 @@
-import CafeCommentLayout from '~/components/molecule/cafeCommentLayout';
-import CafeSingleComment from '~/components/molecule/cafeCommentLayout/CafeSingleComment';
+/**
+ * @createdBy 한수민
+ * @description 카페 대댓글 컴포넌트
+ */
+
+import {
+  CafeCommentLayout,
+  CafeSingleComment,
+} from '~/components/molecule/cafeCommentLayout';
 
 const CafeReComment = () => {
   // 더미 댓글 데이터
