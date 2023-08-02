@@ -3,9 +3,11 @@
  * @description 카페 리뷰 등록 성공 팝업 모달창
  */
 
-import Popup from '~/components/atom/popup';
 import Image from 'next/image';
+
 import { Typography, useTheme } from '@mui/material';
+
+import Popup from '~/components/atom/popup';
 import { ActionButton } from '~/types/popup';
 import reviewSuccess from '../../../static/images/review-logo.png';
 import { ReviewCount } from './cafeDetailInfo.styled';

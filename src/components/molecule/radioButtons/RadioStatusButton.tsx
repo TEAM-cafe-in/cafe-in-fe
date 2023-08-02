@@ -13,7 +13,7 @@ const RadioStatusButton = ({ status }: RadioProps) => {
   return (
     <Wrapper>
       <Radio status={status} />
-      <Typography variant="caption" ml="1px" color={options[status].color}>
+      <Typography variant="caption" color={options[status].color}>
         {options[status].label}
       </Typography>
     </Wrapper>

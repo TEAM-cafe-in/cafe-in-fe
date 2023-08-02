@@ -4,12 +4,14 @@
  */
 import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
 import { List, Typography, useTheme } from '@mui/material';
 
 import { CafesInfo } from '~/types/cafeInfo';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
+import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
 import CafeInfo from './CafeInfo';
 
 interface CafeInfoListProps {
@@ -21,6 +23,7 @@ const CafeInfoList = ({
   setOpenDepth2,
   setDepth2DataId,
 }: CafeInfoListProps) => {
+  const dispatch = useDispatch();
   const token = useAccessTokenSelector();
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
@@ -35,8 +38,10 @@ const CafeInfoList = ({
     (id: string) => {
       setOpenDepth2(true);
       setDepth2DataId(id);
+      // 디테일 정보가 보여지게 set
+      dispatch(setDepth2Content('content'));
     },
-    [setOpenDepth2, setDepth2DataId]
+    [setOpenDepth2, setDepth2DataId, dispatch]
   );
 
   return (

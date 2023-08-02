@@ -38,9 +38,9 @@ export interface CafeDetailInfo {
 export interface Comment {
   commentId: string;
   memberName: string;
-  createdTime: Date;
+  createdTime: string;
   content: string;
-  keywords: string[];
+  keywords: string[] | [];
 }
 export interface CafeComment {
   cafeInfoProjection: CafeDetailInfo;

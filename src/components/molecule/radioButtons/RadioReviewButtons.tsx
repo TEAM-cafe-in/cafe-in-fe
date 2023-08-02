@@ -4,30 +4,18 @@
  */
 import Image from 'next/image';
 
-import { styled } from 'styled-components';
 import { Box, Typography, useTheme } from '@mui/material';
 
 import { reviewOptions } from '~/types/review';
 import radioSelect from '../../../static/images/radio-select.png';
 import radioNotSelect from '../../../static/images/radio-not-select.png';
+import { ReviewRadio, ReviewRadioContent } from './radioButton.styled';
 
 interface ReviewButtonProps {
   type: 'cafeCongestion' | 'hasPlug' | 'isClean';
   state: string;
   setState: (data: string) => void;
 }
-
-const ReviewRadio = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ReviewRadioContent = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-`;
 
 const RadioReviewButtons = ({ type, state, setState }: ReviewButtonProps) => {
   const theme = useTheme();

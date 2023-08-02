@@ -31,3 +31,15 @@ export const CafeStatusSearch = styled(Box)<RadioBorderProps>`
       padding: 10px 0px;
     `}
 `;
+
+export const ReviewRadio = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ReviewRadioContent = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+`;
