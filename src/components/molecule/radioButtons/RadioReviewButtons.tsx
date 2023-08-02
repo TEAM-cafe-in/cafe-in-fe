@@ -1,0 +1,71 @@
+/**
+ * @createBy 한수민
+ * @description  카페 리뷰 라디오 버튼들
+ */
+import Image from 'next/image';
+
+import { styled } from 'styled-components';
+import { Box, Typography, useTheme } from '@mui/material';
+
+import { reviewOptions } from '~/types/review';
+import radioSelect from '../../../static/images/radio-select.png';
+import radioNotSelect from '../../../static/images/radio-not-select.png';
+
+interface ReviewButtonProps {
+  type: 'cafeCongestion' | 'hasPlug' | 'isClean';
+  state: string;
+  setState: (data: string) => void;
+}
+
+const ReviewRadio = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ReviewRadioContent = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+`;
+
+const RadioReviewButtons = ({ type, state, setState }: ReviewButtonProps) => {
+  const theme = useTheme();
+  const grayColor = theme.palette.grey[300];
+  const selectColor = theme.palette.primary.main;
+
+  return (
+    <Box>
+      <Typography mt="10px" mb="10px">
+        {reviewOptions[type].title}
+      </Typography>
+      <ReviewRadio>
+        {reviewOptions[type].select.map((value, index) => (
+          <ReviewRadioContent key={value}>
+            {/* 선택되었을 경우 */}
+            {state === reviewOptions[type].selectValue[index] ? (
+              <>
+                <Image src={radioSelect} alt="" style={{ cursor: 'pointer' }} />
+                <Typography color={selectColor}>{value}</Typography>
+              </>
+            ) : (
+              // 선택되지 않았을 경우
+              <>
+                <Image
+                  src={radioNotSelect}
+                  alt=""
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    setState(reviewOptions[type].selectValue[index])
+                  }
+                />
+                <Typography color={grayColor}>{value}</Typography>
+              </>
+            )}
+          </ReviewRadioContent>
+        ))}
+      </ReviewRadio>
+    </Box>
+  );
+};
+export default RadioReviewButtons;

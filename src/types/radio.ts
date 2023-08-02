@@ -3,8 +3,15 @@
  * @description Radio 관련 타입 정의 모음
  */
 
+export type TCafeCongestion = '1' | '2' | '3' | '0';
+
 export interface RadioProps {
+  status: TCafeCongestion;
+}
+
+export interface RadioStatusProps {
   status: '1' | '2' | '3' | '0';
+  onClick?: () => void;
 }
 
 export enum Status {

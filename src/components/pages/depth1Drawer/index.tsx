@@ -2,7 +2,7 @@
  * @createdBy 김해지
  * @description 메인 레이아웃 사이드 메뉴 Depth1
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 
 import { Box } from '@mui/material';
 import {
@@ -54,14 +54,15 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
     <Depth1Box>
       <Drawer variant="permanent" isSecondProps open={open}>
         {selectedMenu === 'logo' && (
-          <CafeInfoList
-            setOpenDepth2={setOpenDepth2}
-            setDepth2DataId={setDepth2DataId}
-          />
+          <Suspense fallback={<div>loading...</div>}>
+            <CafeInfoList
+              setOpenDepth2={setOpenDepth2}
+              setDepth2DataId={setDepth2DataId}
+            />
+          </Suspense>
         )}
         {selectedMenu === 'mypage' && <MyPage />}
       </Drawer>
-
       <Depth2Drawer open={openDepth2} dataId={depth2DataId} />
 
       <Box display="flex" flexDirection="column">

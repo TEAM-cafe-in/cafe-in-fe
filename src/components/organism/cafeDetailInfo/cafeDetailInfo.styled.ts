@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 // index.tsx 파일 styled component
-export interface CafeInfoGrayProps {
+export interface CafeInfoProps {
   color: string;
 }
 export const CafeDetailContainer = styled(Box)`
@@ -11,15 +11,16 @@ export const CafeDetailContainer = styled(Box)`
   flex-direction: column;
 `;
 
-export const CafeContentContainer = styled(Box)<CafeInfoGrayProps>`
+export const CafeContentContainer = styled(Box)<CafeInfoProps>`
   border-bottom: 4px solid ${(props) => props.color};
 `;
 
-export const CafeStatusTypography = styled(Typography)<CafeInfoGrayProps>`
+export const CafeStatusTypography = styled(Typography)<CafeInfoProps>`
   display: inline-block;
   padding: 2px 4px;
   border-radius: 4px;
   background-color: ${(props) => props.color};
+  color: black;
 `;
 
 export const CafeTitle = styled(Box)`
@@ -34,6 +35,7 @@ interface CafeColorProps {
   icon: string;
 }
 
+// CafePlaceInfo 컴포넌트 styled component
 export const CafePlaceContainer = styled(Box)<CafeColorProps>`
   width: 100%;
   border-bottom: 4px solid ${(props) => props.color};
@@ -54,24 +56,24 @@ export const CafePlaceContainer = styled(Box)<CafeColorProps>`
     display: flex;
     flex-direction: column;
     text-align: center;
-    .plus {
-      text-decoration: underline;
-    }
   }
+`;
+export const CongestionBox = styled(Box)`
+  padding: 1.2rem;
+`;
+export const CongestionItem = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 // CafeCommunity 컴포넌트 styled component
-export const CafeCommunityContainer = styled(Box)<CafeInfoGrayProps>`
+export const CafeCommunityContainer = styled(Box)<CafeInfoProps>`
   border-bottom: 1px solid ${(prop) => prop.color};
-`;
-export const CafeCommunityTypography = styled(Typography)`
-  text-decoration: underline;
-  text-align: center;
-  cursor: pointer;
 `;
 
 // CafeCommunityComment 컴포넌트 styled component
-export const CommentBox = styled(Box)<CafeInfoGrayProps>`
+export const CommentBox = styled(Box)<CafeInfoProps>`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
@@ -81,4 +83,35 @@ export const CommentBox = styled(Box)<CafeInfoGrayProps>`
     background-color: ${(props) => props.color};
     width: 100%;
   }
+`;
+
+// CafeReviewModal 컴포넌트 styled component
+export const ReviewTitle = styled(Box)<CafeInfoProps>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid ${(props) => props.color};
+`;
+export const ReviewContent = styled(Box)<CafeInfoProps>`
+  display: flex;
+  border-bottom: 1px solid ${(props) => props.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+`;
+
+export const ReviewCount = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// CafeCongestionPopup 컴포넌트 styled component
+export const CongestionCoffee = styled(Box)`
+  display: inline-flex;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid black;
+  padding: 3px;
 `;

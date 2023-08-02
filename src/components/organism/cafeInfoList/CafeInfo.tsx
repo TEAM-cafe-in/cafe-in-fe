@@ -1,3 +1,8 @@
+/**
+ * @createdBy 한수민
+ * @description 카페 리스트 아이템 컴포넌트
+ */
+
 import { ListItem, ListItemButton, Typography } from '@mui/material';
 
 import { RadioStatusButton } from '~/components/molecule/radioButtons';
@@ -5,14 +10,14 @@ import { CafesInfo } from '~/types/cafeInfo';
 import { CafeBox, CafeInfoTitle, CafeStatus } from './cafeInfo.styled';
 
 interface CafeInfoProp {
-  onClick: () => void;
+  cafeClickHandler: () => void;
   cafes: CafesInfo;
 }
 
-const CafeInfo = ({ onClick, cafes }: CafeInfoProp) => {
+const CafeInfo = ({ cafeClickHandler, cafes }: CafeInfoProp) => {
   return (
     <ListItem>
-      <ListItemButton onClick={onClick}>
+      <ListItemButton onClick={cafeClickHandler}>
         <CafeBox>
           <CafeInfoTitle>
             <Typography variant="h5" mr="4px">
