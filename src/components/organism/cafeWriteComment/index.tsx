@@ -11,6 +11,7 @@ import { Button, Typography } from '@mui/material';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
 import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
 import { MyArrowBackIosNewIcon } from '~/pages/login/login.styled';
+import { Keywords } from '~/types/comment';
 import { StyledTextField, WriteTitle } from './cafeWriteComment.styled';
 
 interface WriteProp {
@@ -18,7 +19,7 @@ interface WriteProp {
 }
 
 const CafeWriteComment = ({ name }: WriteProp) => {
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<Keywords[]>([]);
   const [textValue, setTextValue] = useState('');
   const placeholderValue =
     '선택하고 싶은 키워드가 있다면 선택해주세요.\n\n주제와 관련된 이야기를 포함해주세요.\n욕설이나 비방을 포함한 의견을 남기지 말아주세요.';
@@ -31,7 +32,7 @@ const CafeWriteComment = ({ name }: WriteProp) => {
 
   // 댓글 키워드 set하는 함수
   const setOptionsHandler = useCallback(
-    (data: string[]) => {
+    (data: Keywords[]) => {
       setOptions(data);
     },
     [setOptions]

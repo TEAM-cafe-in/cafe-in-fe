@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useTheme } from '@mui/material';
 
 import { selectArray, selectOptions } from '~/types/labelButton';
+import { Keywords } from '~/types/comment';
 import {
   SelectArrayWrapper,
   SelectButton,
@@ -15,8 +16,8 @@ import {
 } from './labelButtons.styled';
 
 interface LabelButtonsProps {
-  options: string[];
-  setOptions: (options: string[]) => void;
+  options: Keywords[];
+  setOptions: (options: Keywords[]) => void;
 }
 
 const LabelButtons = ({ options, setOptions }: LabelButtonsProps) => {
@@ -25,11 +26,11 @@ const LabelButtons = ({ options, setOptions }: LabelButtonsProps) => {
   const borderColor = theme.palette.grey[100];
 
   // 버튼 클릭 시
-  const handleButtonClick = (title: string) => {
+  const handleButtonClick = (title: Keywords) => {
     // 이미 선택되었으면 선택 해제, 선택 안되어있으면 선택하여 상태값 update
     const updatedOptions = options.includes(title)
-      ? options.filter((option: string) => option !== title)
-      : [...options, title];
+      ? options.filter((option: Keywords) => option !== title)
+      : options.concat(title);
 
     setOptions(updatedOptions);
   };

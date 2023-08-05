@@ -9,6 +9,7 @@ import Bathroom from '~/static/svg/bathroom.svg';
 import Menu from '~/static/svg/menu.svg';
 import Atmosphere from '~/static/svg/atmosphere.svg';
 import Seat from '~/static/svg/seat.svg';
+import { Keywords } from './comment';
 
 export enum Select {
   'clean', // 청결도
@@ -29,7 +30,7 @@ export const selectArray: Select[] = [
 ];
 
 export interface Option {
-  title: string;
+  title: Keywords;
   imgSvg: string;
 }
 
