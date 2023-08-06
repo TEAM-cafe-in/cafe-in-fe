@@ -25,3 +25,13 @@ export const Puller = styled(Box)(() => ({
   top: 20,
   left: 'calc(50% - 15px)',
 }));
+
+export const ContentBox = styled(Box)`
+  margin-top: 50px;
+  height: 90%;
+  overflow: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
