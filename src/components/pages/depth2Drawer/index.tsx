@@ -6,13 +6,13 @@ import { useQuery } from '@tanstack/react-query';
 
 import { List } from '@mui/material';
 
-import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
-import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import { useDepth2ContentSelector } from '~/store/reducers/depth2ContentSlice';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
+import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
+import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
 import CafeWriteComment from '~/components/organism/cafeWriteComment';
+import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
@@ -54,7 +54,12 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
       {depth2Detail === 're-comment' && <CafeReComment />}
 
       {/* 카페 댓글 작성 페이지 */}
-      {depth2Detail === 'write' && <CafeWriteComment />}
+      {depth2Detail === 'write' && (
+        <CafeWriteComment
+          name={congestion?.cafeInfoProjection.name}
+          cafeId={congestion?.cafeInfoProjection.cafeId}
+        />
+      )}
     </Drawer>
   );
 };
