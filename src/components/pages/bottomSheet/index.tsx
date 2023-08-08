@@ -15,18 +15,19 @@ import {
   setDepth2Content,
   useDepth2ContentSelector,
 } from '~/store/reducers/depth2ContentSlice';
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
+import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
+
 import {
   EMPTY_TOOL_BAR_HEIGHT,
   TOOL_BAR_HEIGHT,
 } from '~/components/organism/appBar';
 import CafeInfoListPage from '~/components/organism/cafeInfoList';
 import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
-
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import CafeDetailTitleHeader from '~/components/organism/cafeDetailInfo/CafeDetailTitleHeader';
-
 import GoogleMapComponent from '~/components/organism/googleMap';
+import CafeDetailComment from '~/components/organism/cafeDetailComment';
+import CafeReComment from '~/components/organism/cafeReComment';
 import {
   ButtonContainer,
   ButtonWrapper,
@@ -96,12 +97,12 @@ const BottomSheet = () => {
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
             overflow: 'visible',
-            height: `calc(100% - ${BOTTOM_SHEET_FULL_HEIGHT}px)`,
+            height: `calc(105% - ${DRAWER_BLEEDING}px)`,
           },
-          ...(depth2Detail === 'content' && {
+          ...(depth2Detail === 'cafelist' && {
             '.MuiDrawer-root > .MuiPaper-root': {
               overflow: 'visible',
-              height: `calc(105% - ${DRAWER_BLEEDING}px)`,
+              height: `calc(100% - ${BOTTOM_SHEET_FULL_HEIGHT}px)`,
             },
           }),
         }}
@@ -163,6 +164,17 @@ const BottomSheet = () => {
                 <CafeDetailInfo cafeId={depth2DataId} data={congestion} />
               </Suspense>
             )}
+
+            {/* 카페 댓글 리스트 페이지 */}
+            {depth2Detail === 'comment' && (
+              <CafeDetailComment
+                name={congestion?.cafeInfoProjection.name}
+                comments={congestion?.comments}
+              />
+            )}
+
+            {/* 카페 대댓글 리스트 페이지 */}
+            {depth2Detail === 're-comment' && <CafeReComment />}
           </ContentBox>
         </StyledBox>
       </SwipeableDrawer>
