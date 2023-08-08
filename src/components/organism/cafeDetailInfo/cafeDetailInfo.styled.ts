@@ -29,6 +29,9 @@ export const CafeTitle = styled(Box)`
   margin-top: 10px;
 `;
 
+export const CafeTitleContainer = styled(Box)`
+  display: flex;
+`;
 // CafePlaceInfo 컴포넌트 styled component
 interface CafeColorProps {
   color: string;

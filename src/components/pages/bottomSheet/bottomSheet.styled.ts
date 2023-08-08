@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-export const DRAWER_BLEEDING = 106;
+export const DRAWER_BLEEDING = 205;
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor:
@@ -25,3 +25,34 @@ export const Puller = styled(Box)(() => ({
   top: 20,
   left: 'calc(50% - 15px)',
 }));
+
+export const ContentBox = styled(Box)`
+  margin-top: 50px;
+  height: 90%;
+  overflow: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+interface ColorProp {
+  color1: string;
+}
+
+export const ButtonContainer = styled(Box)<ColorProp>`
+  background-color: ${(props) => props.color1};
+  width: 44px;
+  height: 44px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 15px;
+  cursor: pointer;
+`;
+
+export const ButtonWrapper = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+`;

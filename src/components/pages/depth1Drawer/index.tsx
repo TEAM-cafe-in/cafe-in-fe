@@ -16,7 +16,7 @@ import MyPage from '~/components/organism/mypage';
 import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import Depth2Drawer from '~/components/pages/depth2Drawer';
 import { Drawer } from '~/components/pages/drawer/drawer.styled';
-import CafeInfoList from '~/components/organism/cafeInfoList';
+import CafeInfoListPage from '~/components/organism/cafeInfoList';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
 
 interface IDepth1Drawer {
@@ -55,7 +55,7 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
       <Drawer variant="permanent" isSecondProps open={open}>
         {selectedMenu === 'logo' && (
           <Suspense fallback={<div>loading...</div>}>
-            <CafeInfoList
+            <CafeInfoListPage
               setOpenDepth2={setOpenDepth2}
               setDepth2DataId={setDepth2DataId}
             />

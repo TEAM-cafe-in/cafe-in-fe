@@ -19,7 +19,7 @@ interface CafeInfoListProps {
   setDepth2DataId: (depth2DataId: string) => void;
 }
 
-const CafeInfoList = ({
+const CafeInfoListPage = ({
   setOpenDepth2,
   setDepth2DataId,
 }: CafeInfoListProps) => {
@@ -51,9 +51,11 @@ const CafeInfoList = ({
           <Typography ml="30px" color={grayColor}>
             총 {data?.cafeCount}
           </Typography>
-          {data.cafes?.map((cafe: CafesInfo) => (
+          {data.cafes?.map((cafe: CafesInfo, index: number) => (
             <CafeInfo
-              key={cafe.cafeId}
+              // key={cafe.cafeId}
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
               cafeClickHandler={() => cafeClickHandler(cafe.cafeId)}
               cafes={cafe}
             />
@@ -63,4 +65,4 @@ const CafeInfoList = ({
     </List>
   );
 };
-export default CafeInfoList;
+export default CafeInfoListPage;

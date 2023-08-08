@@ -5,23 +5,32 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { WriteButton } from '~/components/atom/buttons';
 import { ActionButton } from '~/types/popup';
 import CafeReviewSuccessPopup from './CafeReviewSuccessPopup';
 import CafeReviewModal from './CafeReviewModal';
-import { CafeStatusTypography, CafeTitle } from './cafeDetailInfo.styled';
+import {
+  CafeStatusTypography,
+  CafeTitle,
+  CafeTitleContainer,
+} from './cafeDetailInfo.styled';
 
 interface CafeTitleProps {
   name: string;
   status: string;
   cafeId: string;
+  address: string;
 }
 
-const CafeDetailTitle = ({ name, status, cafeId }: CafeTitleProps) => {
+const query = '(min-width:0px) and (max-width:600px)';
+
+const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
+
+  const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 리뷰 등록 모달 상태
   const [reviewOpen, setReviewOpen] = useState<boolean>(false);
@@ -95,9 +104,20 @@ const CafeDetailTitle = ({ name, status, cafeId }: CafeTitleProps) => {
           <Typography variant="h3" mr="4px" mt="7px">
             {name}
           </Typography>
-          <CafeStatusTypography color={grayColor} variant="subtitle2" mt="5px">
-            {status}
-          </CafeStatusTypography>
+          <CafeTitleContainer>
+            <CafeStatusTypography
+              color={grayColor}
+              variant="subtitle2"
+              mt="5px"
+            >
+              {status}
+            </CafeStatusTypography>
+            {isMobile && (
+              <Typography variant="subtitle2" mt="7px" ml="5px">
+                {address}
+              </Typography>
+            )}
+          </CafeTitleContainer>
         </Box>
         {/* 리뷰 작성 버튼 */}
         <WriteButton onClick={openReviewHandler} />

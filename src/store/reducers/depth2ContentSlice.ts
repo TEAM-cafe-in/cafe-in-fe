@@ -5,7 +5,12 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState, useAppSelector } from '~/store';
 
-type Depth2Navigation = 'content' | 'comment' | 're-comment' | 'write';
+type Depth2Navigation =
+  | 'cafelist'
+  | 'content'
+  | 'comment'
+  | 're-comment'
+  | 'write';
 
 export interface Depth2Content {
   depth2_content: Depth2Navigation;
@@ -17,7 +22,7 @@ export interface Depth2ContentState {
 
 export const initialDepth2ContentState: Depth2ContentState = {
   depth2Content: {
-    depth2_content: 'content',
+    depth2_content: 'cafelist',
   },
 };
 
