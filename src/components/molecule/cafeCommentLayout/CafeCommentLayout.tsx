@@ -7,6 +7,7 @@ import React from 'react';
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Typography } from '@mui/material';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
 import { useDispatch } from 'react-redux';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
@@ -41,6 +42,12 @@ const CafeCommentLayout = ({
       dispatch(setDepth2Content('comment'));
     }
   };
+
+  // 홈 버튼
+  const handleHomeClick = () => {
+    dispatch(setDepth2Content('cafelist'));
+  };
+
   return (
     <Wrapper>
       {/* 헤더 */}
@@ -49,6 +56,10 @@ const CafeCommentLayout = ({
           <ArrowBackIosNewIcon
             className="mui-icon"
             onClick={handleBackArrowClick}
+          />
+          <HomeRoundedIcon
+            className="mui-home-icon"
+            onClick={handleHomeClick}
           />
           <Typography variant="h4" className="title" mr="20px">
             {name}

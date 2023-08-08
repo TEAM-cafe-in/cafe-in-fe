@@ -23,6 +23,11 @@ export const CommentTitle = styled(Box)`
     margin-left: 20px;
     cursor: pointer;
   }
+  .mui-home-icon {
+    cursor: pointer;
+    transform: scale(1.5);
+    margin-left: 10px;
+  }
   .title {
     flex: 1;
     text-align: center;
