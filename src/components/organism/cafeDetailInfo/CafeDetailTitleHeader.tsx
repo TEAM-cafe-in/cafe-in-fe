@@ -20,6 +20,7 @@ const CafeDetailTitleHeader = ({ cafeId, data }: DetailProps) => {
         name={data?.cafeInfoProjection.name}
         status={data?.cafeInfoProjection.status}
         cafeId={cafeId}
+        address={data?.cafeInfoProjection.address}
       />
       {/* 카페 혼잡도 확인 버튼 컴포넌트 */}
       <CafeCongestionStatus
