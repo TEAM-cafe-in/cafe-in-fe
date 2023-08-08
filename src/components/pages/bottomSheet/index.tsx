@@ -4,11 +4,17 @@
  */
 import { useCallback, useState, Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
-import { Box, SwipeableDrawer, Typography } from '@mui/material';
+import { Box, SwipeableDrawer, useTheme } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import CloseIcon from '@mui/icons-material/Close';
 import { Global } from '@emotion/react';
 
-import { useDepth2ContentSelector } from '~/store/reducers/depth2ContentSlice';
+import {
+  setDepth2Content,
+  useDepth2ContentSelector,
+} from '~/store/reducers/depth2ContentSlice';
 import {
   EMPTY_TOOL_BAR_HEIGHT,
   TOOL_BAR_HEIGHT,
@@ -19,7 +25,10 @@ import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import CafeDetailTitleHeader from '~/components/organism/cafeDetailInfo/CafeDetailTitleHeader';
+
 import {
+  ButtonContainer,
+  ButtonWrapper,
   ContentBox,
   DRAWER_BLEEDING,
   Puller,
@@ -31,7 +40,10 @@ const BOTTOM_SHEET_FULL_HEIGHT =
   DRAWER_BLEEDING + TOOL_BAR_HEIGHT + EMPTY_TOOL_BAR_HEIGHT + 20;
 
 const BottomSheet = () => {
+  const theme = useTheme();
+  const color1 = theme.palette.grey[100];
   const token = useAccessTokenSelector();
+  const dispatch = useDispatch();
   const depth2Detail = useDepth2ContentSelector();
   const [open, setOpen] = useState(false);
   // 카페 디테일 아이디
@@ -67,6 +79,16 @@ const BottomSheet = () => {
     setExpand(false);
   }, []);
 
+  // 요약 페이지로 이동
+  const handlePreviousDetail = () => {
+    setOpen(false);
+    setExpand(false);
+  };
+
+  const handlePreviousList = () => {
+    dispatch(setDepth2Content('cafelist'));
+  };
+
   return (
     <>
       <Global
@@ -78,7 +100,10 @@ const BottomSheet = () => {
           ...(depth2Detail === 'content' && {
             '.MuiDrawer-root > .MuiPaper-root': {
               overflow: 'visible',
-              height: `calc(100% - ${DRAWER_BLEEDING}px)`,
+              // height: expand
+              //  ? `calc(105% - ${DRAWER_BLEEDING}px)`
+              //  : `calc(105% - ${DRAWER_BLEEDING}px) `,
+              height: `calc(105% - ${DRAWER_BLEEDING}px)`,
             },
           }),
         }}
@@ -119,7 +144,20 @@ const BottomSheet = () => {
             {/* 카페 디테일 확장 페이지 */}
             {depth2Detail === 'content' && expand && (
               <Suspense fallback={<div>loading...</div>}>
-                <Typography>모바일 디테일 페이지</Typography>
+                <ButtonWrapper>
+                  {/* 요약 페이지로 이동 */}
+                  <ButtonContainer
+                    color1={color1}
+                    onClick={handlePreviousDetail}
+                  >
+                    <KeyboardArrowDownIcon />
+                  </ButtonContainer>
+                  {/* 리스트 페이지로 이동 */}
+                  <ButtonContainer color1={color1} onClick={handlePreviousList}>
+                    <CloseIcon />
+                  </ButtonContainer>
+                </ButtonWrapper>
+
                 <CafeDetailInfo cafeId={depth2DataId} data={congestion} />
               </Suspense>
             )}

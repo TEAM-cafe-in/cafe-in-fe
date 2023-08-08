@@ -35,3 +35,24 @@ export const ContentBox = styled(Box)`
     display: none;
   }
 `;
+
+interface ColorProp {
+  color1: string;
+}
+
+export const ButtonContainer = styled(Box)<ColorProp>`
+  background-color: ${(props) => props.color1};
+  width: 44px;
+  height: 44px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 15px;
+  cursor: pointer;
+`;
+
+export const ButtonWrapper = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+`;
