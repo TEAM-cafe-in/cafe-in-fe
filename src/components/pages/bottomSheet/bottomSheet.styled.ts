@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-export const DRAWER_BLEEDING = 106;
+export const DRAWER_BLEEDING = 205;
 
 export const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor:
