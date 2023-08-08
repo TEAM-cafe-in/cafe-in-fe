@@ -3,7 +3,7 @@
  * @description 권한이 필요한 페이지의 Layout
  */
 
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, Suspense, useCallback, useState } from 'react';
 import Image from 'next/image';
 
 import { Box, Toolbar, useMediaQuery } from '@mui/material';
@@ -68,7 +68,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         {children}
 
         {/* Mobile 전용 BottomSheet 영역  */}
-        {isMobile && <BottomSheet />}
+        {isMobile && (
+          <Suspense fallback={<div>loading...</div>}>
+            <BottomSheet />
+          </Suspense>
+        )}
       </Box>
     </Box>
   );
