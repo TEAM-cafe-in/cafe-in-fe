@@ -26,6 +26,7 @@ import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import CafeDetailTitleHeader from '~/components/organism/cafeDetailInfo/CafeDetailTitleHeader';
 
+import GoogleMapComponent from '~/components/organism/googleMap';
 import {
   ButtonContainer,
   ButtonWrapper,
@@ -100,14 +101,12 @@ const BottomSheet = () => {
           ...(depth2Detail === 'content' && {
             '.MuiDrawer-root > .MuiPaper-root': {
               overflow: 'visible',
-              // height: expand
-              //  ? `calc(105% - ${DRAWER_BLEEDING}px)`
-              //  : `calc(105% - ${DRAWER_BLEEDING}px) `,
               height: `calc(105% - ${DRAWER_BLEEDING}px)`,
             },
           }),
         }}
       />
+
       <SwipeableDrawer
         container={container}
         anchor="bottom"
@@ -157,7 +156,10 @@ const BottomSheet = () => {
                     <CloseIcon />
                   </ButtonContainer>
                 </ButtonWrapper>
-
+                {/* 구글 맵 자리 */}
+                <div style={{ width: '100%', height: '200px' }}>
+                  <GoogleMapComponent />
+                </div>
                 <CafeDetailInfo cafeId={depth2DataId} data={congestion} />
               </Suspense>
             )}
