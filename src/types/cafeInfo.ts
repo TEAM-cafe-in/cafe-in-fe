@@ -3,6 +3,7 @@
  * @description 카페 정보 관련 타입 정의 모음
  */
 
+import { EngKeywords } from './comment';
 import { TCafeCongestion } from './radio';
 
 export interface CafesInfo {
@@ -40,7 +41,7 @@ export interface Comment {
   memberName: string;
   createdTime: string;
   content: string;
-  keywords: string[] | [];
+  keywords: EngKeywords[] | [];
 }
 export interface CafeComment {
   cafeInfoProjection: CafeDetailInfo;

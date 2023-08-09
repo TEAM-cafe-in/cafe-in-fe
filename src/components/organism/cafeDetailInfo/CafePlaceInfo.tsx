@@ -8,7 +8,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import CallIcon from '@mui/icons-material/Call';
 
 import { UnderlineButton } from '~/components/atom/buttons';
-import LabelItems from '~/components/molecule/label/LabelItems';
+import { LabelItems } from '~/components/molecule/label';
 import {
   CafePlaceContainer,
   CongestionBox,

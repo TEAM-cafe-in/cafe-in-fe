@@ -11,14 +11,17 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Comment } from '~/types/cafeInfo';
 import Profile from '~/components/atom/profile';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { EngKeywords } from '~/types/comment';
 import chat from '../../../static/images/chat.png';
 import heart from '../../../static/images/heart.png';
 import {
   CommentContainer,
-  CommentReactIcon,
+  CommentFlexWrapper,
+  CommentLabelWrapper,
   SingleCommentContent,
   SingleCommentTitle,
 } from './cafeCommentLayout.styled';
+import { CommentLabelItems } from '../label';
 
 interface CommentProps {
   comment: Comment;
@@ -49,9 +52,18 @@ const CafeSingleComment = ({ comment, type }: CommentProps) => {
       <Profile size="md" />
       <SingleCommentContent>
         <SingleCommentTitle type={type}>
-          <Typography color={nameColor} variant="body1" mr="5px">
-            {comment.memberName}
-          </Typography>
+          <CommentFlexWrapper>
+            <Typography color={nameColor} variant="body1" mr="5px">
+              {comment.memberName}
+            </Typography>
+            <CommentLabelWrapper>
+              {comment.keywords &&
+                comment.keywords.map((keyword: EngKeywords) => (
+                  <CommentLabelItems key={keyword} type={keyword} />
+                ))}
+            </CommentLabelWrapper>
+          </CommentFlexWrapper>
+
           <Typography color={timeColor} variant="body2">
             {comment.createdTime}
           </Typography>
@@ -59,7 +71,7 @@ const CafeSingleComment = ({ comment, type }: CommentProps) => {
         <Typography mb="5px" mt="5px">
           {comment.content}
         </Typography>
-        <CommentReactIcon>
+        <CommentFlexWrapper>
           {type !== 're-comment' && (
             <>
               <Image
@@ -87,7 +99,7 @@ const CafeSingleComment = ({ comment, type }: CommentProps) => {
               <Typography ml="5px">2</Typography>
             </>
           )}
-        </CommentReactIcon>
+        </CommentFlexWrapper>
       </SingleCommentContent>
       <MoreVertIcon className="menu-icon" />
     </CommentContainer>

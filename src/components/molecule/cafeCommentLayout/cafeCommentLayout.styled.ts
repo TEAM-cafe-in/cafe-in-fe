@@ -119,7 +119,13 @@ export const SingleCommentTitle = styled(Box)<CommetTypeProp>`
       flex-direction: row;
     `}
 `;
-export const CommentReactIcon = styled(Box)`
+export const CommentFlexWrapper = styled(Box)`
   display: flex;
   align-items: center;
+`;
+export const CommentLabelWrapper = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5px;
+  max-width: 100%;
 `;
