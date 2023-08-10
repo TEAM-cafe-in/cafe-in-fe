@@ -15,14 +15,19 @@ interface ModalProps {
   children: ReactNode;
   // 모달 닫기 함수
   onClose: () => void;
+  // 모달 높이
+  height?: string;
 }
 
-const Modal = ({ open, children, onClose }: ModalProps) => {
+const Modal = ({ open, children, onClose, height }: ModalProps) => {
   return (
     <MuiModal open={open} onClose={onClose}>
-      <ModalContainer>{children}</ModalContainer>
+      <ModalContainer style={{ height }}>{children}</ModalContainer>
     </MuiModal>
   );
 };
 
 export default Modal;
+Modal.defaultProps = {
+  height: 'auto', // 기본 높이 값 설정
+};

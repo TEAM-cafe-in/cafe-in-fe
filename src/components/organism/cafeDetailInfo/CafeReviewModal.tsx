@@ -83,7 +83,7 @@ const CafeReviewModal = ({
   const grayColor = theme.palette.grey[100];
 
   return (
-    <Modal open={open} onClose={handleReviewModalClose}>
+    <Modal open={open} onClose={handleReviewModalClose} height="100%">
       <ReviewTitle color={grayColor}>
         <Button color="secondary" onClick={handleReviewModalClose}>
           취소
