@@ -23,6 +23,11 @@ export const CommentTitle = styled(Box)`
     margin-left: 20px;
     cursor: pointer;
   }
+  .mui-home-icon {
+    cursor: pointer;
+    transform: scale(1.5);
+    margin-left: 10px;
+  }
   .title {
     flex: 1;
     text-align: center;
@@ -114,7 +119,13 @@ export const SingleCommentTitle = styled(Box)<CommetTypeProp>`
       flex-direction: row;
     `}
 `;
-export const CommentReactIcon = styled(Box)`
+export const CommentFlexWrapper = styled(Box)`
   display: flex;
   align-items: center;
+`;
+export const CommentLabelWrapper = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5px;
+  max-width: 100%;
 `;

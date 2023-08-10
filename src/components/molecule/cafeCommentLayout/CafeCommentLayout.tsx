@@ -4,11 +4,12 @@
  */
 
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Typography } from '@mui/material';
+import { Typography, useMediaQuery } from '@mui/material';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-import { useDispatch } from 'react-redux';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
 import {
   CommentContent,
@@ -25,12 +26,15 @@ interface CafeCommentLayoutProps {
   type: 'comment' | 're-comment';
 }
 
+const query = '(min-width:0px) and (max-width:600px)';
+
 const CafeCommentLayout = ({
   children,
   name,
   type,
 }: CafeCommentLayoutProps) => {
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 뒤로 가기 버튼
   const handleBackArrowClick = () => {
@@ -41,6 +45,12 @@ const CafeCommentLayout = ({
       dispatch(setDepth2Content('comment'));
     }
   };
+
+  // 홈 버튼
+  const handleHomeClick = () => {
+    dispatch(setDepth2Content('cafelist'));
+  };
+
   return (
     <Wrapper>
       {/* 헤더 */}
@@ -50,6 +60,13 @@ const CafeCommentLayout = ({
             className="mui-icon"
             onClick={handleBackArrowClick}
           />
+          {isMobile && (
+            <HomeRoundedIcon
+              className="mui-home-icon"
+              onClick={handleHomeClick}
+            />
+          )}
+
           <Typography variant="h4" className="title" mr="20px">
             {name}
           </Typography>

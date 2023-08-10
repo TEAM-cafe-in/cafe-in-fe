@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 
 import { Review } from '~/types/mypage';
-import LabelItems from '../label/LabelItems';
+import { LabelItems } from '../label';
 import RadioStatusButton from '../radioButtons/RadioStatusButton';
 
 interface PostProps {
