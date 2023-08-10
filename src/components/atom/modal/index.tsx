@@ -17,12 +17,14 @@ interface ModalProps {
   onClose: () => void;
   // 모달 높이
   height?: string;
+  // 모달 가로
+  width?: string;
 }
 
-const Modal = ({ open, children, onClose, height }: ModalProps) => {
+const Modal = ({ open, children, onClose, height, width }: ModalProps) => {
   return (
     <MuiModal open={open} onClose={onClose}>
-      <ModalContainer style={{ height }}>{children}</ModalContainer>
+      <ModalContainer style={{ height, width }}>{children}</ModalContainer>
     </MuiModal>
   );
 };
@@ -30,4 +32,5 @@ const Modal = ({ open, children, onClose, height }: ModalProps) => {
 export default Modal;
 Modal.defaultProps = {
   height: 'auto', // 기본 높이 값 설정
+  width: 'auto',
 };

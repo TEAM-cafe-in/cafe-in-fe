@@ -86,7 +86,12 @@ const CafeReviewMobileModal = ({
   };
 
   return (
-    <Modal open={open} onClose={handleReviewModalClose} height="100%">
+    <Modal
+      open={open}
+      onClose={handleReviewModalClose}
+      height="100%"
+      width="100%"
+    >
       <MobileTitle color={grayColor}>
         <Typography variant="h5">{title}</Typography>
         <CloseIcon className="closeIcon" onClick={handleReviewModalClose} />
