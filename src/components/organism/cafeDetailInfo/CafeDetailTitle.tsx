@@ -9,6 +9,7 @@ import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { WriteButton } from '~/components/atom/buttons';
 import { ActionButton } from '~/types/popup';
+import { query } from '~/helpers/mobileQuery';
 import CafeReviewSuccessPopup from './CafeReviewSuccessPopup';
 import CafeReviewModal from './CafeReviewModal';
 import {
@@ -16,6 +17,7 @@ import {
   CafeTitle,
   CafeTitleContainer,
 } from './cafeDetailInfo.styled';
+import CafeReviewMobileModal from './mobile/CafeReviewMobileModal';
 
 interface CafeTitleProps {
   name: string;
@@ -23,8 +25,6 @@ interface CafeTitleProps {
   cafeId: string;
   address: string;
 }
-
-const query = '(min-width:0px) and (max-width:600px)';
 
 const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
   const theme = useTheme();
@@ -84,21 +84,35 @@ const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
   return (
     <Box>
       {/* 카페 리뷰 등록 모달 */}
-      <CafeReviewModal
-        cafeId={cafeId}
-        open={reviewOpen}
-        onClose={closeReviewHandler}
-        title={name}
-        reviewSuccess={openReviewPopup}
-        setReviewCount={updateCoffeCount}
-      />
+      {isMobile ? (
+        <CafeReviewMobileModal
+          cafeId={cafeId}
+          open={reviewOpen}
+          onClose={closeReviewHandler}
+          title={name}
+          reviewSuccess={openReviewPopup}
+          setReviewCount={updateCoffeCount}
+        />
+      ) : (
+        <CafeReviewModal
+          cafeId={cafeId}
+          open={reviewOpen}
+          onClose={closeReviewHandler}
+          title={name}
+          reviewSuccess={openReviewPopup}
+          setReviewCount={updateCoffeCount}
+        />
+      )}
+
       {/* 카페 리뷰 등록 성공 팝업 모달 */}
+
       <CafeReviewSuccessPopup
         reviewPopup={reviewPopUp}
         coffeeCount={coffeeCount}
         actions={actions}
         closePopup={closePopup}
       />
+
       <CafeTitle>
         <Box>
           <Typography variant="h3" mr="4px" mt="7px">
