@@ -1,17 +1,19 @@
 /**
  * @createBy 한수민
- * @description  카페 리뷰 작성 모달
+ * @description  [모바일] 카페 리뷰 작성 모달
  */
 import { useState, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { Button, Typography, useTheme } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 import Modal from '~/components/atom/modal';
 import { RadioReviewButtons } from '~/components/molecule/radioButtons';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import addCafeReview from '~/pages/api/cafe/addCafeReview';
-import { ReviewContent, ReviewTitle } from './cafeDetailInfo.styled';
+import { ReviewContent } from '../cafeDetailInfo.styled';
+import { MobileReviewButtons, MobileTitle } from './cafeDetailInfo.styled';
 
 interface ReviewProps {
   cafeId: string;
@@ -22,7 +24,7 @@ interface ReviewProps {
   setReviewCount: (data: number) => void;
 }
 
-const CafeReviewModal = ({
+const CafeReviewMobileModal = ({
   cafeId,
   open,
   onClose,
@@ -32,6 +34,7 @@ const CafeReviewModal = ({
 }: ReviewProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
+  const mainColor = theme.palette.primary.main;
 
   const token = useAccessTokenSelector();
 
@@ -83,16 +86,16 @@ const CafeReviewModal = ({
   };
 
   return (
-    <Modal open={open} onClose={handleReviewModalClose}>
-      <ReviewTitle color={grayColor}>
-        <Button color="secondary" onClick={handleReviewModalClose}>
-          취소
-        </Button>
+    <Modal
+      open={open}
+      onClose={handleReviewModalClose}
+      height="100%"
+      width="100%"
+    >
+      <MobileTitle color={grayColor}>
         <Typography variant="h5">{title}</Typography>
-        <Button onClick={handleCafeReview} disabled={isButtonDisabled()}>
-          등록
-        </Button>
-      </ReviewTitle>
+        <CloseIcon className="closeIcon" onClick={handleReviewModalClose} />
+      </MobileTitle>
 
       <ReviewContent color={grayColor}>
         <RadioReviewButtons
@@ -117,7 +120,23 @@ const CafeReviewModal = ({
           setState={handleHasPlugChange}
         />
       </ReviewContent>
+      <MobileReviewButtons>
+        <Button variant="outlined" onClick={handleReviewModalClose}>
+          <Typography color={mainColor} variant="button">
+            취소
+          </Typography>
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleCafeReview}
+          disabled={isButtonDisabled()}
+        >
+          <Typography color="white" variant="button">
+            등록
+          </Typography>
+        </Button>
+      </MobileReviewButtons>
     </Modal>
   );
 };
-export default CafeReviewModal;
+export default CafeReviewMobileModal;

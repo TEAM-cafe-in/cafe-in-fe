@@ -25,6 +25,8 @@ export const SelectButton = styled(Button)<SelectButtonProps>`
 export const SelectTypography = styled(Typography)<SelectTypographyProps>`
   color: ${({ color1, selected }) => (selected ? 'black' : color1)};
   margin-left: 5px;
+  line-height: 1;
+  padding: 0;
 `;
 
 export const SelectArrayWrapper = styled(Box)`

@@ -28,6 +28,7 @@ import CafeDetailTitleHeader from '~/components/organism/cafeDetailInfo/CafeDeta
 import GoogleMapComponent from '~/components/organism/googleMap';
 import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
+import CafeWriteComment from '~/components/organism/cafeWriteComment';
 import {
   ButtonContainer,
   ButtonWrapper,
@@ -175,6 +176,14 @@ const BottomSheet = () => {
 
             {/* 카페 대댓글 리스트 페이지 */}
             {depth2Detail === 're-comment' && <CafeReComment />}
+
+            {/* 카페 댓글 작성 페이지 */}
+            {depth2Detail === 'write' && (
+              <CafeWriteComment
+                name={congestion?.cafeInfoProjection.name}
+                cafeId={congestion?.cafeInfoProjection.cafeId}
+              />
+            )}
           </ContentBox>
         </StyledBox>
       </SwipeableDrawer>
