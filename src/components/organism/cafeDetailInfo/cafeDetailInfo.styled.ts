@@ -104,12 +104,6 @@ export const ReviewContent = styled(Box)<CafeInfoProps>`
   padding: 10px;
 `;
 
-export const ReviewCount = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 // CafeCongestionPopup 컴포넌트 styled component
 export const CongestionCoffee = styled(Box)`
   display: inline-flex;
