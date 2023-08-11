@@ -21,7 +21,6 @@ interface ReviewProps {
   onClose: () => void;
   title: string;
   reviewSuccess: () => void;
-  setReviewCount: (data: number) => void;
 }
 
 const CafeReviewMobileModal = ({
@@ -30,7 +29,6 @@ const CafeReviewMobileModal = ({
   onClose,
   title,
   reviewSuccess,
-  setReviewCount,
 }: ReviewProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
@@ -44,8 +42,7 @@ const CafeReviewMobileModal = ({
 
   // 리뷰 작성 react query문
   const { mutate } = useMutation(addCafeReview, {
-    onSuccess: (data) => {
-      setReviewCount(data.coffeeBean);
+    onSuccess: () => {
       reviewSuccess();
     },
   });

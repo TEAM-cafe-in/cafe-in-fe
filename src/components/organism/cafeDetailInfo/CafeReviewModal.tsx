@@ -3,13 +3,13 @@
  * @description  카페 리뷰 작성 모달
  */
 import { useState, useCallback } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Button, Typography, useTheme } from '@mui/material';
 
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import Modal from '~/components/atom/modal';
 import { RadioReviewButtons } from '~/components/molecule/radioButtons';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import addCafeReview from '~/pages/api/cafe/addCafeReview';
 import { ReviewContent, ReviewTitle } from './cafeDetailInfo.styled';
 
@@ -19,7 +19,6 @@ interface ReviewProps {
   onClose: () => void;
   title: string;
   reviewSuccess: () => void;
-  setReviewCount: (data: number) => void;
 }
 
 const CafeReviewModal = ({
@@ -28,7 +27,6 @@ const CafeReviewModal = ({
   onClose,
   title,
   reviewSuccess,
-  setReviewCount,
 }: ReviewProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
@@ -40,9 +38,10 @@ const CafeReviewModal = ({
   const [isClean, setIsClean] = useState<string>('');
 
   // 리뷰 작성 react query문
+  const queryClient = useQueryClient();
   const { mutate } = useMutation(addCafeReview, {
-    onSuccess: (data) => {
-      setReviewCount(data.coffeeBean);
+    onSuccess: () => {
+      queryClient.invalidateQueries(['coffeeBean']);
       reviewSuccess();
     },
   });

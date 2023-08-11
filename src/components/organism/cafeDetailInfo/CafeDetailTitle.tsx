@@ -10,7 +10,7 @@ import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { WriteButton } from '~/components/atom/buttons';
 import { ActionButton } from '~/types/popup';
 import { query } from '~/helpers/mobileQuery';
-import CafeReviewSuccessPopup from './CafeReviewSuccessPopup';
+import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
 import CafeReviewModal from './CafeReviewModal';
 import {
   CafeStatusTypography,
@@ -36,13 +36,6 @@ const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
   const [reviewOpen, setReviewOpen] = useState<boolean>(false);
   // 리뷰 등록 성공 팝업 모달 상태
   const [reviewPopUp, setReviewPopUp] = useState<boolean>(false);
-  // 커피빈 남은 개수
-  const [coffeeCount, setCoffeeCount] = useState<number>(0);
-
-  // 커피 남은 콩 개수 update 함수
-  const updateCoffeCount = useCallback((coffee: number) => {
-    setCoffeeCount(coffee);
-  }, []);
 
   // 리뷰 Modal 열기 함수
   const openReviewHandler = useCallback(() => {
@@ -91,7 +84,6 @@ const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
           onClose={closeReviewHandler}
           title={name}
           reviewSuccess={openReviewPopup}
-          setReviewCount={updateCoffeCount}
         />
       ) : (
         <CafeReviewModal
@@ -100,17 +92,15 @@ const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
           onClose={closeReviewHandler}
           title={name}
           reviewSuccess={openReviewPopup}
-          setReviewCount={updateCoffeCount}
         />
       )}
 
       {/* 카페 리뷰 등록 성공 팝업 모달 */}
-
-      <CafeReviewSuccessPopup
-        reviewPopup={reviewPopUp}
-        coffeeCount={coffeeCount}
+      <CafeResponsePopup
+        openPopup={reviewPopUp}
         actions={actions}
         closePopup={closePopup}
+        type="success"
       />
 
       <CafeTitle>

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import styled from 'styled-components';
 
-// [모바일] 카페 리뷰 작성 모달 컴포넌트
+// [모바일] 카페 리뷰 작성 모달
 interface GrayProp {
   color: string;
 }
