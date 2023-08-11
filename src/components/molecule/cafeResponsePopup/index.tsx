@@ -14,14 +14,14 @@ import reviewFail from '../../../static/images/not-review-logo.png';
 import { ReviewCount } from './cafeResponsePopup.styled';
 
 interface CafePopupProps {
-  reviewPopup: boolean;
+  openPopup: boolean;
   actions: ActionButton[];
   closePopup: () => void;
   type: 'success' | 'fail';
 }
 
 const CafeResponsePopup = ({
-  reviewPopup,
+  openPopup,
   actions,
   closePopup,
   type,
@@ -32,7 +32,7 @@ const CafeResponsePopup = ({
 
   return (
     <Popup
-      open={reviewPopup}
+      open={openPopup}
       content={
         <>
           {type === 'success' ? (

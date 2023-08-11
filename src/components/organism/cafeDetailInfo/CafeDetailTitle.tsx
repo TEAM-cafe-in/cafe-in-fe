@@ -97,7 +97,7 @@ const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
 
       {/* 카페 리뷰 등록 성공 팝업 모달 */}
       <CafeResponsePopup
-        reviewPopup={reviewPopUp}
+        openPopup={reviewPopUp}
         actions={actions}
         closePopup={closePopup}
         type="success"
