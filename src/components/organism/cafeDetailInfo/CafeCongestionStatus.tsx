@@ -13,6 +13,8 @@ import { useAddCoffeeBeanMutation } from '~/pages/api/cafe/useCoffeeBean';
 import { ActionButton } from '~/types/popup';
 import { TCafeCongestion } from '~/types/radio';
 import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
+import { useQuery } from '@tanstack/react-query';
+import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
 import CafeCongestionPopup from './CafeCongestionPopup';
 
 interface CongestionProps {
@@ -21,9 +23,6 @@ interface CongestionProps {
 }
 const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
   const token = useAccessTokenSelector();
-
-  // 멤버 커피콩 개수
-  const coffeeBean = 1;
 
   // 실시간 혼잡도 확인할 때 팝업창
   const [cafeCongestionPopup, setCafeCongestionPopup] =
@@ -37,16 +36,21 @@ const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
     cafeId,
   });
 
+  // 커피콩 조회 react query 문
+  const { data, status: coffeeBeanStatus } = useQuery(['coffeeBean'], () =>
+    getCoffeeBean(token)
+  );
+
   // 커피콩 개수에 따라 혼잡도 확인 혹은 부족 팝업창
   const congestionCoffeeBeanClickHandler = useCallback(() => {
     // 커피콩이 2개 이상이면 혼잡도 확인 팝업
-    if (coffeeBean > 2) {
+    if (coffeeBeanStatus === 'success' && data >= 2) {
       setCafeCongestionPopup(true);
     } else {
       // 커피콩 1개 이하이면 커피콩 부족 팝업
       setCoffeeBeanPopup(true);
     }
-  }, []);
+  }, [coffeeBeanStatus, data]);
 
   // 커피콩 부족 팝업 닫기 함수
   const closeCoffeeBeanPopup = useCallback(() => {
