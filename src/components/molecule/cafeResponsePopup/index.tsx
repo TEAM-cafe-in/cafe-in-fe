@@ -3,12 +3,15 @@
  * @description 카페 팝업 창 레이아웃
  */
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import { Typography, useTheme } from '@mui/material';
 
-import Popup from '~/components/atom/popup';
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { ActionButton } from '~/types/popup';
+import Popup from '~/components/atom/popup';
+import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
 import reviewSuccess from '../../../static/images/review-logo.png';
 import reviewFail from '../../../static/images/not-review-logo.png';
 import { ReviewCount } from './cafeResponsePopup.styled';
@@ -26,9 +29,13 @@ const CafeResponsePopup = ({
   closePopup,
   type,
 }: CafePopupProps) => {
+  const token = useAccessTokenSelector();
   const theme = useTheme();
   const mainColor = theme.palette.primary.main;
   const coffeColor = theme.palette.grey[400];
+
+  // 커피콩 조회 react query 문
+  const { data } = useQuery(['coffeeBean'], () => getCoffeeBean(token));
 
   return (
     <Popup
@@ -54,7 +61,7 @@ const CafeResponsePopup = ({
           )}
 
           <Typography variant="body2" color={coffeColor}>
-            잔여 커피콩: 99개
+            잔여 커피콩: {data}개
           </Typography>
         </>
       }

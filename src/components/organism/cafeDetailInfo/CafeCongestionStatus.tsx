@@ -4,16 +4,16 @@
  */
 
 import { useCallback, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { Box } from '@mui/material';
 
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
-import { useAddCoffeeBeanMutation } from '~/pages/api/cafe/useCoffeeBean';
 import { ActionButton } from '~/types/popup';
 import { TCafeCongestion } from '~/types/radio';
+import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
 import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
-import { useQuery } from '@tanstack/react-query';
+import { useAddCoffeeBeanMutation } from '~/pages/api/cafe/useCoffeeBean';
 import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
 import CafeCongestionPopup from './CafeCongestionPopup';
 
@@ -21,6 +21,7 @@ interface CongestionProps {
   status: TCafeCongestion;
   cafeId: string;
 }
+
 const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
   const token = useAccessTokenSelector();
 

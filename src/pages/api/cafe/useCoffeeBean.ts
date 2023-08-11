@@ -41,6 +41,7 @@ export const useAddCoffeeBeanMutation = (body: CoffeeBean) => {
     onSuccess: () => {
       queryClient.invalidateQueries(['cafeList']);
       queryClient.invalidateQueries(['comment']);
+      queryClient.invalidateQueries(['coffeeBean']);
     },
   });
 };
