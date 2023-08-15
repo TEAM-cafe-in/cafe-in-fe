@@ -129,3 +129,7 @@ export const CommentLabelWrapper = styled(Box)`
   gap: 1.5px;
   max-width: 100%;
 `;
+
+export const DeleteContent = styled(Box)`
+  border-radius: 20px;
+`;
