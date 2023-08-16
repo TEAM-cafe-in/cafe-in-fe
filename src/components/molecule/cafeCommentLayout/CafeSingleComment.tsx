@@ -37,9 +37,10 @@ interface CommentProps {
 const CafeSingleComment = ({ comment, type }: CommentProps) => {
   console.log(comment);
   const isMobile = useMediaQuery(query, { noSsr: false });
-
   const dispatch = useDispatch();
+
   const [deleteModal, setDeleteModal] = useState(false);
+
   const theme = useTheme();
   const nameColor = theme.palette.grey[500];
   const timeColor = theme.palette.grey[300];
