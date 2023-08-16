@@ -6,30 +6,25 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 
-import { Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
 import { Comment } from '~/types/cafeInfo';
 import { EngKeywords } from '~/types/comment';
 import Profile from '~/components/atom/profile';
-import Modal from '~/components/atom/modal';
 
-import { query } from '~/helpers/mobileQuery';
-import { useDeleteCafeCommentMutation } from '~/pages/api/cafe/deleteCafeComment';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import chat from '../../../static/images/chat.png';
 import heart from '../../../static/images/heart.png';
 import {
   CommentContainer,
   CommentFlexWrapper,
   CommentLabelWrapper,
-  DeleteContainer,
   SingleCommentContent,
   SingleCommentTitle,
-  StyledBoxButton,
 } from './cafeCommentLayout.styled';
 import { CommentLabelItems } from '../label';
+import CommentDeleteModal from './CommentDeleteModal';
 
 interface CommentProps {
   comment: Comment;
@@ -39,9 +34,7 @@ interface CommentProps {
 
 const CafeSingleComment = ({ comment, cafeId, type }: CommentProps) => {
   console.log(comment, cafeId);
-  const isMobile = useMediaQuery(query, { noSsr: false });
   const dispatch = useDispatch();
-  const token = useAccessTokenSelector();
 
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -51,17 +44,6 @@ const CafeSingleComment = ({ comment, cafeId, type }: CommentProps) => {
   const iconColor = theme.palette.grey[400];
   const borderColor = theme.palette.grey[100];
   const backgroundColor = theme.palette.grey[50];
-
-  // 댓글 삭제하는 react query 문
-  const { mutate: deleteMutate } = useDeleteCafeCommentMutation();
-
-  const deleteCommentHandler = () => {
-    deleteMutate({
-      token,
-      commentId: comment.commentId,
-      cafeId,
-    });
-  };
 
   // 댓글 클릭했을 때 대댓글로 이동
   const handleCommentClick = () => {
@@ -86,30 +68,12 @@ const CafeSingleComment = ({ comment, cafeId, type }: CommentProps) => {
   return (
     <>
       {/* 댓글 삭제 모달 */}
-      <Modal
-        open={deleteModal}
-        onClose={closeDeleteModal}
-        isBorder="8px"
-        width={isMobile ? '260px' : '300px'}
-      >
-        <DeleteContainer>
-          <Typography variant="h4" mt="80x" mb="10px">
-            댓글을 삭제하시겠습니까?
-          </Typography>
-          <StyledBoxButton
-            title="네"
-            color="warning"
-            padding="sm"
-            onClick={() => deleteCommentHandler()}
-          />
-          <StyledBoxButton
-            title="아니오"
-            color="secondary"
-            padding="sm"
-            onClick={closeDeleteModal}
-          />
-        </DeleteContainer>
-      </Modal>
+      <CommentDeleteModal
+        commentId={comment.commentId}
+        cafeId={cafeId}
+        deleteModal={deleteModal}
+        closeDeleteModal={closeDeleteModal}
+      />
 
       <CommentContainer
         color1={iconColor}
