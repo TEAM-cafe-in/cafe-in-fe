@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { css, styled } from 'styled-components';
+import { BoxButton } from '~/components/atom/buttons';
 
 export const Wrapper = styled(Box)`
   height: 100%;
@@ -130,6 +131,14 @@ export const CommentLabelWrapper = styled(Box)`
   max-width: 100%;
 `;
 
-export const DeleteContent = styled(Box)`
-  border-radius: 20px;
+export const DeleteContainer = styled(Box)`
+  margin-top: 15px;
+  margin-bottom: 10px;
+  left: 0;
+  right: 0;
+`;
+
+export const StyledBoxButton = styled(BoxButton)`
+  width: 100px;
+  border-radius: 5px;
 `;

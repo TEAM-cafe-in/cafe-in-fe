@@ -6,22 +6,26 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { Comment } from '~/types/cafeInfo';
-import Profile from '~/components/atom/profile';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { Comment } from '~/types/cafeInfo';
 import { EngKeywords } from '~/types/comment';
+import Profile from '~/components/atom/profile';
 import Modal from '~/components/atom/modal';
+
+import { query } from '~/helpers/mobileQuery';
 import chat from '../../../static/images/chat.png';
 import heart from '../../../static/images/heart.png';
 import {
   CommentContainer,
   CommentFlexWrapper,
   CommentLabelWrapper,
+  DeleteContainer,
   SingleCommentContent,
   SingleCommentTitle,
+  StyledBoxButton,
 } from './cafeCommentLayout.styled';
 import { CommentLabelItems } from '../label';
 
@@ -32,6 +36,7 @@ interface CommentProps {
 
 const CafeSingleComment = ({ comment, type }: CommentProps) => {
   console.log(comment);
+  const isMobile = useMediaQuery(query, { noSsr: false });
 
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -65,13 +70,26 @@ const CafeSingleComment = ({ comment, type }: CommentProps) => {
   return (
     <>
       {/* 댓글 삭제 모달 */}
-      <Modal open={deleteModal} onClose={closeDeleteModal}>
-        <Box>
-          <Typography>댓글을 삭제하시겠습니까?</Typography>
-          <Button>네</Button>
-          <Button>아니오</Button>
-        </Box>
+      <Modal
+        open={deleteModal}
+        onClose={closeDeleteModal}
+        isBorder="8px"
+        width={isMobile ? '260px' : '300px'}
+      >
+        <DeleteContainer>
+          <Typography variant="h4" mt="80x" mb="10px">
+            댓글을 삭제하시겠습니까?
+          </Typography>
+          <StyledBoxButton title="네" color="warning" padding="sm" />
+          <StyledBoxButton
+            title="아니오"
+            color="secondary"
+            padding="sm"
+            onClick={closeDeleteModal}
+          />
+        </DeleteContainer>
       </Modal>
+
       <CommentContainer
         color1={iconColor}
         color2={borderColor}
