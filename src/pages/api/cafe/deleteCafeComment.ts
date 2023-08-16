@@ -16,7 +16,7 @@ const deleteCafeComment = async (body: CafeComment) => {
 
   const url = `http://52.78.196.20:8080/api/cafe/${cafeId}/comment/${commentId}`;
 
-  const response = await fetch(url, {
+  await fetch(url, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -25,9 +25,6 @@ const deleteCafeComment = async (body: CafeComment) => {
     },
     credentials: 'include',
   });
-
-  const data = await response.json();
-  return data;
 };
 export default deleteCafeComment;
 

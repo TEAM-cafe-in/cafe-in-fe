@@ -45,6 +45,7 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
       {/* 카페 댓글 리스트 페이지 */}
       {depth2Detail === 'comment' && (
         <CafeDetailComment
+          cafeId={dataId}
           name={congestion?.cafeInfoProjection.name}
           comments={congestion?.comments}
         />

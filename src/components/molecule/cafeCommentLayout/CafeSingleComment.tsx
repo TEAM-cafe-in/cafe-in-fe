@@ -16,6 +16,8 @@ import Profile from '~/components/atom/profile';
 import Modal from '~/components/atom/modal';
 
 import { query } from '~/helpers/mobileQuery';
+import { useDeleteCafeCommentMutation } from '~/pages/api/cafe/deleteCafeComment';
+import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import chat from '../../../static/images/chat.png';
 import heart from '../../../static/images/heart.png';
 import {
@@ -31,13 +33,15 @@ import { CommentLabelItems } from '../label';
 
 interface CommentProps {
   comment: Comment;
+  cafeId: string;
   type: 'comment' | 're-comment' | 'top-comment';
 }
 
-const CafeSingleComment = ({ comment, type }: CommentProps) => {
-  console.log(comment);
+const CafeSingleComment = ({ comment, cafeId, type }: CommentProps) => {
+  console.log(comment, cafeId);
   const isMobile = useMediaQuery(query, { noSsr: false });
   const dispatch = useDispatch();
+  const token = useAccessTokenSelector();
 
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -47,6 +51,17 @@ const CafeSingleComment = ({ comment, type }: CommentProps) => {
   const iconColor = theme.palette.grey[400];
   const borderColor = theme.palette.grey[100];
   const backgroundColor = theme.palette.grey[50];
+
+  // 댓글 삭제하는 react query 문
+  const { mutate: deleteMutate } = useDeleteCafeCommentMutation();
+
+  const deleteCommentHandler = () => {
+    deleteMutate({
+      token,
+      commentId: comment.commentId,
+      cafeId,
+    });
+  };
 
   // 댓글 클릭했을 때 대댓글로 이동
   const handleCommentClick = () => {
@@ -81,7 +96,12 @@ const CafeSingleComment = ({ comment, type }: CommentProps) => {
           <Typography variant="h4" mt="80x" mb="10px">
             댓글을 삭제하시겠습니까?
           </Typography>
-          <StyledBoxButton title="네" color="warning" padding="sm" />
+          <StyledBoxButton
+            title="네"
+            color="warning"
+            padding="sm"
+            onClick={() => deleteCommentHandler()}
+          />
           <StyledBoxButton
             title="아니오"
             color="secondary"

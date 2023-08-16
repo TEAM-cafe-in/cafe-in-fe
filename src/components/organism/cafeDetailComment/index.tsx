@@ -12,9 +12,10 @@ import { Comment } from '~/types/cafeInfo';
 interface CommentProps {
   name: string;
   comments: Comment[] | [];
+  cafeId: string;
 }
 
-const CafeDetailComment = ({ name, comments }: CommentProps) => {
+const CafeDetailComment = ({ name, comments, cafeId }: CommentProps) => {
   return (
     <CafeCommentLayout name={name} type="comment">
       {comments &&
@@ -22,6 +23,7 @@ const CafeDetailComment = ({ name, comments }: CommentProps) => {
           <CafeSingleComment
             key={comment.commentId}
             comment={comment}
+            cafeId={cafeId}
             type="comment"
           />
         ))}
