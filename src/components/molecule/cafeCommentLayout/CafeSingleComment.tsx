@@ -30,10 +30,15 @@ interface CommentProps {
   comment: Comment;
   cafeId: string;
   type: 'comment' | 're-comment' | 'top-comment';
+  openDeleteToast: () => void;
 }
 
-const CafeSingleComment = ({ comment, cafeId, type }: CommentProps) => {
-  console.log(comment, cafeId);
+const CafeSingleComment = ({
+  comment,
+  cafeId,
+  type,
+  openDeleteToast,
+}: CommentProps) => {
   const dispatch = useDispatch();
 
   const [deleteModal, setDeleteModal] = useState(false);
@@ -73,6 +78,7 @@ const CafeSingleComment = ({ comment, cafeId, type }: CommentProps) => {
         cafeId={cafeId}
         deleteModal={deleteModal}
         closeDeleteModal={closeDeleteModal}
+        setDeleteToast={openDeleteToast}
       />
 
       <CommentContainer

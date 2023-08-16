@@ -3,8 +3,6 @@
  * @description 카페 댓글 삭제하는 api 함수
  */
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 interface CafeComment {
   token: string;
   cafeId: string;
@@ -27,14 +25,3 @@ const deleteCafeComment = async (body: CafeComment) => {
   });
 };
 export default deleteCafeComment;
-
-// 카페 댓글 삭제하는 mutate
-export const useDeleteCafeCommentMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(deleteCafeComment, {
-    onSuccess: () => {
-      // queryClient.invalidateQueries(['cafeList']);
-      queryClient.invalidateQueries(['comment']);
-    },
-  });
-};

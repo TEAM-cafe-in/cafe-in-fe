@@ -41,6 +41,7 @@ const Modal = ({
 };
 
 export default Modal;
+
 Modal.defaultProps = {
   height: 'auto', // 기본 높이 값 설정
   width: 'auto',

@@ -2,12 +2,14 @@
  * @createdBy 한수민
  * @description 카페 상세 댓글 삭제 모달
  */
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { Typography, useMediaQuery } from '@mui/material';
 
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import Modal from '~/components/atom/modal';
 import { query } from '~/helpers/mobileQuery';
-import { useDeleteCafeCommentMutation } from '~/pages/api/cafe/deleteCafeComment';
+import deleteCafeComment from '~/pages/api/cafe/deleteCafeComment';
 import { DeleteContainer, StyledBoxButton } from './cafeCommentLayout.styled';
 
 interface DeleteModalProps {
@@ -15,6 +17,7 @@ interface DeleteModalProps {
   cafeId: string;
   deleteModal: boolean;
   closeDeleteModal: () => void;
+  setDeleteToast: () => void;
 }
 
 const CommentDeleteModal = ({
@@ -22,14 +25,24 @@ const CommentDeleteModal = ({
   cafeId,
   deleteModal,
   closeDeleteModal,
+  setDeleteToast,
 }: DeleteModalProps) => {
   const token = useAccessTokenSelector();
   const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 댓글 삭제하는 react query 문
-  const { mutate: deleteMutate } = useDeleteCafeCommentMutation();
+  const queryClient = useQueryClient();
+  const { mutate: deleteMutate } = useMutation(deleteCafeComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['comment']);
+      setDeleteToast();
+    },
+  });
 
+  // 삭제 모달 확인 버튼 눌렀을 때
   const deleteCommentHandler = () => {
+    closeDeleteModal();
+
     deleteMutate({
       token,
       commentId,
@@ -52,7 +65,7 @@ const CommentDeleteModal = ({
           title="네"
           color="warning"
           padding="sm"
-          onClick={() => deleteCommentHandler()}
+          onClick={deleteCommentHandler}
         />
         <StyledBoxButton
           title="아니오"
