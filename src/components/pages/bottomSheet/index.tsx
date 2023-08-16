@@ -49,6 +49,7 @@ const BottomSheet = () => {
   const dispatch = useDispatch();
   const depth2Detail = useDepth2ContentSelector();
   const [open, setOpen] = useState(false);
+
   // 카페 디테일 아이디
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [openDepth2, setOpenDepth2] = useState(false);

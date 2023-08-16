@@ -19,18 +19,31 @@ interface ModalProps {
   height?: string;
   // 모달 가로
   width?: string;
+  // 모달 둥근 정도
+  isBorder?: string;
 }
 
-const Modal = ({ open, children, onClose, height, width }: ModalProps) => {
+const Modal = ({
+  open,
+  children,
+  onClose,
+  height,
+  width,
+  isBorder,
+}: ModalProps) => {
   return (
     <MuiModal open={open} onClose={onClose}>
-      <ModalContainer style={{ height, width }}>{children}</ModalContainer>
+      <ModalContainer style={{ height, width, borderRadius: isBorder }}>
+        {children}
+      </ModalContainer>
     </MuiModal>
   );
 };
 
 export default Modal;
+
 Modal.defaultProps = {
   height: 'auto', // 기본 높이 값 설정
   width: 'auto',
+  isBorder: 'auto',
 };

@@ -55,11 +55,17 @@ const BoxButton = ({
   ...others
 }: BoxButtonProps) => {
   const theme = useTheme();
+  const typo =
+    !disabled && variant === 'outlined' ? color : theme.palette.grey[700];
 
   // 버튼 색상 분기 처리
   let backgroundColor = color as string;
   if (color === 'secondary') {
-    backgroundColor = theme.palette.grey[900] as string;
+    backgroundColor = theme.palette.grey[200] as string;
+  }
+
+  if (color === 'warning') {
+    backgroundColor = theme.palette.warning.main as string;
   }
 
   // 비활성화인 경우
@@ -77,8 +83,9 @@ const BoxButton = ({
       {...others}
     >
       <Typography
-        variant="h5"
-        color={!disabled && variant === 'outlined' ? color : 'white'}
+        variant="button"
+        // color={!disabled && variant === 'outlined' ? color : 'white'}
+        color={color !== 'warning' ? typo : 'white'}
       >
         {title}
       </Typography>

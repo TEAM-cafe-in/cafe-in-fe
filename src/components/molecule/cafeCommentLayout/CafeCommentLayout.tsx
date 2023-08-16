@@ -11,6 +11,8 @@ import { Typography, useMediaQuery } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { query } from '~/helpers/mobileQuery';
+import CafeCommentWrite from './CafeCommentWrite';
 import {
   CommentContent,
   CommentTitle,
@@ -18,15 +20,12 @@ import {
   FooterContainer,
   Wrapper,
 } from './cafeCommentLayout.styled';
-import CafeCommentWrite from './CafeCommentWrite';
 
 interface CafeCommentLayoutProps {
   children: React.ReactNode;
   name: string;
   type: 'comment' | 're-comment';
 }
-
-const query = '(min-width:0px) and (max-width:600px)';
 
 const CafeCommentLayout = ({
   children,

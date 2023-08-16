@@ -15,6 +15,10 @@ const Palette = (): PaletteOptions => {
       default: '#FFFFFFF',
       paper: '',
     },
+    warning: {
+      main: '#FF4258',
+      dark: '',
+    },
     error: {
       main: '#FF4545',
       dark: '',

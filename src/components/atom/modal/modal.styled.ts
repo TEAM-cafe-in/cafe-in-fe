@@ -2,7 +2,7 @@ import { Box, SwipeableDrawer, styled } from '@mui/material';
 
 export const ModalContainer = styled(Box)(() => ({
   backgroundColor: '#fff',
-  minWidth: 400,
+  minWidth: 100,
   position: 'absolute',
   top: '50%',
   left: '50%',
