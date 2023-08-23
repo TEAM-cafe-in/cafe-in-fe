@@ -1,4 +1,4 @@
-import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { GetServerSidePropsContext } from 'next';
 import Cookies from 'universal-cookie';
 
@@ -9,7 +9,7 @@ import { setToken } from '~/store/reducers/authSlice';
 import wrapper from '~/store';
 import GoogleMapComponent from '~/components/organism/googleMap';
 import { getAccessToken } from './api/user';
-import getAllCafeInfo from './api/home/getAllCafeInfo';
+// import getAllCafeInfo from './api/home/getAllCafeInfo';
 
 const Home = () => {
   return (
@@ -32,26 +32,45 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // 쿠키에 있는 refresh 토큰값으로 access 토큰 발급
     const queryClient = new QueryClient();
 
-    const accessTokenResponse = await queryClient.fetchQuery(
-      ['accessToken'],
-      () => getAccessToken(refreshToken)
-    );
+    const refreshAccessToken = async () => {
+      const accessTokenResponse = await queryClient.fetchQuery(
+        ['accessToken'],
+        () => getAccessToken(refreshToken)
+      );
 
-    const { accessToken } = accessTokenResponse;
+      const { accessToken } = accessTokenResponse;
 
-    // store.dispatch를 사용하여 액션을 호출(토큰 정보 저장)
-    if (accessToken) {
-      store.dispatch(setToken({ access_token: accessToken }));
-    }
+      if (accessToken) {
+        store.dispatch(setToken({ access_token: accessToken }));
+      }
+    };
 
-    // 카페정보 SSR로 미리 캐시해두기
-    await queryClient.prefetchQuery(['cafeList'], () =>
-      getAllCafeInfo(accessToken)
-    );
+    await refreshAccessToken();
+
+    setInterval(() => {
+      refreshAccessToken();
+    }, 10 * 60 * 1000);
+
+    // const accessTokenResponse = await queryClient.fetchQuery(
+    //  ['accessToken'],
+    //  () => getAccessToken(refreshToken)
+    // );
+
+    // const { accessToken } = accessTokenResponse;
+
+    /// / store.dispatch를 사용하여 액션을 호출(토큰 정보 저장)
+    // if (accessToken) {
+    //  store.dispatch(setToken({ access_token: accessToken }));
+    // }
+
+    /// / 카페정보 SSR로 미리 캐시해두기
+    // await queryClient.prefetchQuery(['cafeList'], () =>
+    //  getAllCafeInfo(accessToken)
+    // );
 
     return {
       props: {
-        dehydratedProps: dehydrate(queryClient),
+        // dehydratedProps: dehydrate(queryClient),
       },
     };
   }
