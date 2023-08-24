@@ -48,9 +48,16 @@ const CafeInfoListPage = ({
     [setOpenDepth2, setDepth2DataId, dispatch]
   );
 
+  const cafeData =
+    data &&
+    data?.cafes.map((cafe: CafesInfo) => ({
+      name: cafe.name,
+      cafeId: cafe.cafeId,
+    }));
+
   return (
     <Box>
-      {!isMobile && <SearchCafe />}
+      {!isMobile && <SearchCafe cafeList={cafeData} />}
 
       <List>
         {data && (
