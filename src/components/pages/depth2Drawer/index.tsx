@@ -13,6 +13,9 @@ import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
 import CafeWriteComment from '~/components/organism/cafeWriteComment';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
+import { ErrorBoundary } from '~/helpers/ErrorBoundary';
+import ErrorFallback from '~/helpers/ErrorFallback';
+import { useDispatch } from 'react-redux';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
@@ -33,35 +36,39 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
       enabled: !!dataId, // cafeId가 없을 때 실행 X
     }
   );
+
+  const dispatch = useDispatch();
   return (
-    <Drawer variant="permanent" isSecondProps open={open}>
-      {/* 카페 디테일 페이지 */}
-      {depth2Detail === 'content' && (
-        <List>
-          <CafeDetailInfo cafeId={dataId} data={congestion} />
-        </List>
-      )}
+    <ErrorBoundary dispatch={dispatch} fallback={ErrorFallback}>
+      <Drawer variant="permanent" isSecondProps open={open}>
+        {/* 카페 디테일 페이지 */}
+        {depth2Detail === 'content' && (
+          <List>
+            <CafeDetailInfo cafeId={dataId} data={congestion} />
+          </List>
+        )}
 
-      {/* 카페 댓글 리스트 페이지 */}
-      {depth2Detail === 'comment' && (
-        <CafeDetailComment
-          cafeId={dataId}
-          name={congestion?.cafeInfoProjection.name}
-          comments={congestion?.comments}
-        />
-      )}
+        {/* 카페 댓글 리스트 페이지 */}
+        {depth2Detail === 'comment' && (
+          <CafeDetailComment
+            cafeId={dataId}
+            name={congestion?.cafeInfoProjection.name}
+            comments={congestion?.comments}
+          />
+        )}
 
-      {/* 카페 대댓글 리스트 페이지 */}
-      {depth2Detail === 're-comment' && <CafeReComment />}
+        {/* 카페 대댓글 리스트 페이지 */}
+        {depth2Detail === 're-comment' && <CafeReComment />}
 
-      {/* 카페 댓글 작성 페이지 */}
-      {depth2Detail === 'write' && (
-        <CafeWriteComment
-          name={congestion?.cafeInfoProjection.name}
-          cafeId={congestion?.cafeInfoProjection.cafeId}
-        />
-      )}
-    </Drawer>
+        {/* 카페 댓글 작성 페이지 */}
+        {depth2Detail === 'write' && (
+          <CafeWriteComment
+            name={congestion?.cafeInfoProjection.name}
+            cafeId={congestion?.cafeInfoProjection.cafeId}
+          />
+        )}
+      </Drawer>
+    </ErrorBoundary>
   );
 };
 

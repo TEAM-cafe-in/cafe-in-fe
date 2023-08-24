@@ -6,12 +6,14 @@ import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 
-import { List, Typography, useTheme } from '@mui/material';
+import { Box, List, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { CafesInfo } from '~/types/cafeInfo';
 import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import SearchCafe from '~/components/molecule/search';
+import { query } from '~/helpers/mobileQuery';
 import CafeInfo from './CafeInfo';
 
 interface CafeInfoListProps {
@@ -27,6 +29,8 @@ const CafeInfoListPage = ({
   const token = useAccessTokenSelector();
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
+
+  const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 전체 카페 정보 가져오는 react query 문
   const { data } = useQuery(['cafeList'], () => getAllCafeInfo(token), {
@@ -44,25 +48,36 @@ const CafeInfoListPage = ({
     [setOpenDepth2, setDepth2DataId, dispatch]
   );
 
+  const cafeData =
+    data &&
+    data?.cafes.map((cafe: CafesInfo) => ({
+      name: cafe.name,
+      cafeId: cafe.cafeId,
+    }));
+
   return (
-    <List>
-      {data && (
-        <>
-          <Typography ml="30px" color={grayColor}>
-            총 {data?.cafeCount}
-          </Typography>
-          {data.cafes?.map((cafe: CafesInfo, index: number) => (
-            <CafeInfo
-              // key={cafe.cafeId}
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              cafeClickHandler={() => cafeClickHandler(cafe.cafeId)}
-              cafes={cafe}
-            />
-          ))}
-        </>
-      )}
-    </List>
+    <Box>
+      {!isMobile && <SearchCafe cafeList={cafeData} />}
+
+      <List>
+        {data && (
+          <>
+            <Typography ml="30px" color={grayColor}>
+              총 {data?.cafeCount}
+            </Typography>
+            {data.cafes?.map((cafe: CafesInfo, index: number) => (
+              <CafeInfo
+                // key={cafe.cafeId}
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                cafeClickHandler={() => cafeClickHandler(cafe.cafeId)}
+                cafes={cafe}
+              />
+            ))}
+          </>
+        )}
+      </List>
+    </Box>
   );
 };
 export default CafeInfoListPage;
