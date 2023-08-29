@@ -22,18 +22,17 @@ const LoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  // 카카오 로그인 클릭했을 때
   const kakaoLoginHandler = useCallback(async () => {
     window.Kakao.Auth.login({
       success: async (kakao_data: KakaoResponse) => {
         // 카카오톡 서버로 부터 access token 받기
-        let accessToken: string = kakao_data.access_token;
+        const token: string = kakao_data.access_token;
 
         // api 통신으로 jwt 토큰 access token, refresh token 받기
-        const res: LoginResponse = await getLoginToken(accessToken, 'KAKAO');
-
-        // promise 객체값 접근
+        const res: LoginResponse = await getLoginToken(token, 'KAKAO');
         // jwt access token 리덕스에 저장
-        accessToken = res.data?.accessToken || '';
+        const accessToken = res.data?.accessToken || '';
         dispatch(setToken({ access_token: accessToken }));
 
         // refresh 토큰값과 토큰의 만료시간 쿠키에 저장
@@ -42,12 +41,14 @@ const LoginPage = () => {
           maxAge: expires.getTime(),
           expires,
         });
+
         // 로그인이 완료되면 메인으로 라우트
         router.push('/');
       },
     });
   }, [dispatch, router]);
 
+  // 구글 로그인 클릭했을 때
   // 구글 로그인하기 위한 url로 이동
   const googleLoginHandler = useCallback(() => {
     window.location.href =

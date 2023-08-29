@@ -26,4 +26,5 @@ export const StyledSearchBox = styled(Box)(({ theme }) => ({
   top: 'calc(100%)',
   padding: '0px 15px 10px 15px',
   borderTop: `1px solid ${theme.palette.grey[100]}`,
+  cursor: 'pointer',
 }));

@@ -3,7 +3,7 @@
  * @description 카페 검색 컴포넌트
  */
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 import { Typography, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -44,6 +44,21 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
     setFilterCafe([]);
   };
 
+  // 연관 검색어 클릭했을 때
+  const handleCafeListClick = (cafe: string) => {
+    setSearchInput(cafe);
+  };
+
+  // 검색 클릭했을 때
+  const handleSearchCafeClick = () => {};
+
+  // 인풋 컴포넌트 엔터 쳤을 때
+  const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      console.log('엔터 클릭');
+    }
+  };
+
   return (
     <StyledWrapper>
       <StyledBox>
@@ -53,32 +68,46 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
           inputProps={{ 'aria-label': '카페 바로 검색' }}
           onChange={handleSearchChange}
           value={searchInput}
+          onKeyDown={handleEnterInput}
         />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-          {searchInput !== '' && (
-            <CancelRoundedIcon fontSize="small" onClick={handleSearchCancel} />
-          )}
+        <IconButton
+          type="button"
+          sx={{ p: '10px' }}
+          aria-label="search"
+          onClick={handleSearchCancel}
+        >
+          {searchInput !== '' && <CancelRoundedIcon fontSize="small" />}
         </IconButton>
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+        <IconButton
+          type="button"
+          sx={{ p: '10px' }}
+          aria-label="search"
+          onClick={handleSearchCafeClick}
+        >
           <SearchIcon />
         </IconButton>
       </StyledBox>
       {filterCafe?.length > 0 && (
         <StyledSearchBox>
           {filterCafe?.map((cafe) => (
-            <Typography key={cafe.cafeId} mt="10px">
+            <Typography
+              key={cafe.cafeId}
+              mt="10px"
+              onClick={() => handleCafeListClick(cafe.name)}
+            >
               {cafe.name.toLowerCase().includes(searchInput.toLowerCase()) ? (
                 <span>
-                  {cafe.name.split(searchInput).map((part, index) =>
-                    index > 0 ? (
-                      <span key={part}>
-                        <span style={{ color: 'orange' }}>{searchInput}</span>
-                        {part}
-                      </span>
-                    ) : (
-                      part
-                    )
-                  )}
+                  {cafe.name
+                    .split(new RegExp(`(${searchInput})`, 'ig'))
+                    .map((part) =>
+                      part.toLowerCase() === searchInput.toLowerCase() ? (
+                        <span key={part} style={{ color: 'orange' }}>
+                          {part}
+                        </span>
+                      ) : (
+                        part
+                      )
+                    )}
                 </span>
               ) : (
                 cafe.name

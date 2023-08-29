@@ -19,25 +19,23 @@ function GooglePage() {
   useEffect(() => {
     const url = new URL(window.location.href);
     // url에서 access_token 값 변수에 저장
-    let accessToken: string = url.hash.substring(
+    const token: string = url.hash.substring(
       url.hash.indexOf('=') + 1,
       url.hash.indexOf('&token_type')
     );
 
-    if (accessToken) {
+    if (token) {
       // 구글 서버로부터 받은 access token으로 jwt 토큰 access token, refresh token 받기
-      getLoginToken(accessToken, 'GOOGLE').then((res: LoginResponse) => {
+      getLoginToken(token, 'GOOGLE').then((res: LoginResponse) => {
         // jwt access token 리덕스에 저장
-        accessToken = res.data?.accessToken || '';
+        const accessToken = res.data?.accessToken || '';
         dispatch(setToken({ access_token: accessToken }));
 
         // refresh 토큰값과 토큰의 만료시간 쿠키에 저장
-        const expire = new Date(
-          res.data?.refreshTokenExpireTime || ''
-        ).getTime();
-        setCookie('refreshToken', res.data?.refreshToken, {
-          maxAge: expire,
-          expire: 0,
+        const expires = new Date(res.data?.refreshTokenExpireTime || '');
+        setCookie('refreshToken', res.data?.refreshToken || '', {
+          maxAge: expires.getTime(),
+          expires,
         });
         // 로그인이 완료되면 메인으로 라우트
         router.push('/');
