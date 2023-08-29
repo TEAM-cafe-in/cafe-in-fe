@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Typography, useMediaQuery } from '@mui/material';
 
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import Modal from '~/components/atom/modal';
 import { query } from '~/helpers/mobileQuery';
 import deleteCafeComment from '~/pages/api/cafe/deleteCafeComment';
@@ -27,7 +26,6 @@ const CommentDeleteModal = ({
   closeDeleteModal,
   setDeleteToast,
 }: DeleteModalProps) => {
-  const token = useAccessTokenSelector();
   const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 댓글 삭제하는 react query 문
@@ -44,7 +42,6 @@ const CommentDeleteModal = ({
     closeDeleteModal();
 
     deleteMutate({
-      token,
       commentId,
       cafeId,
     });

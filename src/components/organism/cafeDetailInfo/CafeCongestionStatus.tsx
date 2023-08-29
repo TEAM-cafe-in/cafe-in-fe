@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Box } from '@mui/material';
 
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { ActionButton } from '~/types/popup';
 import { TCafeCongestion } from '~/types/radio';
 import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
@@ -23,8 +22,6 @@ interface CongestionProps {
 }
 
 const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
-  const token = useAccessTokenSelector();
-
   // 실시간 혼잡도 확인할 때 팝업창
   const [cafeCongestionPopup, setCafeCongestionPopup] =
     useState<boolean>(false);
@@ -32,14 +29,11 @@ const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
   const [coffeeBeanPopup, setCoffeeBeanPopup] = useState<boolean>(false);
 
   // 혼잡도 확인 react query 문
-  const { mutate: CoffeeBeanMutate } = useAddCoffeeBeanMutation({
-    token,
-    cafeId,
-  });
+  const { mutate: CoffeeBeanMutate } = useAddCoffeeBeanMutation();
 
   // 커피콩 조회 react query 문
   const { data, status: coffeeBeanStatus } = useQuery(['coffeeBean'], () =>
-    getCoffeeBean(token)
+    getCoffeeBean()
   );
 
   // 커피콩 개수에 따라 혼잡도 확인 혹은 부족 팝업창
@@ -77,9 +71,9 @@ const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
 
   // 혼잡도 확인하는 버튼 함수
   const handleCoffeCongestion = useCallback(() => {
-    CoffeeBeanMutate({ token, cafeId });
+    CoffeeBeanMutate(cafeId);
     closeCafeCongestionPopup();
-  }, [CoffeeBeanMutate, closeCafeCongestionPopup, token, cafeId]);
+  }, [CoffeeBeanMutate, closeCafeCongestionPopup, cafeId]);
 
   // 혼잡도 확인 팝업 Button 목록
   const congestionActions: ActionButton[] = useMemo(() => {

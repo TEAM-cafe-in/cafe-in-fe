@@ -9,10 +9,10 @@ import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@mui/material';
 
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
-import { useAddCafeCommentMutation } from '~/pages/api/cafe/addCafeComment';
 import { Keywords } from '~/types/comment';
+import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
+
+import { useAddCafeCommentMutation } from '~/pages/api/cafe/addCafeComment';
 import { MyArrowBackIosNewIcon } from '~/pages/login/login.styled';
 import { StyledTextField, WriteTitle } from './cafeWriteComment.styled';
 
@@ -23,7 +23,7 @@ interface WriteProp {
 
 const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
   const dispatch = useDispatch();
-  const token = useAccessTokenSelector();
+
   // 선택한 keywords 옵션들
   const [options, setOptions] = useState<Keywords[]>([]);
   // 댓글 content
@@ -57,7 +57,7 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
 
   // 댓글 등록 처리
   const writeCommentClickHandler = () => {
-    const body = { token, cafeId, content: textValue, keywords: options };
+    const body = { cafeId, content: textValue, keywords: options };
     writeCommentMutate(body);
     // 작성하고 댓글 리스트로 이동
     dispatch(setDepth2Content('comment'));

@@ -10,7 +10,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import Modal from '~/components/atom/modal';
 import { RadioReviewButtons } from '~/components/molecule/radioButtons';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import addCafeReview from '~/pages/api/cafe/addCafeReview';
 import { ReviewContent } from '../cafeDetailInfo.styled';
 import { MobileReviewButtons, MobileTitle } from './cafeDetailInfo.styled';
@@ -33,8 +32,6 @@ const CafeReviewMobileModal = ({
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
   const mainColor = theme.palette.primary.main;
-
-  const token = useAccessTokenSelector();
 
   const [cafeCongestion, setCafeCongestion] = useState<string>('');
   const [hasPlug, setHasPlug] = useState<string>('');
@@ -72,7 +69,7 @@ const CafeReviewMobileModal = ({
 
   // 카페 리뷰 등록 함수
   const handleCafeReview = () => {
-    const body = { token, cafeId, cafeCongestion, hasPlug, isClean };
+    const body = { cafeId, cafeCongestion, hasPlug, isClean };
     mutate(body);
     handleReviewModalClose();
   };

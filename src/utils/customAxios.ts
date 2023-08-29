@@ -14,6 +14,8 @@ customAxios.interceptors.request.use(
       const { accessToken } = await getAccessToken(cookie);
       // eslint-disable-next-line no-param-reassign
       config.headers.Authorization = `Bearer ${accessToken}`;
+      // eslint-disable-next-line no-param-reassign
+      config.headers['Content-Type'] = 'application/json';
     }
     return config;
   },
