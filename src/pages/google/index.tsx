@@ -29,6 +29,12 @@ function GooglePage() {
       getLoginToken(token, 'GOOGLE').then((res: LoginResponse) => {
         // jwt access token 리덕스에 저장
         const accessToken = res.data?.accessToken || '';
+        // const accessExpires = new Date(res.data?.accessTokenExpireTime || '');
+        // setCookie('accessToken', res.data?.accessToken || '', {
+        //  maxAge: accessExpires.getTime(),
+        //  expires: accessExpires,
+        // });
+
         dispatch(setToken({ access_token: accessToken }));
 
         // refresh 토큰값과 토큰의 만료시간 쿠키에 저장

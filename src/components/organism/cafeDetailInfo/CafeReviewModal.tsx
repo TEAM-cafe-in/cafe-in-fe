@@ -79,7 +79,7 @@ const CafeReviewModal = ({
   };
 
   return (
-    <Modal open={open} onClose={handleReviewModalClose}>
+    <Modal open={open} onClose={handleReviewModalClose} width="40%">
       <ReviewTitle color={grayColor}>
         <Button color="secondary" onClick={handleReviewModalClose}>
           취소

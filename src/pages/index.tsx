@@ -39,9 +39,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     const { accessToken } = accessTokenResponse;
 
-    // store.dispatch를 사용하여 액션을 호출(토큰 정보 저장)
+    /// / store.dispatch를 사용하여 액션을 호출(토큰 정보 저장)
     if (accessToken) {
       store.dispatch(setToken({ access_token: accessToken }));
+      cookies.set('accessToken', accessToken);
     }
 
     // 카페정보 SSR로 미리 캐시해두기

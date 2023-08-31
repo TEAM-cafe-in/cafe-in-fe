@@ -1,25 +1,63 @@
-import axios from 'axios';
-import { getCookie } from '~/helpers/cookie';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+} from 'axios';
+
+import { getCookie, setCookie } from '~/helpers/cookie';
 import { getAccessToken } from '~/pages/api/user';
 
-export const customAxios = axios.create({
-  baseURL: 'http://52.78.196.20:8080',
-});
+interface ErrorResponse {
+  errorCode: string;
+  errorMessage: string;
+}
 
-// Request 인터셉터: 요청을 보내기 전에 실행됩니다.
-customAxios.interceptors.request.use(
-  async (config) => {
-    if (!config.headers.Authorization) {
-      const cookie = getCookie('refreshToken');
-      const { accessToken } = await getAccessToken(cookie);
-      // eslint-disable-next-line no-param-reassign
-      config.headers.Authorization = `Bearer ${accessToken}`;
-      // eslint-disable-next-line no-param-reassign
-      config.headers['Content-Type'] = 'application/json';
+const setInterceptors = (instance: AxiosInstance) => {
+  instance.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+      const token = getCookie('accessToken');
+      if (config.headers && token) {
+        // eslint-disable-next-line no-param-reassign
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  instance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error: AxiosError<ErrorResponse>) => {
+      if (
+        error?.response?.data.errorCode === 'A-002' ||
+        error?.response?.data.errorCode === 'A-001'
+      ) {
+        const cookie = getCookie('refreshToken');
+        const { accessToken } = await getAccessToken(cookie);
+        setCookie('accessToken', accessToken, {});
+        console.log('토큰이 성공적으로 재발급 되었습니다.');
+
+        // eslint-disable-next-line no-param-reassign
+        error.response.config.headers.Authorization = `Bearer ${accessToken}`;
+
+        return instance.request(error.config);
+      }
+
+      return Promise.reject(error);
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  );
+  return instance;
+};
+
+const createInstance = () => {
+  const instance = axios.create({
+    baseURL: 'http://52.78.196.20:8080',
+    timeout: 10000,
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return setInterceptors(instance);
+};
+
+export const customAxios = createInstance();
