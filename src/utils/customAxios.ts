@@ -1,0 +1,63 @@
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+} from 'axios';
+
+import { getCookie, setCookie } from '~/helpers/cookie';
+import { getAccessToken } from '~/pages/api/user';
+
+interface ErrorResponse {
+  errorCode: string;
+  errorMessage: string;
+}
+
+const setInterceptors = (instance: AxiosInstance) => {
+  instance.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+      const token = getCookie('accessToken');
+      if (config.headers && token) {
+        // eslint-disable-next-line no-param-reassign
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  instance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error: AxiosError<ErrorResponse>) => {
+      if (
+        error?.response?.data.errorCode === 'A-002' ||
+        error?.response?.data.errorCode === 'A-001'
+      ) {
+        const cookie = getCookie('refreshToken');
+        const { accessToken } = await getAccessToken(cookie);
+        setCookie('accessToken', accessToken, {});
+        console.log('토큰이 성공적으로 재발급 되었습니다.');
+
+        // eslint-disable-next-line no-param-reassign
+        error.response.config.headers.Authorization = `Bearer ${accessToken}`;
+
+        return instance.request(error.config);
+      }
+
+      return Promise.reject(error);
+    }
+  );
+  return instance;
+};
+
+const createInstance = () => {
+  const instance = axios.create({
+    baseURL: 'http://52.78.196.20:8080',
+    timeout: 10000,
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return setInterceptors(instance);
+};
+
+export const customAxios = createInstance();

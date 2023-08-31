@@ -3,25 +3,19 @@
  * @description 카페 댓글 삭제하는 api 함수
  */
 
+import { customAxios } from '~/utils/customAxios';
+
 interface CafeComment {
-  token: string;
   cafeId: string;
   commentId: string;
 }
 
 const deleteCafeComment = async (body: CafeComment) => {
-  const { token, cafeId, commentId } = body;
+  const { cafeId, commentId } = body;
 
-  const url = `http://52.78.196.20:8080/api/cafe/${cafeId}/comment/${commentId}`;
-
-  await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      accept: '*/*',
-      Authorization: `Bearer ${token}`,
-    },
-    credentials: 'include',
-  });
+  const response = await customAxios.delete(
+    `/api/cafe/${cafeId}/comment/${commentId}`
+  );
+  return response.data;
 };
 export default deleteCafeComment;

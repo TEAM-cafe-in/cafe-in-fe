@@ -7,7 +7,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Button, Typography, useTheme } from '@mui/material';
 
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import Modal from '~/components/atom/modal';
 import { RadioReviewButtons } from '~/components/molecule/radioButtons';
 import addCafeReview from '~/pages/api/cafe/addCafeReview';
@@ -30,8 +29,6 @@ const CafeReviewModal = ({
 }: ReviewProps) => {
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
-
-  const token = useAccessTokenSelector();
 
   const [cafeCongestion, setCafeCongestion] = useState<string>('');
   const [hasPlug, setHasPlug] = useState<string>('');
@@ -71,7 +68,7 @@ const CafeReviewModal = ({
 
   // 카페 리뷰 등록 함수
   const handleCafeReview = () => {
-    const body = { token, cafeId, cafeCongestion, hasPlug, isClean };
+    const body = { cafeId, cafeCongestion, hasPlug, isClean };
     mutate(body);
     handleReviewModalClose();
   };
@@ -82,7 +79,7 @@ const CafeReviewModal = ({
   };
 
   return (
-    <Modal open={open} onClose={handleReviewModalClose}>
+    <Modal open={open} onClose={handleReviewModalClose} width="40%">
       <ReviewTitle color={grayColor}>
         <Button color="secondary" onClick={handleReviewModalClose}>
           취소

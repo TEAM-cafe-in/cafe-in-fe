@@ -9,10 +9,9 @@ import { useDispatch } from 'react-redux';
 import { Box, List, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { CafesInfo } from '~/types/cafeInfo';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
+import SearchCafe from '~/components/molecule/search';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
 import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
-import SearchCafe from '~/components/molecule/search';
 import { query } from '~/helpers/mobileQuery';
 import CafeInfo from './CafeInfo';
 
@@ -26,14 +25,13 @@ const CafeInfoListPage = ({
   setDepth2DataId,
 }: CafeInfoListProps) => {
   const dispatch = useDispatch();
-  const token = useAccessTokenSelector();
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
 
   const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 전체 카페 정보 가져오는 react query 문
-  const { data } = useQuery(['cafeList'], () => getAllCafeInfo(token), {
+  const { data } = useQuery(['cafeList'], () => getAllCafeInfo(), {
     suspense: true,
   });
 

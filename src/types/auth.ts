@@ -6,6 +6,7 @@ export interface LoginResponse {
   success: boolean;
   data?: {
     accessToken: string;
+    accessTokenExpireTime: string;
     refreshTokenExpireTime: string;
     refreshToken: string;
   };

@@ -13,9 +13,6 @@ import {
 } from '@mui/material';
 
 import { DrawerItem, DrawerName } from '~/types/drawer';
-import { ErrorBoundary } from '~/helpers/ErrorBoundary';
-import { useDispatch } from 'react-redux';
-import ErrorFallback from '~/helpers/ErrorFallback';
 import { Drawer } from './drawer.styled';
 import Depth1Drawer from '../depth1Drawer';
 
@@ -39,8 +36,6 @@ const MainDrawer = ({
   const handleOpenDepth1 = useCallback(() => {
     setOpenDepth1(!openDepth1);
   }, [openDepth1]);
-
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -66,13 +61,11 @@ const MainDrawer = ({
         </List>
       </Drawer>
 
-      <ErrorBoundary dispatch={dispatch} fallback={ErrorFallback}>
-        <Depth1Drawer
-          selectedMenu={selectedMenu}
-          open={openDepth1}
-          setOpen={handleOpenDepth1}
-        />
-      </ErrorBoundary>
+      <Depth1Drawer
+        selectedMenu={selectedMenu}
+        open={openDepth1}
+        setOpen={handleOpenDepth1}
+      />
     </>
   );
 };

@@ -13,14 +13,12 @@ import { MyPageResponse, MyPageTab, TMyPageTabKey } from '~/types/mypage';
 import Recently from '~/components/molecule/mypage/Recently';
 import Post from '~/components/molecule/mypage/Post';
 import getMemberMyPage from '~/pages/api/member/getMemberMyPage';
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 
 const TabContainer = () => {
   const theme = useTheme();
-  const token = useAccessTokenSelector();
   const { data, isError, error } = useQuery(
     ['mypage'],
-    () => getMemberMyPage(token),
+    () => getMemberMyPage(),
     {
       suspense: true,
     }
