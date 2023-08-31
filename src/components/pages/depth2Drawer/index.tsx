@@ -3,7 +3,6 @@
  * @description 메인 레이아웃 사이드 메뉴 Depth2
  */
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
 
 import { List } from '@mui/material';
 
@@ -35,7 +34,6 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
     }
   );
 
-  const dispatch = useDispatch();
   return (
     <Drawer variant="permanent" isSecondProps open={open}>
       {/* 카페 디테일 페이지 */}

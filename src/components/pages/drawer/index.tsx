@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 
 import { DrawerItem, DrawerName } from '~/types/drawer';
-import { useDispatch } from 'react-redux';
 import { Drawer } from './drawer.styled';
 import Depth1Drawer from '../depth1Drawer';
 
@@ -37,8 +36,6 @@ const MainDrawer = ({
   const handleOpenDepth1 = useCallback(() => {
     setOpenDepth1(!openDepth1);
   }, [openDepth1]);
-
-  const dispatch = useDispatch();
 
   return (
     <>
