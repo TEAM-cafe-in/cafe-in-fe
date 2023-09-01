@@ -45,6 +45,7 @@ const setInterceptors = (instance: AxiosInstance) => {
             setCookie('accessToken', accessToken, {});
             console.log('토큰이 성공적으로 재발급 되었습니다.');
 
+            // eslint-disable-next-line no-param-reassign
             error.response.config.headers.Authorization = `Bearer ${accessToken}`;
 
             return await instance.request(error.config);
