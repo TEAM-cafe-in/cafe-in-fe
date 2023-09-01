@@ -12,9 +12,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Global } from '@emotion/react';
 
 import {
-  setDepth2Content,
-  useDepth2ContentSelector,
-} from '~/store/reducers/depth2ContentSlice';
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigate';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 
 import {
@@ -29,6 +29,7 @@ import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
 import CafeWriteComment from '~/components/organism/cafeWriteComment';
 import { CafeComment } from '~/types/cafeInfo';
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import {
   ButtonContainer,
   ButtonWrapper,
@@ -47,13 +48,14 @@ const BottomSheet = () => {
   const color1 = theme.palette.grey[100];
 
   const dispatch = useDispatch();
-  const depth2Detail = useDepth2ContentSelector();
+  const depth2Detail = useNavigationSelector();
+  const cafe = useCafeIdSelector();
   const [open, setOpen] = useState(false);
 
   // 카페 디테일 아이디
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [openDepth2, setOpenDepth2] = useState(false);
-  const [depth2DataId, setDepth2DataId] = useState('22');
+  const [depth2DataId, setDepth2DataId] = useState(cafe.cafe_id);
 
   // 디테일 페이지 확장 상태
   const [expand, setExpand] = useState(true);
@@ -90,7 +92,7 @@ const BottomSheet = () => {
   };
 
   const handlePreviousList = () => {
-    dispatch(setDepth2Content('cafelist'));
+    dispatch(setNavigationContent('cafelist'));
   };
 
   return (

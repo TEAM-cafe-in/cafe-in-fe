@@ -8,6 +8,7 @@ import { setToken } from '~/store/reducers/authSlice';
 // Google Maps 페이지
 import wrapper from '~/store';
 import GoogleMapComponent from '~/components/organism/googleMap';
+import { setCookie } from '~/helpers/cookie';
 import { getAccessToken } from './api/user';
 import getAllCafeInfo from './api/home/getAllCafeInfo';
 
@@ -42,7 +43,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     /// / store.dispatch를 사용하여 액션을 호출(토큰 정보 저장)
     if (accessToken) {
       store.dispatch(setToken({ access_token: accessToken }));
-      cookies.set('accessToken', accessToken);
+      setCookie('accessToken', accessToken, {});
+      // cookies.set('accessToken', accessToken);
     }
 
     // 카페정보 SSR로 미리 캐시해두기

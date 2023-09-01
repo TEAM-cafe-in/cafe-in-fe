@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { List } from '@mui/material';
 
-import { useDepth2ContentSelector } from '~/store/reducers/depth2ContentSlice';
+import { useNavigationSelector } from '~/store/reducers/navigate';
 import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
 import CafeWriteComment from '~/components/organism/cafeWriteComment';
@@ -14,6 +14,8 @@ import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
 
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import { CafeComment } from '~/types/cafeInfo';
+import MypageSetting from '~/components/organism/mypageSetting';
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
@@ -22,7 +24,9 @@ interface Depth2DrawerProps {
 }
 
 const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
-  const depth2Detail = useDepth2ContentSelector();
+  const navigate = useNavigationSelector();
+
+  const cafe = useCafeIdSelector();
 
   // 혼잡도 확인했을 때 카페 디테일 정보 react query문
   const { data: congestion } = useQuery<CafeComment>(
@@ -37,31 +41,35 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
   return (
     <Drawer variant="permanent" isSecondProps open={open}>
       {/* 카페 디테일 페이지 */}
-      {depth2Detail === 'content' && congestion && (
+      {navigate === 'content' && congestion && cafe && (
         <List>
           <CafeDetailInfo cafeId={dataId} data={congestion} />
         </List>
       )}
 
       {/* 카페 댓글 리스트 페이지 */}
-      {depth2Detail === 'comment' && congestion && (
-        <CafeDetailComment
-          cafeId={dataId}
-          name={congestion?.cafeInfoProjection.name}
-          comments={congestion?.comments}
-        />
-      )}
+      {(navigate === 'comment' || navigate === 'search-detail') &&
+        congestion && (
+          <CafeDetailComment
+            cafeId={dataId}
+            name={congestion?.cafeInfoProjection.name}
+            comments={congestion?.comments}
+          />
+        )}
 
       {/* 카페 대댓글 리스트 페이지 */}
-      {depth2Detail === 're-comment' && <CafeReComment />}
+      {navigate === 're-comment' && <CafeReComment />}
 
       {/* 카페 댓글 작성 페이지 */}
-      {depth2Detail === 'write' && congestion && (
+      {navigate === 'write' && congestion && (
         <CafeWriteComment
           name={congestion?.cafeInfoProjection.name}
           cafeId={congestion?.cafeInfoProjection.cafeId}
         />
       )}
+
+      {/* 마이페이지 설정 페이지 */}
+      {navigate === 'setting' && <MypageSetting />}
     </Drawer>
   );
 };

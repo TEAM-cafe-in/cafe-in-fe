@@ -10,7 +10,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Typography, useMediaQuery } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { setNavigationContent } from '~/store/reducers/navigate';
 import { query } from '~/helpers/mobileQuery';
 import CafeCommentWrite from './CafeCommentWrite';
 import {
@@ -38,16 +38,16 @@ const CafeCommentLayout = ({
   // 뒤로 가기 버튼
   const handleBackArrowClick = () => {
     if (type === 'comment') {
-      dispatch(setDepth2Content('content'));
+      dispatch(setNavigationContent('content'));
     }
     if (type === 're-comment') {
-      dispatch(setDepth2Content('comment'));
+      dispatch(setNavigationContent('comment'));
     }
   };
 
   // 홈 버튼
   const handleHomeClick = () => {
-    dispatch(setDepth2Content('cafelist'));
+    dispatch(setNavigationContent('cafelist'));
   };
 
   return (

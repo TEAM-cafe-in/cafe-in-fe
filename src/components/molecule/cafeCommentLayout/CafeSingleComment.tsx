@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Typography, useTheme } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { setNavigationContent } from '~/store/reducers/navigate';
 import { Comment } from '~/types/cafeInfo';
 import { EngKeywords } from '~/types/comment';
 import Profile from '~/components/atom/profile';
@@ -52,7 +52,7 @@ const CafeSingleComment = ({
 
   // 댓글 클릭했을 때 대댓글로 이동
   const handleCommentClick = () => {
-    dispatch(setDepth2Content('re-comment'));
+    dispatch(setNavigationContent('re-comment'));
   };
 
   // 삭제 Modal 열기 함수
