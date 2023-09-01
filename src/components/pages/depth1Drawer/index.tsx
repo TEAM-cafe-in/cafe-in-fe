@@ -17,6 +17,7 @@ import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import Depth2Drawer from '~/components/pages/depth2Drawer';
 import { Drawer } from '~/components/pages/drawer/drawer.styled';
 import CafeInfoListPage from '~/components/organism/cafeInfoList';
+import { useNavigationSelector } from '~/store/reducers/navigate';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
 
 interface IDepth1Drawer {
@@ -28,17 +29,24 @@ interface IDepth1Drawer {
 
 const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
   const cafeId = useCafeIdSelector();
+  const navigate = useNavigationSelector();
 
   // depth2 메뉴 오픈 여부
   const [openDepth2, setOpenDepth2] = useState(false);
   const [depth2DataId, setDepth2DataId] = useState('');
 
   useEffect(() => {
-    if (cafeId !== '0') {
-      setOpenDepth2(true);
-      setDepth2DataId(cafeId);
+    // if (cafeId.cafe_id !== '0') {
+    //  setOpenDepth2(true);
+    //  setDepth2DataId(cafeId);
+    // }
+    if (navigate === 'mypage' || navigate === 'cafelist') {
+      setOpenDepth2(false);
     }
-  }, [cafeId]);
+    if (navigate === 'setting') {
+      setOpenDepth2(true);
+    }
+  }, [cafeId, navigate]);
 
   // depth1 메뉴 열기/닫기 handler 함수
   const handleOpen = () => {
@@ -53,6 +61,7 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
   return (
     <Depth1Box>
       <Drawer variant="permanent" isSecondProps open={open}>
+        {/* 카페 리스트 컴포넌트 */}
         {selectedMenu === 'logo' && (
           <Suspense fallback={<div>loading...</div>}>
             <CafeInfoListPage
@@ -61,6 +70,7 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
             />
           </Suspense>
         )}
+        {/* 마이 페이지 컴포넌트 */}
         {selectedMenu === 'mypage' && <MyPage />}
       </Drawer>
 

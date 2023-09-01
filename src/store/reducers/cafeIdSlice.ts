@@ -7,6 +7,7 @@ import { RootState, useAppSelector } from '~/store';
 
 export interface CafeId {
   cafe_id: string;
+  comment_id: string;
 }
 
 export interface CafeIdState {
@@ -16,6 +17,7 @@ export interface CafeIdState {
 export const initialCafeIdState: CafeIdState = {
   cafeId: {
     cafe_id: '0',
+    comment_id: '0',
   },
 };
 
@@ -26,6 +28,7 @@ const cafeIdSlice = createSlice({
   reducers: {
     setCafeId(state: CafeIdState, { payload }: PayloadAction<CafeId>) {
       state.cafeId.cafe_id = payload.cafe_id;
+      state.cafeId.comment_id = payload.comment_id;
     },
   },
 });
@@ -33,6 +36,6 @@ const cafeIdSlice = createSlice({
 export const { setCafeId } = cafeIdSlice.actions;
 
 export const useCafeIdSelector = () =>
-  useAppSelector((rootState: RootState) => rootState.cafeId.cafeId.cafe_id);
+  useAppSelector((rootState: RootState) => rootState.cafeId.cafeId);
 
 export default cafeIdSlice.reducer;

@@ -65,7 +65,7 @@ const GoogleMapComponent = () => {
         // 마커 클릭했을 때
         function handleMarkerClick() {
           // 마커 클릭하면 카페 id를 리덕스 저장
-          dispatch(setCafeId({ cafe_id: cafe.cafeId }));
+          dispatch(setCafeId({ cafe_id: cafe.cafeId, comment_id: '0' }));
         }
         marker.addListener('click', handleMarkerClick);
       });

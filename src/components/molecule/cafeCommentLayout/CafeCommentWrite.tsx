@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material';
 
 import Profile from '~/components/atom/profile';
-import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { setNavigationContent } from '~/store/reducers/navigate';
 import { WriteContainer } from './cafeCommentLayout.styled';
 
 interface WriteCommentProp {
@@ -24,7 +24,7 @@ const CafeCommentWrite = ({ type }: WriteCommentProp) => {
   // 댓글 작성 페이지로 이동
   const handleWriteCommentClick = () => {
     if (type === 'comment') {
-      dispatch(setDepth2Content('write'));
+      dispatch(setNavigationContent('write'));
     }
   };
   return (

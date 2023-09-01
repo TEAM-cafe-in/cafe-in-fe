@@ -11,8 +11,9 @@ import { Box, List, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { CafesInfo } from '~/types/cafeInfo';
 import SearchCafe from '~/components/molecule/search';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
-import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { setNavigationContent } from '~/store/reducers/navigate';
 import { query } from '~/helpers/mobileQuery';
+import { setCafeId } from '~/store/reducers/cafeIdSlice';
 import CafeInfo from './CafeInfo';
 
 interface CafeInfoListProps {
@@ -40,8 +41,10 @@ const CafeInfoListPage = ({
     (id: string) => {
       setOpenDepth2(true);
       setDepth2DataId(id);
+
       // 디테일 정보가 보여지게 set
-      dispatch(setDepth2Content('content'));
+      dispatch(setNavigationContent('content'));
+      dispatch(setCafeId({ cafe_id: id, comment_id: '0' }));
     },
     [setOpenDepth2, setDepth2DataId, dispatch]
   );

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import { Button, Typography } from '@mui/material';
 
-import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { setNavigationContent } from '~/store/reducers/navigate';
 import { Keywords } from '~/types/comment';
 import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
 
@@ -37,7 +37,7 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
 
   // 뒤로 가기 버튼
   const handleBackArrowClick = () => {
-    dispatch(setDepth2Content('comment'));
+    dispatch(setNavigationContent('comment'));
   };
 
   // 댓글 키워드 set하는 함수
@@ -60,7 +60,7 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
     const body = { cafeId, content: textValue, keywords: options };
     writeCommentMutate(body);
     // 작성하고 댓글 리스트로 이동
-    dispatch(setDepth2Content('comment'));
+    dispatch(setNavigationContent('comment'));
   };
 
   return (

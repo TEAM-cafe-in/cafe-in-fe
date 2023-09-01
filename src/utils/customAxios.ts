@@ -12,14 +12,16 @@ interface ErrorResponse {
   errorMessage: string;
 }
 
+let fetchingToken = false;
+
 const setInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       const token = getCookie('accessToken');
-      if (config.headers && token) {
-        // eslint-disable-next-line no-param-reassign
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+
+      // eslint-disable-next-line no-param-reassign
+      config.headers.Authorization = `Bearer ${token}`;
+
       return config;
     },
     (error) => Promise.reject(error)
@@ -34,15 +36,27 @@ const setInterceptors = (instance: AxiosInstance) => {
         error?.response?.data.errorCode === 'A-002' ||
         error?.response?.data.errorCode === 'A-001'
       ) {
-        const cookie = getCookie('refreshToken');
-        const { accessToken } = await getAccessToken(cookie);
-        setCookie('accessToken', accessToken, {});
-        console.log('토큰이 성공적으로 재발급 되었습니다.');
+        if (!fetchingToken) {
+          fetchingToken = true;
 
-        // eslint-disable-next-line no-param-reassign
-        error.response.config.headers.Authorization = `Bearer ${accessToken}`;
+          try {
+            const cookie = getCookie('refreshToken');
+            const { accessToken } = await getAccessToken(cookie);
+            setCookie('accessToken', accessToken, {});
+            console.log('토큰이 성공적으로 재발급 되었습니다.');
 
-        return instance.request(error.config);
+            error.response.config.headers.Authorization = `Bearer ${accessToken}`;
+
+            return await instance.request(error.config);
+          } catch (refreshError) {
+            return await Promise.reject(refreshError);
+          } finally {
+            fetchingToken = false;
+          }
+        } else {
+          console.log('토큰 발급 및 재시도 중입니다.');
+          return Promise.reject(error);
+        }
       }
 
       return Promise.reject(error);
@@ -54,7 +68,6 @@ const setInterceptors = (instance: AxiosInstance) => {
 const createInstance = () => {
   const instance = axios.create({
     baseURL: 'http://52.78.196.20:8080',
-    timeout: 10000,
     headers: { 'Content-Type': 'application/json' },
   });
   return setInterceptors(instance);

@@ -2,7 +2,8 @@
  * @createdBy 김해지
  * @description 사이드 고정 메뉴
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   List,
@@ -13,6 +14,10 @@ import {
 } from '@mui/material';
 
 import { DrawerItem, DrawerName } from '~/types/drawer';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigate';
 import { Drawer } from './drawer.styled';
 import Depth1Drawer from '../depth1Drawer';
 
@@ -31,11 +36,24 @@ const MainDrawer = ({
 }: MainDrawerProps) => {
   // depth1 메뉴 오픈 여부
   const [openDepth1, setOpenDepth1] = useState(true);
+  const dispatch = useDispatch();
+  const navigate = useNavigationSelector();
+
+  useEffect(() => {
+    if (navigate === 'search-detail') {
+      setOpenDepth1(false);
+    }
+  }, [navigate]);
 
   // depth1 메뉴 열기/닫기 함수
   const handleOpenDepth1 = useCallback(() => {
     setOpenDepth1(!openDepth1);
   }, [openDepth1]);
+
+  const handleSelectMenuClick = (name: DrawerName) => {
+    handleSelectedMenu(name);
+    dispatch(setNavigationContent(name === 'logo' ? 'cafelist' : 'mypage'));
+  };
 
   return (
     <>
@@ -45,7 +63,7 @@ const MainDrawer = ({
             <ListItem key={v.name} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 selected={selectedMenu === v.name}
-                onClick={() => handleSelectedMenu(v.name)}
+                onClick={() => handleSelectMenuClick(v.name)}
               >
                 <ListItemAvatar sx={{ m: '0 auto', minWidth: 'auto' }}>
                   {v.children}

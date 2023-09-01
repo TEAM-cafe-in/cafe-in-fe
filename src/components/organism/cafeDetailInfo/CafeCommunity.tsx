@@ -9,7 +9,7 @@ import { Typography, useTheme } from '@mui/material';
 
 import { UnderlineButton } from '~/components/atom/buttons';
 import { Comment } from '~/types/cafeInfo';
-import { setDepth2Content } from '~/store/reducers/depth2ContentSlice';
+import { setNavigationContent } from '~/store/reducers/navigate';
 import CafeCommunityComment from './CafeCommunityComment';
 import { CafeCommunityContainer } from './cafeDetailInfo.styled';
 
@@ -49,14 +49,14 @@ const CafeCommunity = ({ comment }: CommunityProp) => {
         <UnderlineButton
           text={content}
           onClick={() => {
-            dispatch(setDepth2Content('comment'));
+            dispatch(setNavigationContent('comment'));
           }}
         />
       ) : (
         <UnderlineButton
           text="댓글을 입력하세요"
           onClick={() => {
-            dispatch(setDepth2Content('comment'));
+            dispatch(setNavigationContent('comment'));
           }}
         />
       )}
