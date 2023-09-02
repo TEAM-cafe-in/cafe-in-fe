@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Typography, useTheme } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { setNavigationContent } from '~/store/reducers/navigate';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { Comment } from '~/types/cafeInfo';
 import { EngKeywords } from '~/types/comment';
 import Profile from '~/components/atom/profile';

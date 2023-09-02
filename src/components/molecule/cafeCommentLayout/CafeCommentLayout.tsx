@@ -10,7 +10,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Typography, useMediaQuery } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-import { setNavigationContent } from '~/store/reducers/navigate';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { query } from '~/helpers/mobileQuery';
 import CafeCommentWrite from './CafeCommentWrite';
 import {

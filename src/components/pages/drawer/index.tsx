@@ -17,7 +17,7 @@ import { DrawerItem, DrawerName } from '~/types/drawer';
 import {
   setNavigationContent,
   useNavigationSelector,
-} from '~/store/reducers/navigate';
+} from '~/store/reducers/navigateSlice';
 import { Drawer } from './drawer.styled';
 import Depth1Drawer from '../depth1Drawer';
 

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material';
 
 import Profile from '~/components/atom/profile';
-import { setNavigationContent } from '~/store/reducers/navigate';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { WriteContainer } from './cafeCommentLayout.styled';
 
 interface WriteCommentProp {

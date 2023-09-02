@@ -2,7 +2,8 @@
  * @createBy 한수민
  * @description 카페 정보 리스트
  */
-import { useCallback } from 'react';
+import { useCallback, useState, useMemo } from 'react';
+import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 
@@ -11,10 +12,15 @@ import { Box, List, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { CafesInfo } from '~/types/cafeInfo';
 import SearchCafe from '~/components/molecule/search';
 import getAllCafeInfo from '~/pages/api/home/getAllCafeInfo';
-import { setNavigationContent } from '~/store/reducers/navigate';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
 import { query } from '~/helpers/mobileQuery';
 import { setCafeId } from '~/store/reducers/cafeIdSlice';
+import searchLogo from '../../../static/images/not-search-logo.png';
 import CafeInfo from './CafeInfo';
+import { SearchContainer } from './cafeInfo.styled';
 
 interface CafeInfoListProps {
   setOpenDepth2: (openDpth2: boolean) => void;
@@ -28,6 +34,11 @@ const CafeInfoListPage = ({
   const dispatch = useDispatch();
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
+  const navigate = useNavigationSelector();
+
+  const [searchInput, setSearchInput] = useState('');
+
+  console.log(navigate);
 
   const isMobile = useMediaQuery(query, { noSsr: false });
 
@@ -61,7 +72,7 @@ const CafeInfoListPage = ({
       {!isMobile && <SearchCafe cafeList={cafeData} />}
 
       <List>
-        {data && (
+        {data && navigate !== 'search-list' && (
           <>
             <Typography ml="30px" color={grayColor}>
               총 {data?.cafeCount}
@@ -69,6 +80,7 @@ const CafeInfoListPage = ({
             {data.cafes?.map((cafe: CafesInfo, index: number) => (
               <CafeInfo
                 // key={cafe.cafeId}
+                // 백엔드 아이디 처리 전까지
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 cafeClickHandler={() => cafeClickHandler(cafe.cafeId)}
@@ -76,6 +88,14 @@ const CafeInfoListPage = ({
               />
             ))}
           </>
+        )}
+        {navigate === 'search-list' && (
+          <SearchContainer>
+            <Image src={searchLogo} alt="" />
+            <Typography variant="h5" mt="20px">
+              {searchInput} 와 일치하는 카페 검색결과가 없습니다.
+            </Typography>
+          </SearchContainer>
         )}
       </List>
     </Box>

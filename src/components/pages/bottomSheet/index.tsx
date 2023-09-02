@@ -14,7 +14,7 @@ import { Global } from '@emotion/react';
 import {
   setNavigationContent,
   useNavigationSelector,
-} from '~/store/reducers/navigate';
+} from '~/store/reducers/navigateSlice';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 
 import {

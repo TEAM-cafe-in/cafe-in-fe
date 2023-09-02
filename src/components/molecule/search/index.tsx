@@ -3,12 +3,14 @@
  * @description 카페 검색 컴포넌트
  */
 
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Typography, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
+import { useDispatch } from 'react-redux';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { StyledBox, StyledSearchBox, StyledWrapper } from './search.styled';
 
 interface SearchCafeData {
@@ -19,8 +21,13 @@ interface SearchCafeProp {
   cafeList: SearchCafeData[];
 }
 const SearchCafe = ({ cafeList }: SearchCafeProp) => {
+  // 사용자가 입력하는 검색어
   const [searchInput, setSearchInput] = useState<string>('');
+
+  // 연관 검색어 리스트
   const [filterCafe, setFilterCafe] = useState<SearchCafeData[]>([]);
+
+  const dispatch = useDispatch();
 
   // 검색 입력하는 함수
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +35,7 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
     setSearchInput(input);
 
     const regex = /^[a-zA-Z0-9가-힣]+$/;
+    // 입력할 때마다 연관 검색어 update
     setFilterCafe(
       cafeList.filter((cafe) => {
         return (
@@ -45,18 +53,13 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
   };
 
   // 연관 검색어 클릭했을 때
-  const handleCafeListClick = (cafe: string) => {
-    setSearchInput(cafe);
+  const handleCafeListClick = (cafe: SearchCafeData) => {
+    setSearchInput(cafe.name);
   };
 
   // 검색 클릭했을 때
-  const handleSearchCafeClick = () => {};
-
-  // 인풋 컴포넌트 엔터 쳤을 때
-  const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      console.log('엔터 클릭');
-    }
+  const handleSearchCafeClick = () => {
+    dispatch(setNavigationContent('search-list'));
   };
 
   return (
@@ -68,7 +71,7 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
           inputProps={{ 'aria-label': '카페 바로 검색' }}
           onChange={handleSearchChange}
           value={searchInput}
-          onKeyDown={handleEnterInput}
+          onClick={() => dispatch(setNavigationContent('search'))}
         />
         <IconButton
           type="button"
@@ -93,7 +96,7 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
             <Typography
               key={cafe.cafeId}
               mt="10px"
-              onClick={() => handleCafeListClick(cafe.name)}
+              onClick={() => handleCafeListClick(cafe)}
             >
               {cafe.name.toLowerCase().includes(searchInput.toLowerCase()) ? (
                 <span>

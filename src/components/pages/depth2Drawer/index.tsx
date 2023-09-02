@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { List } from '@mui/material';
 
-import { useNavigationSelector } from '~/store/reducers/navigate';
+import { useNavigationSelector } from '~/store/reducers/navigateSlice';
 import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
 import CafeWriteComment from '~/components/organism/cafeWriteComment';

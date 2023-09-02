@@ -13,7 +13,7 @@ import Setting from '~/static/images/setting.svg';
 import Badge from '~/static/images/badge.png';
 import Profile from '~/components/atom/profile';
 import TabContainer from '~/components/organism/mypage/TabContainer';
-import { setNavigationContent } from '~/store/reducers/navigate';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { ProfileContainer, BadgeImg } from './mypage.styled';
 
 const MyPage = () => {

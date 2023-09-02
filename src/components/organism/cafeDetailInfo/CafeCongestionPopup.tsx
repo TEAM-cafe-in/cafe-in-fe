@@ -8,7 +8,6 @@ import Image from 'next/image';
 
 import { Typography, useTheme } from '@mui/material';
 
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
 import { ActionButton } from '~/types/popup';
 import Popup from '~/components/atom/popup';
 import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
@@ -22,13 +21,12 @@ interface CongestionProps {
 }
 
 const CafeCongestionPopup = ({ open, actions, onClose }: CongestionProps) => {
-  const token = useAccessTokenSelector();
   const theme = useTheme();
   const mainColor = theme.palette.primary.main;
   const grayColor = theme.palette.grey[400];
 
   // 커피콩 조회 react query 문
-  const { data } = useQuery(['coffeeBean'], () => getCoffeeBean(token));
+  const { data } = useQuery(['coffeeBean'], () => getCoffeeBean());
   return (
     <Popup
       open={open}

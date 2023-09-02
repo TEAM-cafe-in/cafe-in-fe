@@ -13,3 +13,9 @@ export const CafeInfoTitle = styled(Box)`
   display: flex;
   align-items: center;
 `;
+export const SearchContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+`;
