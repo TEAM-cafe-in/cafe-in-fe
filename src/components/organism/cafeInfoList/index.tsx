@@ -2,7 +2,7 @@
  * @createBy 한수민
  * @description 카페 정보 리스트
  */
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ const CafeInfoListPage = ({
   const grayColor = theme.palette.grey[400];
   const navigate = useNavigationSelector();
 
-  const [searchInput, setSearchInput] = useState('');
+  // const [searchInput, setSearchInput] = useState('');
 
   console.log(navigate);
 
@@ -93,7 +93,7 @@ const CafeInfoListPage = ({
           <SearchContainer>
             <Image src={searchLogo} alt="" />
             <Typography variant="h5" mt="20px">
-              {searchInput} 와 일치하는 카페 검색결과가 없습니다.
+              와 일치하는 카페 검색결과가 없습니다.
             </Typography>
           </SearchContainer>
         )}
