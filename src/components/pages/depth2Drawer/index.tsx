@@ -41,21 +41,22 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
   return (
     <Drawer variant="permanent" isSecondProps open={open}>
       {/* 카페 디테일 페이지 */}
-      {navigate === 'content' && congestion && cafe && (
-        <List>
-          <CafeDetailInfo cafeId={dataId} data={congestion} />
-        </List>
-      )}
+      {(navigate === 'content' || navigate === 'search-detail') &&
+        congestion &&
+        cafe && (
+          <List>
+            <CafeDetailInfo cafeId={dataId} data={congestion} />
+          </List>
+        )}
 
       {/* 카페 댓글 리스트 페이지 */}
-      {(navigate === 'comment' || navigate === 'search-detail') &&
-        congestion && (
-          <CafeDetailComment
-            cafeId={dataId}
-            name={congestion?.cafeInfoProjection.name}
-            comments={congestion?.comments}
-          />
-        )}
+      {navigate === 'comment' && congestion && (
+        <CafeDetailComment
+          cafeId={dataId}
+          name={congestion?.cafeInfoProjection.name}
+          comments={congestion?.comments}
+        />
+      )}
 
       {/* 카페 대댓글 리스트 페이지 */}
       {navigate === 're-comment' && <CafeReComment />}

@@ -10,7 +10,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 import { useDispatch } from 'react-redux';
-import { setNavigationContent } from '~/store/reducers/navigateSlice';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
 import { StyledBox, StyledSearchBox, StyledWrapper } from './search.styled';
 
 interface SearchCafeData {
@@ -19,15 +22,22 @@ interface SearchCafeData {
 }
 interface SearchCafeProp {
   cafeList: SearchCafeData[];
+  searchInput: string;
+  setSearchInput: (searchInput: string) => void;
 }
-const SearchCafe = ({ cafeList }: SearchCafeProp) => {
+const SearchCafe = ({
+  cafeList,
+  searchInput,
+  setSearchInput,
+}: SearchCafeProp) => {
   // 사용자가 입력하는 검색어
-  const [searchInput, setSearchInput] = useState<string>('');
+  // const [searchInput, setSearchInput] = useState<string>('');
 
   // 연관 검색어 리스트
   const [filterCafe, setFilterCafe] = useState<SearchCafeData[]>([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigationSelector();
 
   // 검색 입력하는 함수
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +60,7 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
   const handleSearchCancel = () => {
     setSearchInput('');
     setFilterCafe([]);
+    dispatch(setNavigationContent('cafelist'));
   };
 
   // 연관 검색어 클릭했을 때
@@ -90,7 +101,7 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
           <SearchIcon />
         </IconButton>
       </StyledBox>
-      {filterCafe?.length > 0 && (
+      {filterCafe?.length > 0 && navigate === 'search' && (
         <StyledSearchBox>
           {filterCafe?.map((cafe) => (
             <Typography

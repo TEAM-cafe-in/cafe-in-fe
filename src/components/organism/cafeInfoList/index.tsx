@@ -2,7 +2,7 @@
  * @createBy 한수민
  * @description 카페 정보 리스트
  */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
@@ -36,9 +36,9 @@ const CafeInfoListPage = ({
   const grayColor = theme.palette.grey[400];
   const navigate = useNavigationSelector();
 
-  // const [searchInput, setSearchInput] = useState('');
-
-  console.log(navigate);
+  // 검색 결과 입력
+  const [searchInput, setSearchInput] = useState('');
+  const [filterCafe, setFilterCafe] = useState([]);
 
   const isMobile = useMediaQuery(query, { noSsr: false });
 
@@ -46,6 +46,19 @@ const CafeInfoListPage = ({
   const { data } = useQuery(['cafeList'], () => getAllCafeInfo(), {
     suspense: true,
   });
+
+  // 검색어 입력하는 값 update 하는 함수
+  const searchInputSetHandler = useCallback(
+    (s: string) => {
+      setSearchInput(s);
+
+      // 검색어가 변경될 때마다 필터링된 카페 목록 업데이트
+      const filteredCafes =
+        data?.cafes?.filter((cafe: CafesInfo) => cafe.name.includes(s)) || [];
+      setFilterCafe(filteredCafes);
+    },
+    [data]
+  );
 
   // 카페 아이템을 클릭했을 때 실행
   const cafeClickHandler = useCallback(
@@ -60,6 +73,7 @@ const CafeInfoListPage = ({
     [setOpenDepth2, setDepth2DataId, dispatch]
   );
 
+  console.log(navigate);
   const cafeData =
     data &&
     data?.cafes.map((cafe: CafesInfo) => ({
@@ -69,10 +83,16 @@ const CafeInfoListPage = ({
 
   return (
     <Box>
-      {!isMobile && <SearchCafe cafeList={cafeData} />}
+      {!isMobile && (
+        <SearchCafe
+          cafeList={cafeData}
+          searchInput={searchInput}
+          setSearchInput={searchInputSetHandler}
+        />
+      )}
 
       <List>
-        {data && navigate !== 'search-list' && (
+        {data && (navigate === 'cafelist' || navigate === 'search') && (
           <>
             <Typography ml="30px" color={grayColor}>
               총 {data?.cafeCount}
@@ -89,14 +109,33 @@ const CafeInfoListPage = ({
             ))}
           </>
         )}
-        {navigate === 'search-list' && (
+        {navigate === 'search-list' && filterCafe.length === 0 && (
           <SearchContainer>
             <Image src={searchLogo} alt="" />
             <Typography variant="h5" mt="20px">
-              와 일치하는 카페 검색결과가 없습니다.
+              {searchInput} 와 일치하는 카페 검색결과가 없습니다.
             </Typography>
           </SearchContainer>
         )}
+
+        {navigate === 'search-list' ||
+          ('search-detail' && filterCafe.length > 0 && (
+            <>
+              {filterCafe.map((filter: CafesInfo, index: number) => (
+                <CafeInfo
+                  // key={cafe.cafeId}
+                  // 백엔드 아이디 처리 전까지
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  cafeClickHandler={() => {
+                    cafeClickHandler(filter.cafeId);
+                    dispatch(setNavigationContent('search-detail'));
+                  }}
+                  cafes={filter}
+                />
+              ))}
+            </>
+          ))}
       </List>
     </Box>
   );

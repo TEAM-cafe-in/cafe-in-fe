@@ -17,5 +17,5 @@ export const SearchContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 40px;
 `;
