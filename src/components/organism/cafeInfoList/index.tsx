@@ -38,7 +38,7 @@ const CafeInfoListPage = ({
 
   // 검색 결과 입력
   const [searchInput, setSearchInput] = useState('');
-  const [filterCafe, setFilterCafe] = useState([]);
+  const [filterCafe, setFilterCafe] = useState<CafesInfo[]>([]);
 
   const isMobile = useMediaQuery(query, { noSsr: false });
 
@@ -54,7 +54,14 @@ const CafeInfoListPage = ({
 
       // 검색어가 변경될 때마다 필터링된 카페 목록 업데이트
       const filteredCafes =
-        data?.cafes?.filter((cafe: CafesInfo) => cafe.name.includes(s)) || [];
+        data?.cafes?.filter((cafe: CafesInfo) => {
+          // cafe.name과 검색어를 모두 소문자로 변환하여 비교
+          const cafeNameLower = cafe.name.toLowerCase().replace(/\s/g, '');
+          const searchInputLower = s.toLowerCase().replace(/\s/g, ''); // 공백 제거
+
+          // cafeNameLower에서 검색어를 포함하는지 검사
+          return cafeNameLower.includes(searchInputLower);
+        }) || [];
       setFilterCafe(filteredCafes);
     },
     [data]
@@ -73,53 +80,49 @@ const CafeInfoListPage = ({
     [setOpenDepth2, setDepth2DataId, dispatch]
   );
 
-  console.log(navigate);
-  const cafeData =
-    data &&
-    data?.cafes.map((cafe: CafesInfo) => ({
-      name: cafe.name,
-      cafeId: cafe.cafeId,
-    }));
-
   return (
     <Box>
       {!isMobile && (
         <SearchCafe
-          cafeList={cafeData}
           searchInput={searchInput}
           setSearchInput={searchInputSetHandler}
+          filterCafe={filterCafe}
         />
       )}
 
       <List>
-        {data && (navigate === 'cafelist' || navigate === 'search') && (
-          <>
-            <Typography ml="30px" color={grayColor}>
-              총 {data?.cafeCount}
-            </Typography>
-            {data.cafes?.map((cafe: CafesInfo, index: number) => (
-              <CafeInfo
-                // key={cafe.cafeId}
-                // 백엔드 아이디 처리 전까지
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                cafeClickHandler={() => cafeClickHandler(cafe.cafeId)}
-                cafes={cafe}
-              />
-            ))}
-          </>
-        )}
-        {navigate === 'search-list' && filterCafe.length === 0 && (
-          <SearchContainer>
-            <Image src={searchLogo} alt="" />
-            <Typography variant="h5" mt="20px">
-              {searchInput} 와 일치하는 카페 검색결과가 없습니다.
-            </Typography>
-          </SearchContainer>
-        )}
+        {data &&
+          (navigate === 'cafelist' ||
+            navigate === 'search' ||
+            navigate === 'content') && (
+            <>
+              <Typography ml="30px" color={grayColor}>
+                총 {data?.cafeCount}
+              </Typography>
+              {data.cafes?.map((cafe: CafesInfo, index: number) => (
+                <CafeInfo
+                  // key={cafe.cafeId}
+                  // 백엔드 아이디 처리 전까지
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  cafeClickHandler={() => cafeClickHandler(cafe.cafeId)}
+                  cafes={cafe}
+                />
+              ))}
+            </>
+          )}
+        {(navigate === 'search-list' || navigate === 'search-detail') &&
+          filterCafe.length === 0 && (
+            <SearchContainer>
+              <Image src={searchLogo} alt="" />
+              <Typography variant="h5" mt="20px">
+                {searchInput} 와 일치하는 카페 검색결과가 없습니다.
+              </Typography>
+            </SearchContainer>
+          )}
 
-        {navigate === 'search-list' ||
-          ('search-detail' && filterCafe.length > 0 && (
+        {(navigate === 'search-list' || navigate === 'search-detail') &&
+          filterCafe.length > 0 && (
             <>
               {filterCafe.map((filter: CafesInfo, index: number) => (
                 <CafeInfo
@@ -135,7 +138,7 @@ const CafeInfoListPage = ({
                 />
               ))}
             </>
-          ))}
+          )}
       </List>
     </Box>
   );

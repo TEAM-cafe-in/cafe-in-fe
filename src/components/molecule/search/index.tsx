@@ -3,39 +3,30 @@
  * @description 카페 검색 컴포넌트
  */
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Typography, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
-import { useDispatch } from 'react-redux';
 import {
   setNavigationContent,
   useNavigationSelector,
 } from '~/store/reducers/navigateSlice';
+import { CafesInfo } from '~/types/cafeInfo';
 import { StyledBox, StyledSearchBox, StyledWrapper } from './search.styled';
 
-interface SearchCafeData {
-  cafeId: string;
-  name: string;
-}
 interface SearchCafeProp {
-  cafeList: SearchCafeData[];
   searchInput: string;
   setSearchInput: (searchInput: string) => void;
+  filterCafe: CafesInfo[];
 }
 const SearchCafe = ({
-  cafeList,
   searchInput,
   setSearchInput,
+  filterCafe,
 }: SearchCafeProp) => {
-  // 사용자가 입력하는 검색어
-  // const [searchInput, setSearchInput] = useState<string>('');
-
-  // 연관 검색어 리스트
-  const [filterCafe, setFilterCafe] = useState<SearchCafeData[]>([]);
-
   const dispatch = useDispatch();
   const navigate = useNavigationSelector();
 
@@ -43,28 +34,16 @@ const SearchCafe = ({
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setSearchInput(input);
-
-    const regex = /^[a-zA-Z0-9가-힣]+$/;
-    // 입력할 때마다 연관 검색어 update
-    setFilterCafe(
-      cafeList.filter((cafe) => {
-        return (
-          regex.test(input) &&
-          cafe.name.toLowerCase().includes(input.toLowerCase())
-        );
-      })
-    );
   };
 
   // 검색 취소하기
   const handleSearchCancel = () => {
     setSearchInput('');
-    setFilterCafe([]);
     dispatch(setNavigationContent('cafelist'));
   };
 
   // 연관 검색어 클릭했을 때
-  const handleCafeListClick = (cafe: SearchCafeData) => {
+  const handleCafeListClick = (cafe: CafesInfo) => {
     setSearchInput(cafe.name);
   };
 
@@ -101,35 +80,51 @@ const SearchCafe = ({
           <SearchIcon />
         </IconButton>
       </StyledBox>
-      {filterCafe?.length > 0 && navigate === 'search' && (
+      {navigate === 'search' &&
+        searchInput !== '' &&
+        filterCafe?.length > 0 && (
+          <StyledSearchBox>
+            {filterCafe?.map((cafe) => (
+              <Typography
+                key={cafe.cafeId}
+                mt="10px"
+                onClick={() => handleCafeListClick(cafe)}
+              >
+                {cafe.name.toLowerCase().includes(searchInput.toLowerCase()) ? (
+                  <span>
+                    {cafe.name
+                      .split(new RegExp(`(${searchInput})`, 'ig'))
+                      .map((part) =>
+                        part.toLowerCase() === searchInput.toLowerCase() ? (
+                          <span key={part} style={{ color: 'orange' }}>
+                            {part}
+                          </span>
+                        ) : (
+                          part
+                        )
+                      )}
+                  </span>
+                ) : (
+                  cafe.name
+                )}
+              </Typography>
+            ))}
+          </StyledSearchBox>
+        )}
+
+      {navigate === 'search' && searchInput === '' && (
         <StyledSearchBox>
-          {filterCafe?.map((cafe) => (
-            <Typography
-              key={cafe.cafeId}
-              mt="10px"
-              onClick={() => handleCafeListClick(cafe)}
-            >
-              {cafe.name.toLowerCase().includes(searchInput.toLowerCase()) ? (
-                <span>
-                  {cafe.name
-                    .split(new RegExp(`(${searchInput})`, 'ig'))
-                    .map((part) =>
-                      part.toLowerCase() === searchInput.toLowerCase() ? (
-                        <span key={part} style={{ color: 'orange' }}>
-                          {part}
-                        </span>
-                      ) : (
-                        part
-                      )
-                    )}
-                </span>
-              ) : (
-                cafe.name
-              )}
-            </Typography>
-          ))}
+          <Typography mt="10px">검색어를 입력해주세요</Typography>
         </StyledSearchBox>
       )}
+
+      {navigate === 'search' &&
+        searchInput !== '' &&
+        filterCafe?.length === 0 && (
+          <StyledSearchBox>
+            <Typography mt="10px">검색 결과가 없습니다</Typography>
+          </StyledSearchBox>
+        )}
     </StyledWrapper>
   );
 };
