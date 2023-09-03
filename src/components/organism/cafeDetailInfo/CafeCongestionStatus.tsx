@@ -18,14 +18,15 @@ import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
 import { useAddCoffeeBeanMutation } from '~/pages/api/cafe/useCoffeeBean';
 import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
 import { useNavigationSelector } from '~/store/reducers/navigateSlice';
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import CafeCongestionPopup from './CafeCongestionPopup';
 
 interface CongestionProps {
   status: TCafeCongestion;
-  cafeId: string;
 }
 
-const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
+const CafeCongestionStatus = ({ status }: CongestionProps) => {
+  const { cafeId } = useCafeIdSelector();
   const navigate = useNavigationSelector();
   // 실시간 혼잡도 확인할 때 팝업창
   const [cafeCongestionPopup, setCafeCongestionPopup] =

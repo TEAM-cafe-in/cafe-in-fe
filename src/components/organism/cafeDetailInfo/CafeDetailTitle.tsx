@@ -13,6 +13,7 @@ import { ActionButton } from '~/types/popup';
 import { query } from '~/helpers/mobileQuery';
 import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
 import { useNavigationSelector } from '~/store/reducers/navigateSlice';
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import CafeReviewModal from './CafeReviewModal';
 import {
   CafeStatusTypography,
@@ -24,11 +25,11 @@ import CafeReviewMobileModal from './mobile/CafeReviewMobileModal';
 interface CafeTitleProps {
   name: string;
   status: string;
-  cafeId: string;
   address: string;
 }
 
-const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
+const CafeDetailTitle = ({ name, status, address }: CafeTitleProps) => {
+  const { cafeId } = useCafeIdSelector();
   const theme = useTheme();
   const navigate = useNavigationSelector();
   const grayColor = theme.palette.grey[100];

@@ -8,7 +8,7 @@ interface RadioBorderProps {
 }
 
 interface RadioSearchProp {
-  mainColor: string;
+  main: string;
 }
 
 export const Wrapper = styled.div`
@@ -39,7 +39,7 @@ export const CafeStatusSearch = styled(Box)<RadioBorderProps>`
 
 // RadioStatusSearchButton 컴포넌트
 export const CafeSearchBox = styled(Box)<RadioSearchProp>`
-  border: 2px solid ${(props) => props.mainColor};
+  border: 2px solid ${(props) => props.main};
   border-radius: 4px;
   display: flex;
   justify-content: center;

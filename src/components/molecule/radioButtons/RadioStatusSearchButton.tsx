@@ -13,7 +13,7 @@ const RadioStatusSearchButton = ({ onClick }: StatusSearchProp) => {
   const theme = useTheme();
   const color = theme.palette.primary.main;
   return (
-    <CafeSearchBox mainColor={color} onClick={onClick}>
+    <CafeSearchBox main={color} onClick={onClick}>
       <Typography color={color} variant="h5">
         실시간 혼잡도 알아보기
       </Typography>

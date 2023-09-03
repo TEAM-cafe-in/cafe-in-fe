@@ -15,7 +15,10 @@ import {
 } from '~/store/reducers/navigateSlice';
 import { useCallback } from 'react';
 import CafeCommunityComment from './CafeCommunityComment';
-import { CafeCommunityContainer } from './cafeDetailInfo.styled';
+import {
+  CafeCommunityContainer,
+  CommentPlusBox,
+} from './cafeDetailInfo.styled';
 
 interface CommunityProp {
   comment: Comment[] | [];
@@ -59,14 +62,16 @@ const CafeCommunity = ({ comment }: CommunityProp) => {
           </>
         )}
       </CafeCommunityContainer>
-      {comment.length !== 0 ? (
-        <UnderlineButton text={content} onClick={handleCommentClick} />
-      ) : (
-        <UnderlineButton
-          text="댓글을 입력하세요"
-          onClick={handleCommentClick}
-        />
-      )}
+      <CommentPlusBox>
+        {comment.length !== 0 ? (
+          <UnderlineButton text={content} onClick={handleCommentClick} />
+        ) : (
+          <UnderlineButton
+            text="댓글을 입력하세요"
+            onClick={handleCommentClick}
+          />
+        )}
+      </CommentPlusBox>
     </>
   );
 };

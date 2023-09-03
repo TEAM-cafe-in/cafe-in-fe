@@ -89,6 +89,12 @@ export const CommentBox = styled(Box)<CafeInfoProps>`
   }
 `;
 
+export const CommentPlusBox = styled(Box)`
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+`;
+
 // CafeReviewModal 컴포넌트 styled component
 export const ReviewTitle = styled(Box)<CafeInfoProps>`
   display: flex;

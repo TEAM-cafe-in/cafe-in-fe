@@ -11,16 +11,15 @@ import { CafeDetailContainer } from './cafeDetailInfo.styled';
 import CafeDetailTitleHeader from './CafeDetailTitleHeader';
 
 interface DetailProps {
-  cafeId: string;
   data: CafeComment;
 }
 
-const CafeDetailInfo = ({ cafeId, data }: DetailProps) => {
+const CafeDetailInfo = ({ data }: DetailProps) => {
   return (
     <ListItem>
       {data && (
         <CafeDetailContainer>
-          <CafeDetailTitleHeader cafeId={cafeId} data={data} />
+          <CafeDetailTitleHeader data={data} />
           <CafePlaceInfo
             address={data?.cafeInfoProjection.address}
             phoneNumber={data?.cafeInfoProjection.phoneNumber}

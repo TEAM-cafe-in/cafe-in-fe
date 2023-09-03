@@ -24,13 +24,9 @@ import { SearchContainer } from './cafeInfo.styled';
 
 interface CafeInfoListProps {
   setOpenDepth2: (openDpth2: boolean) => void;
-  setDepth2DataId: (depth2DataId: string) => void;
 }
 
-const CafeInfoListPage = ({
-  setOpenDepth2,
-  setDepth2DataId,
-}: CafeInfoListProps) => {
+const CafeInfoListPage = ({ setOpenDepth2 }: CafeInfoListProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
@@ -71,13 +67,16 @@ const CafeInfoListPage = ({
   const cafeClickHandler = useCallback(
     (id: string) => {
       setOpenDepth2(true);
-      setDepth2DataId(id);
-
-      // 디테일 정보가 보여지게 set
-      dispatch(setNavigationContent('content'));
-      dispatch(setCafeId({ cafe_id: id, comment_id: '0' }));
+      dispatch(setCafeId({ cafeId: id, commentId: '' }));
+      if (navigate === 'cafelist' || navigate === 'search') {
+        // 디테일 정보가 보여지게 set
+        dispatch(setNavigationContent('content'));
+      }
+      if (navigate === 'search-list') {
+        dispatch(setNavigationContent('search-detail'));
+      }
     },
-    [setOpenDepth2, setDepth2DataId, dispatch]
+    [setOpenDepth2, dispatch, navigate]
   );
 
   return (
@@ -142,10 +141,7 @@ const CafeInfoListPage = ({
                   // 백엔드 아이디 처리 전까지
                   // eslint-disable-next-line react/no-array-index-key
                   key={index}
-                  cafeClickHandler={() => {
-                    cafeClickHandler(filter.cafeId);
-                    dispatch(setNavigationContent('search-detail'));
-                  }}
+                  cafeClickHandler={() => cafeClickHandler(filter.cafeId)}
                   cafes={filter}
                 />
               ))}

@@ -33,13 +33,9 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
 
   // depth2 메뉴 오픈 여부
   const [openDepth2, setOpenDepth2] = useState(false);
-  const [depth2DataId, setDepth2DataId] = useState('');
 
   useEffect(() => {
-    // if (cafeId.cafe_id !== '0') {
-    //  setOpenDepth2(true);
-    //  setDepth2DataId(cafeId);
-    // }
+    // 다음의 navigate일 때는 depth2 닫아놓기
     if (
       navigate === 'mypage' ||
       navigate === 'cafelist' ||
@@ -68,10 +64,7 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
         {/* 카페 리스트 컴포넌트 */}
         {selectedMenu === 'logo' && (
           <Suspense fallback={<div>loading...</div>}>
-            <CafeInfoListPage
-              setOpenDepth2={setOpenDepth2}
-              setDepth2DataId={setDepth2DataId}
-            />
+            <CafeInfoListPage setOpenDepth2={setOpenDepth2} />
           </Suspense>
         )}
         {/* 마이 페이지 컴포넌트 */}
@@ -79,7 +72,7 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
       </Drawer>
 
       <Suspense fallback={<div>loading...</div>}>
-        <Depth2Drawer open={openDepth2} dataId={depth2DataId} />
+        <Depth2Drawer open={openDepth2} />
       </Suspense>
 
       <Box display="flex" flexDirection="column">

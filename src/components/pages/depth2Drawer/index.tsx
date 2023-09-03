@@ -20,22 +20,20 @@ import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
   open: boolean;
-  dataId: string;
 }
 
-const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
+const Depth2Drawer = ({ open }: Depth2DrawerProps) => {
   const navigate = useNavigationSelector();
-  console.log(navigate);
 
   const cafe = useCafeIdSelector();
 
   // 혼잡도 확인했을 때 카페 디테일 정보 react query문
   const { data: congestion } = useQuery<CafeComment>(
-    ['comment', dataId],
-    () => getCoffeeBeanInfo(dataId),
+    ['comment', cafe.cafeId],
+    () => getCoffeeBeanInfo(cafe.cafeId),
     {
       suspense: true,
-      enabled: !!dataId, // cafeId가 없을 때 실행 X
+      enabled: !!cafe.cafeId, // cafeId가 없을 때 실행 X
     }
   );
 
@@ -46,7 +44,7 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
         congestion &&
         cafe && (
           <List>
-            <CafeDetailInfo cafeId={dataId} data={congestion} />
+            <CafeDetailInfo data={congestion} />
           </List>
         )}
 
@@ -54,7 +52,7 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
       {(navigate === 'comment' || navigate === 'search-comment') &&
         congestion && (
           <CafeDetailComment
-            cafeId={dataId}
+            cafeId={cafe.cafeId}
             name={congestion?.cafeInfoProjection.name}
             comments={congestion?.comments}
           />

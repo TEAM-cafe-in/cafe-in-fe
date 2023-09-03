@@ -6,8 +6,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState, useAppSelector } from '~/store';
 
 export interface CafeId {
-  cafe_id: string;
-  comment_id: string;
+  cafeId: string;
+  commentId: string;
 }
 
 export interface CafeIdState {
@@ -16,8 +16,8 @@ export interface CafeIdState {
 
 export const initialCafeIdState: CafeIdState = {
   cafeId: {
-    cafe_id: '0',
-    comment_id: '0',
+    cafeId: '',
+    commentId: '',
   },
 };
 
@@ -27,8 +27,8 @@ const cafeIdSlice = createSlice({
   initialState: initialCafeIdState,
   reducers: {
     setCafeId(state: CafeIdState, { payload }: PayloadAction<CafeId>) {
-      state.cafeId.cafe_id = payload.cafe_id;
-      state.cafeId.comment_id = payload.comment_id;
+      state.cafeId.cafeId = payload.cafeId;
+      state.cafeId.commentId = payload.commentId;
     },
   },
 });
