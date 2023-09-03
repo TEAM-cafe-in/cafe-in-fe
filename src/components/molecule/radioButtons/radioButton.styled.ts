@@ -6,6 +6,11 @@ interface RadioBorderProps {
   background: string;
   isborder: string;
 }
+
+interface RadioSearchProp {
+  mainColor: string;
+}
+
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -30,6 +35,17 @@ export const CafeStatusSearch = styled(Box)<RadioBorderProps>`
       flex-direction: column;
       padding: 10px 0px;
     `}
+`;
+
+// RadioStatusSearchButton 컴포넌트
+export const CafeSearchBox = styled(Box)<RadioSearchProp>`
+  border: 2px solid ${(props) => props.mainColor};
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  padding: 12px 0px;
+  margin: 24px 5px;
+  cursor: pointer;
 `;
 
 export const ReviewRadio = styled(Box)`

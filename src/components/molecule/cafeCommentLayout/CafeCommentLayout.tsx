@@ -10,7 +10,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Typography, useMediaQuery } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-import { setNavigationContent } from '~/store/reducers/navigateSlice';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
 import { query } from '~/helpers/mobileQuery';
 import CafeCommentWrite from './CafeCommentWrite';
 import {
@@ -24,24 +27,26 @@ import {
 interface CafeCommentLayoutProps {
   children: React.ReactNode;
   name: string;
-  type: 'comment' | 're-comment';
 }
 
-const CafeCommentLayout = ({
-  children,
-  name,
-  type,
-}: CafeCommentLayoutProps) => {
+const CafeCommentLayout = ({ children, name }: CafeCommentLayoutProps) => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(query, { noSsr: false });
+  const navigate = useNavigationSelector();
 
   // 뒤로 가기 버튼
   const handleBackArrowClick = () => {
-    if (type === 'comment') {
+    if (navigate === 'comment') {
       dispatch(setNavigationContent('content'));
     }
-    if (type === 're-comment') {
+    if (navigate === 're-comment') {
       dispatch(setNavigationContent('comment'));
+    }
+    if (navigate === 'search-comment') {
+      dispatch(setNavigationContent('search-detail'));
+    }
+    if (navigate === 'search-re-comment') {
+      dispatch(setNavigationContent('search-comment'));
     }
   };
 
@@ -76,7 +81,7 @@ const CafeCommentLayout = ({
 
         {/* 댓글 달기 */}
         <FooterContainer>
-          <CafeCommentWrite type={type} />
+          <CafeCommentWrite />
         </FooterContainer>
       </CommentWrapper>
     </Wrapper>

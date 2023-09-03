@@ -18,7 +18,7 @@ const CafeReComment = () => {
   //  keywords: [],
   // };
   return (
-    <CafeCommentLayout name="cafe" type="re-comment">
+    <CafeCommentLayout name="cafe">
       {/* <CafeSingleComment comment={data} type="top-comment" cafeId="1" />
       <CafeSingleComment comment={data} type="re-comment" cafeId="1" /> */}
     </CafeCommentLayout>

@@ -9,7 +9,10 @@ import Image from 'next/image';
 import { Typography, useTheme } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { setNavigationContent } from '~/store/reducers/navigateSlice';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
 import { Comment } from '~/types/cafeInfo';
 import { EngKeywords } from '~/types/comment';
 import Profile from '~/components/atom/profile';
@@ -40,6 +43,7 @@ const CafeSingleComment = ({
   openDeleteToast,
 }: CommentProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigationSelector();
 
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -52,7 +56,12 @@ const CafeSingleComment = ({
 
   // 댓글 클릭했을 때 대댓글로 이동
   const handleCommentClick = () => {
-    dispatch(setNavigationContent('re-comment'));
+    if (navigate === 'comment') {
+      dispatch(setNavigationContent('re-comment'));
+    }
+    if (navigate === 'search-comment') {
+      dispatch(setNavigationContent('search-re-comment'));
+    }
   };
 
   // 삭제 Modal 열기 함수

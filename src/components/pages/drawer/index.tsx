@@ -2,7 +2,7 @@
  * @createdBy 김해지
  * @description 사이드 고정 메뉴
  */
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -14,10 +14,7 @@ import {
 } from '@mui/material';
 
 import { DrawerItem, DrawerName } from '~/types/drawer';
-import {
-  setNavigationContent,
-  useNavigationSelector,
-} from '~/store/reducers/navigateSlice';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { Drawer } from './drawer.styled';
 import Depth1Drawer from '../depth1Drawer';
 
@@ -37,13 +34,6 @@ const MainDrawer = ({
   // depth1 메뉴 오픈 여부
   const [openDepth1, setOpenDepth1] = useState(true);
   const dispatch = useDispatch();
-  const navigate = useNavigationSelector();
-
-  useEffect(() => {
-    if (navigate === 'search-detail') {
-      setOpenDepth1(false);
-    }
-  }, [navigate]);
 
   // depth1 메뉴 열기/닫기 함수
   const handleOpenDepth1 = useCallback(() => {

@@ -31,7 +31,7 @@ const CafeDetailComment = ({ name, comments, cafeId }: CommentProps) => {
   }, []);
 
   return (
-    <CafeCommentLayout name={name} type="comment">
+    <CafeCommentLayout name={name}>
       {/* 댓글 삭제 성공 토스트 */}
       <Toast
         open={openToast}

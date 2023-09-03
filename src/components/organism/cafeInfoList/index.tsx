@@ -90,11 +90,16 @@ const CafeInfoListPage = ({
         />
       )}
 
+      {/* 카페 전체 정보 리스트 */}
       <List>
         {data &&
           (navigate === 'cafelist' ||
             navigate === 'search' ||
-            navigate === 'content') && (
+            navigate === 'content' ||
+            navigate === 'comment' ||
+            navigate === 're-comment' ||
+            navigate === 'write' ||
+            searchInput === '') && (
             <>
               <Typography ml="30px" color={grayColor}>
                 총 {data?.cafeCount}
@@ -111,6 +116,8 @@ const CafeInfoListPage = ({
               ))}
             </>
           )}
+
+        {/* 검색 후 카페 리스트가 없을 때 */}
         {(navigate === 'search-list' || navigate === 'search-detail') &&
           filterCafe.length === 0 && (
             <SearchContainer>
@@ -121,7 +128,12 @@ const CafeInfoListPage = ({
             </SearchContainer>
           )}
 
-        {(navigate === 'search-list' || navigate === 'search-detail') &&
+        {/* 검색 후 카페 리스트 1개 이상 일 때 */}
+        {(navigate === 'search-list' ||
+          navigate === 'search-detail' ||
+          navigate === 'search-write' ||
+          navigate === 'search-re-comment' ||
+          navigate === 'search-comment') &&
           filterCafe.length > 0 && (
             <>
               {filterCafe.map((filter: CafesInfo, index: number) => (

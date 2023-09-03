@@ -10,10 +10,14 @@ import { Box } from '@mui/material';
 
 import { ActionButton } from '~/types/popup';
 import { TCafeCongestion } from '~/types/radio';
-import { RadioStatusBoxButton } from '~/components/molecule/radioButtons';
+import {
+  RadioStatusBoxButton,
+  RadioStatusSearchButton,
+} from '~/components/molecule/radioButtons';
 import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
 import { useAddCoffeeBeanMutation } from '~/pages/api/cafe/useCoffeeBean';
 import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
+import { useNavigationSelector } from '~/store/reducers/navigateSlice';
 import CafeCongestionPopup from './CafeCongestionPopup';
 
 interface CongestionProps {
@@ -22,6 +26,7 @@ interface CongestionProps {
 }
 
 const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
+  const navigate = useNavigationSelector();
   // 실시간 혼잡도 확인할 때 팝업창
   const [cafeCongestionPopup, setCafeCongestionPopup] =
     useState<boolean>(false);
@@ -104,13 +109,14 @@ const CafeCongestionStatus = ({ status, cafeId }: CongestionProps) => {
         type="fail"
       />
 
-      {status === '0' ? (
+      {status !== '0' && <RadioStatusBoxButton status={status} />}
+      {status === '0' && navigate === 'search-detail' ? (
+        <RadioStatusSearchButton onClick={congestionCoffeeBeanClickHandler} />
+      ) : (
         <RadioStatusBoxButton
           status={status}
           onClick={congestionCoffeeBeanClickHandler}
         />
-      ) : (
-        <RadioStatusBoxButton status={status} />
       )}
     </Box>
   );

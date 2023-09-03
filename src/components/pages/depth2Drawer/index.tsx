@@ -25,6 +25,7 @@ interface Depth2DrawerProps {
 
 const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
   const navigate = useNavigationSelector();
+  console.log(navigate);
 
   const cafe = useCafeIdSelector();
 
@@ -50,19 +51,22 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
         )}
 
       {/* 카페 댓글 리스트 페이지 */}
-      {navigate === 'comment' && congestion && (
-        <CafeDetailComment
-          cafeId={dataId}
-          name={congestion?.cafeInfoProjection.name}
-          comments={congestion?.comments}
-        />
-      )}
+      {(navigate === 'comment' || navigate === 'search-comment') &&
+        congestion && (
+          <CafeDetailComment
+            cafeId={dataId}
+            name={congestion?.cafeInfoProjection.name}
+            comments={congestion?.comments}
+          />
+        )}
 
       {/* 카페 대댓글 리스트 페이지 */}
-      {navigate === 're-comment' && <CafeReComment />}
+      {(navigate === 're-comment' || navigate === 'search-re-comment') && (
+        <CafeReComment />
+      )}
 
       {/* 카페 댓글 작성 페이지 */}
-      {navigate === 'write' && congestion && (
+      {(navigate === 'write' || navigate === 'search-write') && congestion && (
         <CafeWriteComment
           name={congestion?.cafeInfoProjection.name}
           cafeId={congestion?.cafeInfoProjection.cafeId}

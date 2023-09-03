@@ -31,6 +31,12 @@ export const CafeTitle = styled(Box)`
 
 export const CafeTitleContainer = styled(Box)`
   display: flex;
+  align-items: center;
+  margin-top: 5px;
+  .mui-icon {
+    color: black;
+    margin-right: 10px;
+  }
 `;
 // CafePlaceInfo 컴포넌트 styled component
 interface CafeColorProps {
@@ -48,17 +54,12 @@ export const CafePlaceContainer = styled(Box)<CafeColorProps>`
   .cafe-info {
     display: flex;
     align-items: center;
-    margin-bottom: 6px;
+    margin-top: 18px;
     svg {
       color: ${(props) => props.icon};
       transform: scale(0.8);
       margin-right: 5px;
     }
-  }
-  .cafe-plus {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
   }
 `;
 export const CongestionBox = styled(Box)`
