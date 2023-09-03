@@ -7,14 +7,15 @@ import { RootState, useAppSelector } from '~/store';
 
 type Navigation =
   | 'cafelist'
+  | 'mypage'
   | 'content'
   | 'comment'
   | 're-comment'
   | 'write'
-  | 'search-detail'
   | 'search'
-  | 'mypage'
+  | 'search-detail'
   | 'search-list'
+  | 'search'
   | 'setting';
 
 export interface NavigationContent {

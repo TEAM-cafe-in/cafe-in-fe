@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import { Button, Typography } from '@mui/material';
 
-import { setNavigationContent } from '~/store/reducers/navigate';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import { Keywords } from '~/types/comment';
 import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
 

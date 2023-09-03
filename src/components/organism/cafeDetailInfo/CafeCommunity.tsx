@@ -9,7 +9,7 @@ import { Typography, useTheme } from '@mui/material';
 
 import { UnderlineButton } from '~/components/atom/buttons';
 import { Comment } from '~/types/cafeInfo';
-import { setNavigationContent } from '~/store/reducers/navigate';
+import { setNavigationContent } from '~/store/reducers/navigateSlice';
 import CafeCommunityComment from './CafeCommunityComment';
 import { CafeCommunityContainer } from './cafeDetailInfo.styled';
 

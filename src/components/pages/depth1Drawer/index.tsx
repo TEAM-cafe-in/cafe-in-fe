@@ -17,7 +17,7 @@ import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import Depth2Drawer from '~/components/pages/depth2Drawer';
 import { Drawer } from '~/components/pages/drawer/drawer.styled';
 import CafeInfoListPage from '~/components/organism/cafeInfoList';
-import { useNavigationSelector } from '~/store/reducers/navigate';
+import { useNavigationSelector } from '~/store/reducers/navigateSlice';
 import { Depth1Box, SwipeButton, CloseButton } from './depth1Drawer.styled';
 
 interface IDepth1Drawer {
@@ -40,10 +40,14 @@ const Depth1Drawer = ({ selectedMenu, open, setOpen }: IDepth1Drawer) => {
     //  setOpenDepth2(true);
     //  setDepth2DataId(cafeId);
     // }
-    if (navigate === 'mypage' || navigate === 'cafelist') {
+    if (
+      navigate === 'mypage' ||
+      navigate === 'cafelist' ||
+      navigate === 'search' ||
+      navigate === 'search-list'
+    ) {
       setOpenDepth2(false);
-    }
-    if (navigate === 'setting') {
+    } else {
       setOpenDepth2(true);
     }
   }, [cafeId, navigate]);

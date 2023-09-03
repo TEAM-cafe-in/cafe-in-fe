@@ -6,7 +6,9 @@ import { HYDRATE } from 'next-redux-wrapper';
 import authSlice, { AuthState } from './authSlice';
 import userSlice, { UserState } from './userSlice';
 import cafeIdSlice, { CafeIdState } from './cafeIdSlice';
-import navigationContentSlice, { NavigationContentState } from './navigate';
+import navigationContentSlice, {
+  NavigationContentState,
+} from './navigateSlice';
 
 export interface ReducerStates {
   auth: AuthState;

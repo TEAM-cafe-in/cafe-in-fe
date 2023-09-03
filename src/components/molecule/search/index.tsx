@@ -3,60 +3,53 @@
  * @description 카페 검색 컴포넌트
  */
 
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Typography, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
+import { CafesInfo } from '~/types/cafeInfo';
 import { StyledBox, StyledSearchBox, StyledWrapper } from './search.styled';
 
-interface SearchCafeData {
-  cafeId: string;
-  name: string;
-}
 interface SearchCafeProp {
-  cafeList: SearchCafeData[];
+  searchInput: string;
+  setSearchInput: (searchInput: string) => void;
+  filterCafe: CafesInfo[];
 }
-const SearchCafe = ({ cafeList }: SearchCafeProp) => {
-  const [searchInput, setSearchInput] = useState<string>('');
-  const [filterCafe, setFilterCafe] = useState<SearchCafeData[]>([]);
+const SearchCafe = ({
+  searchInput,
+  setSearchInput,
+  filterCafe,
+}: SearchCafeProp) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigationSelector();
 
   // 검색 입력하는 함수
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setSearchInput(input);
-
-    const regex = /^[a-zA-Z0-9가-힣]+$/;
-    setFilterCafe(
-      cafeList.filter((cafe) => {
-        return (
-          regex.test(input) &&
-          cafe.name.toLowerCase().includes(input.toLowerCase())
-        );
-      })
-    );
   };
 
   // 검색 취소하기
   const handleSearchCancel = () => {
     setSearchInput('');
-    setFilterCafe([]);
+    dispatch(setNavigationContent('cafelist'));
   };
 
   // 연관 검색어 클릭했을 때
-  const handleCafeListClick = (cafe: string) => {
-    setSearchInput(cafe);
+  const handleCafeListClick = (cafe: CafesInfo) => {
+    setSearchInput(cafe.name);
   };
 
   // 검색 클릭했을 때
-  const handleSearchCafeClick = () => {};
-
-  // 인풋 컴포넌트 엔터 쳤을 때
-  const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      console.log('엔터 클릭');
-    }
+  const handleSearchCafeClick = () => {
+    dispatch(setNavigationContent('search-list'));
   };
 
   return (
@@ -68,7 +61,7 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
           inputProps={{ 'aria-label': '카페 바로 검색' }}
           onChange={handleSearchChange}
           value={searchInput}
-          onKeyDown={handleEnterInput}
+          onClick={() => dispatch(setNavigationContent('search'))}
         />
         <IconButton
           type="button"
@@ -87,35 +80,51 @@ const SearchCafe = ({ cafeList }: SearchCafeProp) => {
           <SearchIcon />
         </IconButton>
       </StyledBox>
-      {filterCafe?.length > 0 && (
+      {navigate === 'search' &&
+        searchInput !== '' &&
+        filterCafe?.length > 0 && (
+          <StyledSearchBox>
+            {filterCafe?.map((cafe) => (
+              <Typography
+                key={cafe.cafeId}
+                mt="10px"
+                onClick={() => handleCafeListClick(cafe)}
+              >
+                {cafe.name.toLowerCase().includes(searchInput.toLowerCase()) ? (
+                  <span>
+                    {cafe.name
+                      .split(new RegExp(`(${searchInput})`, 'ig'))
+                      .map((part) =>
+                        part.toLowerCase() === searchInput.toLowerCase() ? (
+                          <span key={part} style={{ color: 'orange' }}>
+                            {part}
+                          </span>
+                        ) : (
+                          part
+                        )
+                      )}
+                  </span>
+                ) : (
+                  cafe.name
+                )}
+              </Typography>
+            ))}
+          </StyledSearchBox>
+        )}
+
+      {navigate === 'search' && searchInput === '' && (
         <StyledSearchBox>
-          {filterCafe?.map((cafe) => (
-            <Typography
-              key={cafe.cafeId}
-              mt="10px"
-              onClick={() => handleCafeListClick(cafe.name)}
-            >
-              {cafe.name.toLowerCase().includes(searchInput.toLowerCase()) ? (
-                <span>
-                  {cafe.name
-                    .split(new RegExp(`(${searchInput})`, 'ig'))
-                    .map((part) =>
-                      part.toLowerCase() === searchInput.toLowerCase() ? (
-                        <span key={part} style={{ color: 'orange' }}>
-                          {part}
-                        </span>
-                      ) : (
-                        part
-                      )
-                    )}
-                </span>
-              ) : (
-                cafe.name
-              )}
-            </Typography>
-          ))}
+          <Typography mt="10px">검색어를 입력해주세요</Typography>
         </StyledSearchBox>
       )}
+
+      {navigate === 'search' &&
+        searchInput !== '' &&
+        filterCafe?.length === 0 && (
+          <StyledSearchBox>
+            <Typography mt="10px">검색 결과가 없습니다</Typography>
+          </StyledSearchBox>
+        )}
     </StyledWrapper>
   );
 };
