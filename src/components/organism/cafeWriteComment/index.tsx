@@ -69,7 +69,12 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
     const body = { cafeId, content: textValue, keywords: options };
     writeCommentMutate(body);
     // 작성하고 댓글 리스트로 이동
-    dispatch(setNavigationContent('comment'));
+    if (navigate === 'write') {
+      dispatch(setNavigationContent('comment'));
+    }
+    if (navigate === 'search-write') {
+      dispatch(setNavigationContent('search-comment'));
+    }
   };
 
   return (
