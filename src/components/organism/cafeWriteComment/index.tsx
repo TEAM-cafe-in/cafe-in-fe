@@ -8,7 +8,10 @@ import { useDispatch } from 'react-redux';
 
 import { Button, Typography } from '@mui/material';
 
-import { setNavigationContent } from '~/store/reducers/navigateSlice';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
 import { Keywords } from '~/types/comment';
 import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
 
@@ -23,6 +26,7 @@ interface WriteProp {
 
 const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
   const dispatch = useDispatch();
+  const navigate = useNavigationSelector();
 
   // 선택한 keywords 옵션들
   const [options, setOptions] = useState<Keywords[]>([]);
@@ -37,7 +41,12 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
 
   // 뒤로 가기 버튼
   const handleBackArrowClick = () => {
-    dispatch(setNavigationContent('comment'));
+    if (navigate === 'write') {
+      dispatch(setNavigationContent('comment'));
+    }
+    if (navigate === 'search-write') {
+      dispatch(setNavigationContent('search-comment'));
+    }
   };
 
   // 댓글 키워드 set하는 함수

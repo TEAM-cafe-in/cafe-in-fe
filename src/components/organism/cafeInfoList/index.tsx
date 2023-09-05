@@ -24,13 +24,9 @@ import { SearchContainer } from './cafeInfo.styled';
 
 interface CafeInfoListProps {
   setOpenDepth2: (openDpth2: boolean) => void;
-  setDepth2DataId: (depth2DataId: string) => void;
 }
 
-const CafeInfoListPage = ({
-  setOpenDepth2,
-  setDepth2DataId,
-}: CafeInfoListProps) => {
+const CafeInfoListPage = ({ setOpenDepth2 }: CafeInfoListProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const grayColor = theme.palette.grey[400];
@@ -71,13 +67,16 @@ const CafeInfoListPage = ({
   const cafeClickHandler = useCallback(
     (id: string) => {
       setOpenDepth2(true);
-      setDepth2DataId(id);
-
-      // 디테일 정보가 보여지게 set
-      dispatch(setNavigationContent('content'));
-      dispatch(setCafeId({ cafe_id: id, comment_id: '0' }));
+      dispatch(setCafeId({ cafeId: id, commentId: '' }));
+      if (navigate === 'cafelist' || navigate === 'search') {
+        // 디테일 정보가 보여지게 set
+        dispatch(setNavigationContent('content'));
+      }
+      if (navigate === 'search-list') {
+        dispatch(setNavigationContent('search-detail'));
+      }
     },
-    [setOpenDepth2, setDepth2DataId, dispatch]
+    [setOpenDepth2, dispatch, navigate]
   );
 
   return (
@@ -90,11 +89,16 @@ const CafeInfoListPage = ({
         />
       )}
 
+      {/* 카페 전체 정보 리스트 */}
       <List>
         {data &&
           (navigate === 'cafelist' ||
             navigate === 'search' ||
-            navigate === 'content') && (
+            navigate === 'content' ||
+            navigate === 'comment' ||
+            navigate === 're-comment' ||
+            navigate === 'write' ||
+            searchInput === '') && (
             <>
               <Typography ml="30px" color={grayColor}>
                 총 {data?.cafeCount}
@@ -111,6 +115,8 @@ const CafeInfoListPage = ({
               ))}
             </>
           )}
+
+        {/* 검색 후 카페 리스트가 없을 때 */}
         {(navigate === 'search-list' || navigate === 'search-detail') &&
           filterCafe.length === 0 && (
             <SearchContainer>
@@ -121,7 +127,12 @@ const CafeInfoListPage = ({
             </SearchContainer>
           )}
 
-        {(navigate === 'search-list' || navigate === 'search-detail') &&
+        {/* 검색 후 카페 리스트 1개 이상 일 때 */}
+        {(navigate === 'search-list' ||
+          navigate === 'search-detail' ||
+          navigate === 'search-write' ||
+          navigate === 'search-re-comment' ||
+          navigate === 'search-comment') &&
           filterCafe.length > 0 && (
             <>
               {filterCafe.map((filter: CafesInfo, index: number) => (
@@ -130,10 +141,7 @@ const CafeInfoListPage = ({
                   // 백엔드 아이디 처리 전까지
                   // eslint-disable-next-line react/no-array-index-key
                   key={index}
-                  cafeClickHandler={() => {
-                    cafeClickHandler(filter.cafeId);
-                    dispatch(setNavigationContent('search-detail'));
-                  }}
+                  cafeClickHandler={() => cafeClickHandler(filter.cafeId)}
                   cafes={filter}
                 />
               ))}

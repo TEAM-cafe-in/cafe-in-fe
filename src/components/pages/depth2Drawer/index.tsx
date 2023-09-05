@@ -20,21 +20,20 @@ import { Drawer } from '../drawer/drawer.styled';
 
 interface Depth2DrawerProps {
   open: boolean;
-  dataId: string;
 }
 
-const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
+const Depth2Drawer = ({ open }: Depth2DrawerProps) => {
   const navigate = useNavigationSelector();
 
   const cafe = useCafeIdSelector();
 
   // 혼잡도 확인했을 때 카페 디테일 정보 react query문
   const { data: congestion } = useQuery<CafeComment>(
-    ['comment', dataId],
-    () => getCoffeeBeanInfo(dataId),
+    ['comment', cafe.cafeId],
+    () => getCoffeeBeanInfo(cafe.cafeId),
     {
       suspense: true,
-      enabled: !!dataId, // cafeId가 없을 때 실행 X
+      enabled: !!cafe.cafeId, // cafeId가 없을 때 실행 X
     }
   );
 
@@ -45,24 +44,27 @@ const Depth2Drawer = ({ open, dataId }: Depth2DrawerProps) => {
         congestion &&
         cafe && (
           <List>
-            <CafeDetailInfo cafeId={dataId} data={congestion} />
+            <CafeDetailInfo data={congestion} />
           </List>
         )}
 
       {/* 카페 댓글 리스트 페이지 */}
-      {navigate === 'comment' && congestion && (
-        <CafeDetailComment
-          cafeId={dataId}
-          name={congestion?.cafeInfoProjection.name}
-          comments={congestion?.comments}
-        />
-      )}
+      {(navigate === 'comment' || navigate === 'search-comment') &&
+        congestion && (
+          <CafeDetailComment
+            cafeId={cafe.cafeId}
+            name={congestion?.cafeInfoProjection.name}
+            comments={congestion?.comments}
+          />
+        )}
 
       {/* 카페 대댓글 리스트 페이지 */}
-      {navigate === 're-comment' && <CafeReComment />}
+      {(navigate === 're-comment' || navigate === 'search-re-comment') && (
+        <CafeReComment />
+      )}
 
       {/* 카페 댓글 작성 페이지 */}
-      {navigate === 'write' && congestion && (
+      {(navigate === 'write' || navigate === 'search-write') && congestion && (
         <CafeWriteComment
           name={congestion?.cafeInfoProjection.name}
           cafeId={congestion?.cafeInfoProjection.cafeId}

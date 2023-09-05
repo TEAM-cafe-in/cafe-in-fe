@@ -9,19 +9,36 @@ import { Typography, useTheme } from '@mui/material';
 
 import { UnderlineButton } from '~/components/atom/buttons';
 import { Comment } from '~/types/cafeInfo';
-import { setNavigationContent } from '~/store/reducers/navigateSlice';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
+import { useCallback } from 'react';
 import CafeCommunityComment from './CafeCommunityComment';
-import { CafeCommunityContainer } from './cafeDetailInfo.styled';
+import {
+  CafeCommunityContainer,
+  CommentPlusBox,
+} from './cafeDetailInfo.styled';
 
 interface CommunityProp {
   comment: Comment[] | [];
 }
 const CafeCommunity = ({ comment }: CommunityProp) => {
   const dispatch = useDispatch();
+  const navigate = useNavigationSelector();
   const theme = useTheme();
   const grayColor = theme.palette.grey[100];
 
   const content = `${comment.length}개 댓글보기`;
+
+  // 댓글 더 보기 눌렀을 때
+  const handleCommentClick = useCallback(() => {
+    if (navigate === 'search-detail') {
+      dispatch(setNavigationContent('search-comment'));
+    } else {
+      dispatch(setNavigationContent('comment'));
+    }
+  }, [navigate, dispatch]);
 
   return (
     <>
@@ -45,21 +62,16 @@ const CafeCommunity = ({ comment }: CommunityProp) => {
           </>
         )}
       </CafeCommunityContainer>
-      {comment.length !== 0 ? (
-        <UnderlineButton
-          text={content}
-          onClick={() => {
-            dispatch(setNavigationContent('comment'));
-          }}
-        />
-      ) : (
-        <UnderlineButton
-          text="댓글을 입력하세요"
-          onClick={() => {
-            dispatch(setNavigationContent('comment'));
-          }}
-        />
-      )}
+      <CommentPlusBox>
+        {comment.length !== 0 ? (
+          <UnderlineButton text={content} onClick={handleCommentClick} />
+        ) : (
+          <UnderlineButton
+            text="댓글을 입력하세요"
+            onClick={handleCommentClick}
+          />
+        )}
+      </CommentPlusBox>
     </>
   );
 };

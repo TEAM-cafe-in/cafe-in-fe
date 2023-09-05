@@ -6,11 +6,14 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import CallIcon from '@mui/icons-material/Call';
 
 import { WriteButton } from '~/components/atom/buttons';
 import { ActionButton } from '~/types/popup';
 import { query } from '~/helpers/mobileQuery';
 import CafeResponsePopup from '~/components/molecule/cafeResponsePopup';
+import { useNavigationSelector } from '~/store/reducers/navigateSlice';
+import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
 import CafeReviewModal from './CafeReviewModal';
 import {
   CafeStatusTypography,
@@ -22,12 +25,13 @@ import CafeReviewMobileModal from './mobile/CafeReviewMobileModal';
 interface CafeTitleProps {
   name: string;
   status: string;
-  cafeId: string;
   address: string;
 }
 
-const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
+const CafeDetailTitle = ({ name, status, address }: CafeTitleProps) => {
+  const { cafeId } = useCafeIdSelector();
   const theme = useTheme();
+  const navigate = useNavigationSelector();
   const grayColor = theme.palette.grey[100];
 
   const isMobile = useMediaQuery(query, { noSsr: false });
@@ -109,11 +113,8 @@ const CafeDetailTitle = ({ name, status, cafeId, address }: CafeTitleProps) => {
             {name}
           </Typography>
           <CafeTitleContainer>
-            <CafeStatusTypography
-              color={grayColor}
-              variant="subtitle2"
-              mt="5px"
-            >
+            {navigate === 'search-detail' && <CallIcon className="mui-icon" />}
+            <CafeStatusTypography color={grayColor} variant="subtitle2">
               {status}
             </CafeStatusTypography>
             {isMobile && (

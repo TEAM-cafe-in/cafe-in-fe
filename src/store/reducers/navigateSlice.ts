@@ -15,6 +15,9 @@ type Navigation =
   | 'search'
   | 'search-detail'
   | 'search-list'
+  | 'search-comment'
+  | 'search-re-comment'
+  | 'search-write'
   | 'search'
   | 'setting';
 
