@@ -15,6 +15,8 @@ import AppBar from '~/components/organism/appBar';
 import Drawer from '~/components/pages/drawer';
 import Profile from '~/components/atom/profile';
 import BottomSheet from '~/components/pages/bottomSheet';
+import { useNavigationSelector } from '~/store/reducers/navigateSlice';
+import MobilePage from '../pages/mobilePage';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -38,6 +40,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
    */
   const isMobile = useMediaQuery(query, { noSsr: false });
 
+  const navigate = useNavigationSelector();
+
   // 선택중인 메뉴
   const [selectedMenu, setSelectedMenu] = useState<DrawerName>('logo');
 
@@ -49,7 +53,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <Box style={{ display: 'flex' }}>
       {/* 모바일 AppBar 영역 */}
-      {isMobile && <AppBar />}
+      {isMobile && (navigate === 'cafelist' || navigate === 'content') && (
+        <AppBar />
+      )}
 
       {/* PC 용 Side Menu 영역 */}
       {!isMobile && (
@@ -59,21 +65,22 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           handleSelectedMenu={handleSelectedMenu}
         />
       )}
-
       <Box component="main" sx={{ flexGrow: 1, backgroundColor: 'gray' }}>
-        {/* Mobile 용 AppBar 영역만큼 차지해줌 */}
-        {isMobile && <Toolbar />}
-
-        {/* 현재 라우팅된 페이지 */}
+        {isMobile && (navigate === 'cafelist' || navigate === 'content') && (
+          <Toolbar />
+        )}
         {children}
-
-        {/* Mobile 전용 BottomSheet 영역  */}
-        {isMobile && (
+        {isMobile && (navigate === 'cafelist' || navigate === 'content') && (
           <Suspense fallback={<div>loading...</div>}>
             <BottomSheet />
           </Suspense>
         )}
       </Box>
+      {isMobile && navigate !== 'content' && navigate !== 'cafelist' && (
+        <Suspense fallback={<div>loading...</div>}>
+          <MobilePage />
+        </Suspense>
+      )}
     </Box>
   );
 };
