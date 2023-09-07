@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { Suspense } from 'react';
 
 import { Box } from '@mui/material';
 
@@ -45,6 +46,13 @@ const MobilePage = () => {
           name={congestion?.cafeInfoProjection.name}
           cafeId={congestion?.cafeInfoProjection.cafeId}
         />
+      )}
+
+      {/* 검색 페이지 */}
+      {navigate === 'search' && (
+        <Suspense fallback={<div>loading...</div>}>
+          {/* <MobileSearch /> */}
+        </Suspense>
       )}
     </Box>
   );

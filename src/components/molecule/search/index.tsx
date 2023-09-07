@@ -6,7 +6,13 @@
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Typography, InputBase, IconButton } from '@mui/material';
+import {
+  Typography,
+  InputBase,
+  IconButton,
+  useMediaQuery,
+} from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
@@ -15,7 +21,13 @@ import {
   useNavigationSelector,
 } from '~/store/reducers/navigateSlice';
 import { CafesInfo } from '~/types/cafeInfo';
-import { StyledBox, StyledSearchBox, StyledWrapper } from './search.styled';
+import { query } from '~/helpers/mobileQuery';
+import {
+  StyledBox,
+  StyledInput,
+  StyledSearchBox,
+  StyledWrapper,
+} from './search.styled';
 
 interface SearchCafeProp {
   searchInput: string;
@@ -29,6 +41,7 @@ const SearchCafe = ({
 }: SearchCafeProp) => {
   const dispatch = useDispatch();
   const navigate = useNavigationSelector();
+  const isMobile = useMediaQuery(query, { noSsr: false });
 
   // 검색 입력하는 함수
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,32 +67,36 @@ const SearchCafe = ({
 
   return (
     <StyledWrapper>
-      <StyledBox>
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="카페 바로 검색"
-          inputProps={{ 'aria-label': '카페 바로 검색' }}
-          onChange={handleSearchChange}
-          value={searchInput}
-          onClick={() => dispatch(setNavigationContent('search'))}
-        />
-        <IconButton
-          type="button"
-          sx={{ p: '10px' }}
-          aria-label="search"
-          onClick={handleSearchCancel}
-        >
-          {searchInput !== '' && <CancelRoundedIcon fontSize="small" />}
-        </IconButton>
-        <IconButton
-          type="button"
-          sx={{ p: '10px' }}
-          aria-label="search"
-          onClick={handleSearchCafeClick}
-        >
-          <SearchIcon />
-        </IconButton>
-      </StyledBox>
+      <StyledInput>
+        {isMobile && <ArrowBackIosNewIcon />}
+        <StyledBox>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="카페 바로 검색"
+            inputProps={{ 'aria-label': '카페 바로 검색' }}
+            onChange={handleSearchChange}
+            value={searchInput}
+            onClick={() => dispatch(setNavigationContent('search'))}
+          />
+          <IconButton
+            type="button"
+            sx={{ p: '10px' }}
+            aria-label="search"
+            onClick={handleSearchCancel}
+          >
+            {searchInput !== '' && <CancelRoundedIcon fontSize="small" />}
+          </IconButton>
+          <IconButton
+            type="button"
+            sx={{ p: '10px' }}
+            aria-label="search"
+            onClick={handleSearchCafeClick}
+          >
+            <SearchIcon />
+          </IconButton>{' '}
+        </StyledBox>
+      </StyledInput>
+
       {navigate === 'search' &&
         searchInput !== '' &&
         filterCafe?.length > 0 && (

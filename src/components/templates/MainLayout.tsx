@@ -65,16 +65,17 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           handleSelectedMenu={handleSelectedMenu}
         />
       )}
-      {isMobile && (navigate === 'cafelist' || navigate === 'content') && (
-        <Box component="main" sx={{ flexGrow: 1, backgroundColor: 'gray' }}>
+      <Box component="main" sx={{ flexGrow: 1, backgroundColor: 'gray' }}>
+        {isMobile && (navigate === 'cafelist' || navigate === 'content') && (
           <Toolbar />
-          {children}
+        )}
+        {children}
+        {isMobile && (navigate === 'cafelist' || navigate === 'content') && (
           <Suspense fallback={<div>loading...</div>}>
             <BottomSheet />
           </Suspense>
-        </Box>
-      )}
-
+        )}
+      </Box>
       {isMobile && navigate !== 'content' && navigate !== 'cafelist' && (
         <Suspense fallback={<div>loading...</div>}>
           <MobilePage />

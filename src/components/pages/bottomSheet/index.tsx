@@ -54,7 +54,7 @@ const BottomSheet = () => {
   const [openDepth2, setOpenDepth2] = useState(false);
 
   // 디테일 페이지 확장 상태
-  const [expand, setExpand] = useState(true);
+  const [expand, setExpand] = useState(false);
 
   // 혼잡도 확인했을 때 카페 디테일 정보 react query문
   const { data: congestion } = useQuery<CafeComment>(

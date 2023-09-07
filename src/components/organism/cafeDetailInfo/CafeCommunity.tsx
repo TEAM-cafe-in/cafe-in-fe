@@ -53,10 +53,10 @@ const CafeCommunity = ({ comment }: CommunityProp) => {
         ) : (
           <>
             <CafeCommunityComment content={comment[0].content} />
-            {comment[1].content && (
+            {comment.length > 1 && (
               <CafeCommunityComment content={comment[1].content} />
             )}
-            {comment[2].content && (
+            {comment.length > 2 && (
               <CafeCommunityComment content={comment[2].content} />
             )}
           </>
