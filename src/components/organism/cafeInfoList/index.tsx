@@ -3,7 +3,6 @@
  * @description 카페 정보 리스트
  */
 import { useCallback, useState } from 'react';
-import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 
@@ -18,9 +17,9 @@ import {
 } from '~/store/reducers/navigateSlice';
 import { query } from '~/helpers/mobileQuery';
 import { setCafeId } from '~/store/reducers/cafeIdSlice';
-import searchLogo from '../../../static/images/not-search-logo.png';
+
 import CafeInfo from './CafeInfo';
-import { SearchContainer } from './cafeInfo.styled';
+import NoCafeComment from './NoCafeComment';
 
 interface CafeInfoListProps {
   setOpenDepth2: (openDpth2: boolean) => void;
@@ -119,12 +118,13 @@ const CafeInfoListPage = ({ setOpenDepth2 }: CafeInfoListProps) => {
         {/* 검색 후 카페 리스트가 없을 때 */}
         {(navigate === 'search-list' || navigate === 'search-detail') &&
           filterCafe.length === 0 && (
-            <SearchContainer>
-              <Image src={searchLogo} alt="" />
-              <Typography variant="h5" mt="20px">
-                {searchInput} 와 일치하는 카페 검색결과가 없습니다.
-              </Typography>
-            </SearchContainer>
+            // <SearchContainer>
+            //  <Image src={searchLogo} alt="" />
+            //  <Typography variant="h5" mt="20px">
+            //    {searchInput} 와 일치하는 카페 검색결과가 없습니다.
+            //  </Typography>
+            // </SearchContainer>
+            <NoCafeComment searchInput={searchInput} />
           )}
 
         {/* 검색 후 카페 리스트 1개 이상 일 때 */}

@@ -12,7 +12,6 @@ import {
   IconButton,
   useMediaQuery,
 } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
@@ -23,6 +22,7 @@ import {
 import { CafesInfo } from '~/types/cafeInfo';
 import { query } from '~/helpers/mobileQuery';
 import {
+  StyledArrowIcon,
   StyledBox,
   StyledInput,
   StyledSearchBox,
@@ -52,7 +52,9 @@ const SearchCafe = ({
   // 검색 취소하기
   const handleSearchCancel = () => {
     setSearchInput('');
-    dispatch(setNavigationContent('cafelist'));
+    if (!isMobile) {
+      dispatch(setNavigationContent('cafelist'));
+    }
   };
 
   // 연관 검색어 클릭했을 때
@@ -68,7 +70,7 @@ const SearchCafe = ({
   return (
     <StyledWrapper>
       <StyledInput>
-        {isMobile && <ArrowBackIosNewIcon />}
+        {isMobile && <StyledArrowIcon />}
         <StyledBox>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
