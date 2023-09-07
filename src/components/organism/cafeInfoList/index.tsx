@@ -118,12 +118,6 @@ const CafeInfoListPage = ({ setOpenDepth2 }: CafeInfoListProps) => {
         {/* 검색 후 카페 리스트가 없을 때 */}
         {(navigate === 'search-list' || navigate === 'search-detail') &&
           filterCafe.length === 0 && (
-            // <SearchContainer>
-            //  <Image src={searchLogo} alt="" />
-            //  <Typography variant="h5" mt="20px">
-            //    {searchInput} 와 일치하는 카페 검색결과가 없습니다.
-            //  </Typography>
-            // </SearchContainer>
             <NoCafeComment searchInput={searchInput} />
           )}
 

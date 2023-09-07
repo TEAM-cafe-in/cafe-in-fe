@@ -64,6 +64,9 @@ const SearchCafe = ({
 
   // 검색 클릭했을 때
   const handleSearchCafeClick = () => {
+    if (searchInput === '') {
+      return;
+    }
     dispatch(setNavigationContent('search-list'));
   };
 

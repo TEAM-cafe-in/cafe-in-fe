@@ -3,8 +3,11 @@ import { Suspense, useCallback, useState } from 'react';
 
 import { Box } from '@mui/material';
 
-import { useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
-import { useNavigationSelector } from '~/store/reducers/navigateSlice';
+import { setCafeId, useCafeIdSelector } from '~/store/reducers/cafeIdSlice';
+import {
+  setNavigationContent,
+  useNavigationSelector,
+} from '~/store/reducers/navigateSlice';
 import { CafeComment, CafesInfo } from '~/types/cafeInfo';
 
 import CafeDetailComment from '~/components/organism/cafeDetailComment';
@@ -13,10 +16,13 @@ import CafeWriteComment from '~/components/organism/cafeWriteComment';
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import MobileSearch from '~/components/organism/mobileSearch';
 import NoCafeComment from '~/components/organism/cafeInfoList/NoCafeComment';
+import CafeInfo from '~/components/organism/cafeInfoList/CafeInfo';
+import { useDispatch } from 'react-redux';
 
 const MobilePage = () => {
   const navigate = useNavigationSelector();
   const cafe = useCafeIdSelector();
+  const dispatch = useDispatch();
 
   const [filterCafe, setFilterCafe] = useState<CafesInfo[]>([]);
   const [searchInput, setSearchInput] = useState('');
@@ -28,6 +34,15 @@ const MobilePage = () => {
   const setFilterCafeHandler = useCallback((value: CafesInfo[]) => {
     setFilterCafe(value);
   }, []);
+
+  // 카페 아이템을 클릭했을 때 실행
+  const cafeClickHandler = useCallback(
+    (id: string) => {
+      dispatch(setCafeId({ cafeId: id, commentId: '' }));
+      dispatch(setNavigationContent('content'));
+    },
+    [dispatch]
+  );
 
   console.log(navigate);
 
@@ -79,6 +94,21 @@ const MobilePage = () => {
 
       {navigate === 'search-list' && filterCafe.length === 0 && (
         <NoCafeComment searchInput={searchInput} />
+      )}
+
+      {navigate === 'search-list' && filterCafe.length > 0 && (
+        <>
+          {filterCafe.map((filter: CafesInfo, index: number) => (
+            <CafeInfo
+              // key={cafe.cafeId}
+              // 백엔드 아이디 처리 전까지
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              cafeClickHandler={() => cafeClickHandler(filter.cafeId)}
+              cafes={filter}
+            />
+          ))}
+        </>
       )}
     </Box>
   );
