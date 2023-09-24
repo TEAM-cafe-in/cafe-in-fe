@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 
 import { getCookie, setCookie } from '~/helpers/cookie';
 import { getAccessToken } from '~/pages/api/user';
@@ -16,7 +12,7 @@ let fetchingToken = false;
 
 const setInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
+    (config) => {
       const token = getCookie('accessToken');
 
       // eslint-disable-next-line no-param-reassign
@@ -48,7 +44,7 @@ const setInterceptors = (instance: AxiosInstance) => {
             // eslint-disable-next-line no-param-reassign
             error.response.config.headers.Authorization = `Bearer ${accessToken}`;
 
-            return await instance.request(error.config);
+            return await instance.request(error?.response.config);
           } catch (refreshError) {
             return await Promise.reject(refreshError);
           } finally {

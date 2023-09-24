@@ -1,4 +1,4 @@
-import { TCafeCongestion } from './cafeInfo';
+import { TCafeCongestion } from './radio';
 
 export type TMyPageTabKey = 'recently' | 'post';
 

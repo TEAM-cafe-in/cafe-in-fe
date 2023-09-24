@@ -44,8 +44,6 @@ const MobilePage = () => {
     [dispatch]
   );
 
-  console.log(navigate);
-
   // 혼잡도 확인했을 때 카페 디테일 정보 react query문
   const { data: congestion } = useQuery<CafeComment>(
     ['comment', cafe.cafeId],
@@ -59,19 +57,22 @@ const MobilePage = () => {
   return (
     <Box sx={{ width: '100%' }}>
       {/* 카페 댓글 리스트 페이지 */}
-      {navigate === 'comment' && congestion && (
-        <CafeDetailComment
-          name={congestion?.cafeInfoProjection.name}
-          comments={congestion?.comments}
-          cafeId={congestion?.cafeInfoProjection.cafeId}
-        />
-      )}
+      {(navigate === 'comment' || navigate === 'search-comment') &&
+        congestion && (
+          <CafeDetailComment
+            name={congestion?.cafeInfoProjection.name}
+            comments={congestion?.comments}
+            cafeId={congestion?.cafeInfoProjection.cafeId}
+          />
+        )}
 
       {/* 카페 대댓글 리스트 페이지 */}
-      {navigate === 're-comment' && <CafeReComment />}
+      {(navigate === 're-comment' || navigate === 'search-re-comment') && (
+        <CafeReComment />
+      )}
 
       {/* 카페 댓글 작성 페이지 */}
-      {navigate === 'write' && congestion && (
+      {(navigate === 'write' || navigate === 'search-write') && congestion && (
         <CafeWriteComment
           name={congestion?.cafeInfoProjection.name}
           cafeId={congestion?.cafeInfoProjection.cafeId}
