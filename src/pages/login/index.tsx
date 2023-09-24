@@ -5,18 +5,36 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Typography } from '@mui/material';
 
-import { setCookie } from '~/helpers/cookie';
-import { setToken } from '~/store/reducers/authSlice';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import styled from 'styled-components';
 import SnsButton from '~/components/molecule/buttons/SnsButton';
-import { KakaoResponse, LoginResponse } from '~/types/auth';
+import { setCookie } from '~/helpers/cookie';
 import image from '~/static/images/cafe-in-logo.png';
+import { setToken } from '~/store/reducers/authSlice';
+import { KakaoResponse, LoginResponse } from '~/types/auth';
 import { getLoginToken } from '../api/user';
-import { MyArrowBackIosNewIcon, Wrapper } from './login.styled';
+
+const MyArrowBackIosNewIcon = styled(ArrowBackIosNewIcon)`
+  margin-left: 20%;
+  margin-top: 15px;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    margin: 5px;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 150px;
+`;
 
 const LoginPage = () => {
   const router = useRouter();
@@ -64,7 +82,7 @@ const LoginPage = () => {
   }, [router]);
 
   return (
-    <>
+    <div>
       <MyArrowBackIosNewIcon onClick={backClickHandler} />
       <Wrapper>
         <Typography mb="20px">
@@ -74,7 +92,7 @@ const LoginPage = () => {
         <SnsButton type="kakao" onClick={kakaoLoginHandler} />
         <SnsButton type="google" onClick={googleLoginHandler} />
       </Wrapper>
-    </>
+    </div>
   );
 };
 export default LoginPage;
