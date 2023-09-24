@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { useDispatch } from 'react-redux';
 
 import LocationButtonGroup from '~/components/molecule/buttons/LocationButtonGroup';
-import { setCafeId } from '~/store/reducers/cafeIdSlice';
 import { CafeData } from '~/db/data';
+import { setCafeId } from '~/store/reducers/cafeIdSlice';
 import { encodeSVG } from './encodeSVG';
 import { tagSvgRaw } from './tagSvgRaw';
 
@@ -65,7 +65,7 @@ const GoogleMapComponent = () => {
         // 마커 클릭했을 때
         function handleMarkerClick() {
           // 마커 클릭하면 카페 id를 리덕스 저장
-          dispatch(setCafeId({ cafe_id: cafe.cafeId, comment_id: '0' }));
+          dispatch(setCafeId({ cafeId: cafe.cafeId, commentId: '0' }));
         }
         marker.addListener('click', handleMarkerClick);
       });

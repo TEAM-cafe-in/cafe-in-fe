@@ -8,12 +8,11 @@ import Image from 'next/image';
 
 import { Typography, useTheme } from '@mui/material';
 
-import { useAccessTokenSelector } from '~/store/reducers/authSlice';
-import { ActionButton } from '~/types/popup';
 import Popup from '~/components/atom/popup';
 import getCoffeeBean from '~/pages/api/member/getCoffeeBean';
-import reviewSuccess from '../../../static/images/review-logo.png';
+import { ActionButton } from '~/types/popup';
 import reviewFail from '../../../static/images/not-review-logo.png';
+import reviewSuccess from '../../../static/images/review-logo.png';
 import { ReviewCount } from './cafeResponsePopup.styled';
 
 interface CafePopupProps {
@@ -29,13 +28,12 @@ const CafeResponsePopup = ({
   closePopup,
   type,
 }: CafePopupProps) => {
-  const token = useAccessTokenSelector();
   const theme = useTheme();
   const mainColor = theme.palette.primary.main;
   const coffeColor = theme.palette.grey[400];
 
   // 커피콩 조회 react query 문
-  const { data } = useQuery(['coffeeBean'], () => getCoffeeBean(token));
+  const { data } = useQuery(['coffeeBean'], () => getCoffeeBean());
 
   return (
     <Popup

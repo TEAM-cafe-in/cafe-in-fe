@@ -11,7 +11,6 @@ import CafeDetailComment from '~/components/organism/cafeDetailComment';
 import CafeReComment from '~/components/organism/cafeReComment';
 import CafeWriteComment from '~/components/organism/cafeWriteComment';
 import CafeDetailInfo from '~/components/organism/cafeDetailInfo';
-
 import getCoffeeBeanInfo from '~/pages/api/cafe/getCoffeeBeanInfo';
 import { CafeComment } from '~/types/cafeInfo';
 import MypageSetting from '~/components/organism/mypageSetting';

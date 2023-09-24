@@ -6,7 +6,7 @@
 import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 
 import {
   setNavigationContent,
@@ -16,8 +16,8 @@ import { Keywords } from '~/types/comment';
 import LabelButtons from '~/components/molecule/labelButtons/LabelButtons';
 
 import { useAddCafeCommentMutation } from '~/pages/api/cafe/addCafeComment';
-import { MyArrowBackIosNewIcon } from '~/pages/login/login.styled';
-import { StyledTextField, WriteTitle } from './cafeWriteComment.styled';
+import { HeaderWrapper } from '~/components/atom/header';
+import { StyledTextField } from './cafeWriteComment.styled';
 
 interface WriteProp {
   name: string;
@@ -38,16 +38,6 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
 
   // 댓글 작성 react query문
   const { mutate: writeCommentMutate } = useAddCafeCommentMutation();
-
-  // 뒤로 가기 버튼
-  const handleBackArrowClick = () => {
-    if (navigate === 'write') {
-      dispatch(setNavigationContent('comment'));
-    }
-    if (navigate === 'search-write') {
-      dispatch(setNavigationContent('search-comment'));
-    }
-  };
 
   // 댓글 키워드 set하는 함수
   const setOptionsHandler = useCallback(
@@ -79,18 +69,11 @@ const CafeWriteComment = ({ name, cafeId }: WriteProp) => {
 
   return (
     <>
-      <WriteTitle>
-        <MyArrowBackIosNewIcon
-          className="mui-icon"
-          onClick={handleBackArrowClick}
-        />
-        <Typography variant="h4" className="title" mr="20px">
-          {name}
-        </Typography>
+      <HeaderWrapper name={name}>
         <Button disabled={textValue === ''} onClick={writeCommentClickHandler}>
           등록
         </Button>
-      </WriteTitle>
+      </HeaderWrapper>
 
       <LabelButtons options={options} setOptions={setOptionsHandler} />
 

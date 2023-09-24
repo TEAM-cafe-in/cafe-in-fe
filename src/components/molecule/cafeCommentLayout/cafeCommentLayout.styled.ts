@@ -15,26 +15,6 @@ export const CommentWrapper = styled(Box)`
   height: 100%;
 `;
 
-export const CommentTitle = styled(Box)`
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  height: 35px;
-  .mui-icon {
-    margin-left: 20px;
-    cursor: pointer;
-  }
-  .mui-home-icon {
-    cursor: pointer;
-    transform: scale(1.5);
-    margin-left: 10px;
-  }
-  .title {
-    flex: 1;
-    text-align: center;
-  }
-`;
-
 export const CommentContent = styled(Box)`
   margin-bottom: 30px;
   flex: 1;

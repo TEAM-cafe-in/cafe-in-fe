@@ -67,12 +67,10 @@ const CafeInfoListPage = ({ setOpenDepth2 }: CafeInfoListProps) => {
     (id: string) => {
       setOpenDepth2(true);
       dispatch(setCafeId({ cafeId: id, commentId: '' }));
-      if (navigate === 'cafelist' || navigate === 'search') {
-        // 디테일 정보가 보여지게 set
-        dispatch(setNavigationContent('content'));
-      }
       if (navigate === 'search-list') {
         dispatch(setNavigationContent('search-detail'));
+      } else {
+        dispatch(setNavigationContent('content'));
       }
     },
     [setOpenDepth2, dispatch, navigate]
